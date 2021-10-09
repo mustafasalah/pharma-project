@@ -1,0 +1,38 @@
+export const getInventoryItems = () => {
+    return [
+        {
+            id: 1,
+            name: "Diarrhoea. Relief - Loperamide Capsules",
+            barcode: "1237980133840942",
+            unit: "6 Capsules",
+            category: "antibiotics",
+            company: "Diarrhoea",
+            photo: "/assets/images/5.jpg",
+            cost: 1000,
+            price: 1200,
+            supplier: "AbdAlaziz Medical",
+            stock: 255,
+            reserved: 3,
+            arrival_date: "2021-09-12",
+            expair_date: "2021-12-12",
+            online_order: true,
+        },
+        {
+            id: 2,
+            name: "Ovex Family Pack Tablets",
+            barcode: "1237d3434340942",
+            unit: "4x 100mg Tablets",
+            category: "antibiotics",
+            company: "Ovex",
+            photo: "/assets/images/3.jpg",
+            cost: 1200,
+            price: 1400,
+            supplier: "Abo Alra",
+            stock: 95,
+            reserved: 1,
+            arrival_date: "2021-12-22",
+            expair_date: "2022-05-22",
+            online_order: true,
+        },
+    ];
+};

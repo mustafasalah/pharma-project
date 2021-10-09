@@ -1,13 +1,74 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+
+@layer base {
+    * {
+        transition-property: background-color, border-color, color, fill, stroke,
+            opacity, box-shadow, transform, filter, backdrop-filter;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 500ms;
+    }
+
+    main a {
+        @apply text-secondary underline font-medium hover:text-primary;
+    }
+
+    table {
+        @apply overflow-hidden rounded shadow-lg bg-white w-full mt-5 text-left;
+    }
+
+    table tbody tr {
+        @apply border-b-2 border-gray-200 last:border-0 even:bg-gray;
+    }
+
+    table thead tr {
+        @apply border-b-2 border-gray-200;
+    }
+
+    table th,
+    table td {
+        @apply py-5 text-smd pr-4 first:pl-5 last:pr-5;
+    }
+
+    table th {
+        @apply font-semibold text-gray-600 bg-gray;
+    }
+
+    input,
+    select {
+        @apply outline-none bg-gray;
+    }
+
+    input:disabled,
+    select:disabled {
+        @apply bg-gray-100 opacity-75;
+    }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@tailwind components;
+
+@layer components {
+    .manage-btn {
+        @apply font-medium py-1.5 px-2 text-xxs rounded-sm shadow-md first:mr-2;
+    }
+
+    .menu-item {
+        @apply py-4 px-6 block border-b-2 border-gray-200 flex items-center font-semibold;
+    }
+
+    .active-menu-item {
+        @apply menu-item;
+        @apply bg-gray-100 shadow font-bold;
+    }
+
+    .menu-item-icon {
+        @apply inline-block py-2 shadow-md rounded text-xs mr-3 bg-bright 
+        text-primary w-8 text-center group-hover:bg-primary group-hover:text-bright;
+    }
+
+    .active-menu-item-icon {
+        @apply menu-item-icon;
+        @apply bg-secondary text-white !important;
+    }
 }
+
+@tailwind utilities;
