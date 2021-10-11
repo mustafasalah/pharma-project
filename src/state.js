@@ -1,5 +1,5 @@
 import { createState, DevTools } from "@hookstate/core";
-import { getInventoryItems } from "./services/getInventoryItems";
+import inventorySate from "./states/inventoryState";
 
 const store = createState({
     notifications: [
@@ -15,14 +15,7 @@ const store = createState({
         },
     ],
     tables: {
-        inventory: {
-            data: getInventoryItems(),
-            filters: {
-                search: "",
-                category: "",
-                status: "",
-            },
-        },
+        inventory: inventorySate,
     },
 });
 

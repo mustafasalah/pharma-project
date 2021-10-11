@@ -44,7 +44,10 @@ function FormField({
                                     type="radio"
                                     value={value}
                                     onChange={onChange}
-                                    checked={currentValue === value.toString()}
+                                    checked={
+                                        currentValue.toString() ===
+                                        value.toString()
+                                    }
                                     {...props}
                                 />
                                 <label htmlFor={`${label}_${i}`}>{label}</label>
@@ -84,6 +87,9 @@ function FormField({
         <div className={className}>
             <label htmlFor={props.id} className="mb-2 font-medium capitalize">
                 {label}
+                {props.required ? (
+                    <span className="text-red ml-0.5">*</span>
+                ) : undefined}
             </label>
             {printInput()}
         </div>

@@ -1,7 +1,6 @@
 import React from "react";
-import configs from "../../configs";
 
-function Filters({ filters, data }) {
+function Filters({ filters, data, pagination }) {
     return (
         <div className="mt-6 text-xs">
             <div className="inline-block font-semibold">
@@ -14,6 +13,7 @@ function Filters({ filters, data }) {
                     case "search":
                         return (
                             <SearchFilter
+                                key={filter.label}
                                 label={filter.label}
                                 value={data[filter.prop]}
                                 placeholder={filter.placeholder}
@@ -23,6 +23,7 @@ function Filters({ filters, data }) {
                     default:
                         return (
                             <SelectFilter
+                                key={filter.label}
                                 label={filter.label}
                                 value={data[filter.prop]}
                                 options={filter.options}
@@ -31,16 +32,16 @@ function Filters({ filters, data }) {
                 }
             })}
 
-            {/* <SelectFilter
+            <SelectFilter
                 label="Items per Page"
                 name="items_per_page"
                 className="float-right"
-                value={5}
-                dataList={configs.itemsPerPageOptions.map((option) => ({
+                value={pagination.itemsPerPage}
+                options={pagination.itemsPerPageOptions.get().map((option) => ({
                     label: option,
                     value: option,
                 }))}
-            /> */}
+            />
         </div>
     );
 }
