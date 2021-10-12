@@ -18,7 +18,7 @@ const PopupForm = ({ title, children, state, className }) => {
             >
                 <div className="flex justify-between py-4 px-5 bg-gray shadow-md font-semibold">
                     <h3>
-                        <i className="fas fa-plus-square text-primary mr-1"></i>
+                        <i className="fas fa-plus-square text-primary mr-2"></i>
                         {title}
                     </h3>
                     <button

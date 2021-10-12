@@ -1,5 +1,6 @@
 const inventoryFormState = {
     data: {
+        productId: null,
         name: "",
         barcode: "",
         unit: "",

@@ -1,5 +1,5 @@
 import { DevTools, useState } from "@hookstate/core";
-import React from "react";
+import React, { useEffect } from "react";
 import inventoryFormState from "../../states/inventoryFormState";
 import Note from "../common/Note";
 import CategoriesField from "./CategoriesField";
@@ -7,11 +7,36 @@ import CompaniesField from "./CompaniesField";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
 import SuppliersField from "./SuppliersField";
+import ProductsField from "./ProductsField";
+import { getProducts } from "../../services/products";
 
 const InventoryPopupForm = ({ showState }) => {
+    const products = getProducts();
     let state = useState(inventoryFormState);
     const { data, errors } = state;
     DevTools(state).label("Inventory Popup Form");
+
+    useEffect(() => {
+        let scanneredBarcode = "";
+        window.onkeypress = ({ keyCode, key }) => {
+            if (keyCode === 13) {
+                const product = products.find(
+                    ({ barcode }) => barcode === scanneredBarcode
+                );
+                if (product) {
+                    data.productId.set(product.id);
+                    data.name.set(product.name);
+                    data.barcode.set(product.barcode);
+                    data.unit.set(product.unit);
+                    data.category.set(product.category);
+                    data.company.set(product.company);
+                }
+                scanneredBarcode = "";
+            } else {
+                scanneredBarcode += key;
+            }
+        };
+    }, []);
 
     return (
         <PopupForm
@@ -24,13 +49,23 @@ const InventoryPopupForm = ({ showState }) => {
                 <i className="fas fa-barcode"></i> barcode reader to capture
                 basic product information into the fields below.
             </Note>
-            <FormField
+
+            <ProductsField
                 className="flex flex-col col-span-2"
-                label="product name"
-                name="product_name"
                 id="1"
+                type="select"
                 value={data.name}
-                placeholder="enter product name here..."
+                onChange={({ value: selectedId }) => {
+                    const product = products.find(
+                        ({ id }) => id === selectedId
+                    );
+                    data.productId.set(product.id);
+                    data.name.set(product.name);
+                    data.barcode.set(product.barcode);
+                    data.unit.set(product.unit);
+                    data.category.set(product.category);
+                    data.company.set(product.company);
+                }}
                 required
             />
 
@@ -38,8 +73,24 @@ const InventoryPopupForm = ({ showState }) => {
                 className="flex flex-col"
                 label="barcode"
                 name="barcode"
+                type="select"
                 id="2"
                 value={data.barcode}
+                options={products.map(({ barcode, id }) => ({
+                    label: barcode,
+                    value: id,
+                }))}
+                onChange={({ value: selectedId }) => {
+                    const product = products.find(
+                        ({ id }) => id === selectedId
+                    );
+                    data.productId.set(product.id);
+                    data.name.set(product.name);
+                    data.barcode.set(product.barcode);
+                    data.unit.set(product.unit);
+                    data.category.set(product.category);
+                    data.company.set(product.company);
+                }}
                 placeholder="barcode here..."
                 required
             />

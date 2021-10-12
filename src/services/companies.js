@@ -1,8 +1,8 @@
 export const getCompanies = () => {
     return [
-        { id: 1, value: "Abo alra" },
-        { id: 2, value: "Rowachol" },
-        { id: 3, value: "Ovex" },
-        { id: 4, value: "Diarrhoea" },
+        { id: 1, label: "Abo alra", value: "Abo alra" },
+        { id: 2, label: "Rowachol", value: "Rowachol" },
+        { id: 3, label: "Ovex", value: "Ovex" },
+        { id: 4, label: "Diarrhoea", value: "Diarrhoea" },
     ];
 };

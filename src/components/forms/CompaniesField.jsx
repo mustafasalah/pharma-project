@@ -8,7 +8,7 @@ const CompaniesField = (props) => {
             name="company"
             label="company"
             type="text"
-            options={getCompanies().map((company) => company.value)}
+            options={getCompanies()}
             placeholder="Enter the company..."
             taggable
             {...props}

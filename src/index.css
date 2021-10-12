@@ -39,8 +39,13 @@
     }
 
     input:disabled,
-    select:disabled {
+    select:disabled,
+    .react-select--is-disabled {
         @apply bg-gray-100 opacity-75;
+    }
+
+    .react-select__indicator {
+        padding: 0 !important;
     }
 }
 

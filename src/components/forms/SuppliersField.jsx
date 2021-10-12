@@ -8,7 +8,7 @@ const SuppliersField = (props) => {
             name="supplier"
             label="supplier"
             type="text"
-            options={getSuppliers().map((supplier) => supplier.value)}
+            options={getSuppliers()}
             placeholder="Enter supplier name..."
             taggable
             {...props}

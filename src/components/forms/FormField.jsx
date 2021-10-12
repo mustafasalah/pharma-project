@@ -1,4 +1,6 @@
 import React, { useCallback } from "react";
+import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 
 function FormField({
     className,
@@ -10,24 +12,30 @@ function FormField({
     ...props
 }) {
     const currentValue = value.get();
-    const onChange = ({ target }) => value.set(target.value);
+    const onInputChange = ({ target }) => {
+        value.set(target.value);
+    };
+    const onSelectChange = (selectedValue) => {
+        value.set(selectedValue.value);
+    };
     const printInput = useCallback(() => {
         switch (type) {
             case "select":
                 return (
-                    <select
+                    <Select
+                        styles={styleObject}
                         className="border border-gray-300 rounded-sm py-1 px-2 shadow"
-                        value={currentValue}
-                        onChange={onChange}
+                        classNamePrefix="react-select"
+                        value={{
+                            label: currentValue,
+                            value: currentValue,
+                        }}
+                        options={options}
+                        onChange={onSelectChange}
+                        isSearchable={true}
+                        isDisabled={props.disabled}
                         {...props}
-                    >
-                        {options &&
-                            options.map(({ label, value }) => (
-                                <option key={value} value={value}>
-                                    {label}
-                                </option>
-                            ))}
-                    </select>
+                    />
                 );
 
             case "radio":
@@ -43,7 +51,7 @@ function FormField({
                                     className="mr-1 align-middle"
                                     type="radio"
                                     value={value}
-                                    onChange={onChange}
+                                    onChange={onInputChange}
                                     checked={
                                         currentValue.toString() ===
                                         value.toString()
@@ -57,28 +65,38 @@ function FormField({
                 );
 
             default:
-                return (
-                    <>
-                        <input
+                if (taggable) {
+                    return (
+                        <CreatableSelect
+                            styles={styleObject}
                             className="border border-gray-300 rounded-sm py-1 px-2 shadow"
-                            type={type}
-                            value={currentValue}
-                            onChange={onChange}
-                            list={
-                                taggable
-                                    ? `${props.name}_${props.id}_list`
-                                    : undefined
-                            }
+                            classNamePrefix="react-select"
+                            value={{
+                                label: currentValue,
+                                value: currentValue,
+                            }}
+                            options={options}
+                            onChange={onSelectChange}
+                            onInputChange={(newValue, actionMeta) => {
+                                if (actionMeta === "input-change") {
+                                    value.set(newValue);
+                                }
+                            }}
+                            isSearchable={true}
+                            isDisabled={props.disabled}
                             {...props}
                         />
-                        {taggable && (
-                            <datalist id={`${props.name}_${props.id}_list`}>
-                                {options.map((option) => (
-                                    <option key={option} value={option} />
-                                ))}
-                            </datalist>
-                        )}
-                    </>
+                    );
+                }
+
+                return (
+                    <input
+                        className="border border-gray-300 rounded-sm py-1 px-2 shadow"
+                        type={type}
+                        value={currentValue}
+                        onChange={onInputChange}
+                        {...props}
+                    />
                 );
         }
     }, [props, options, taggable, type]);
@@ -95,4 +113,30 @@ function FormField({
         </div>
     );
 }
+
 export default FormField;
+
+const styleObject = {
+    control: (provided) => ({
+        display: "flex",
+        justifyContent: "space-between",
+    }),
+    valueContainer: (provided) => ({
+        ...provided,
+        padding: "0",
+    }),
+    indicatorsContainer: () => ({}),
+    input: (provided) => ({
+        ...provided,
+        padding: "0",
+        margin: "0",
+    }),
+    singleValue: (provided) => ({
+        ...provided,
+        margin: "0",
+    }),
+    menu: (provided) => ({
+        ...provided,
+        left: 0,
+    }),
+};

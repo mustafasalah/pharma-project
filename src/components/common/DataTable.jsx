@@ -34,6 +34,7 @@ function Pagination({ paginationData, data, onPaginate }) {
                 )}
                 {range(start, end).map((index) => (
                     <button
+                        key={index}
                         className={`py-2 px-4 rounded-sm font-medium ${
                             +currentPage === index
                                 ? "bg-primary shadow-md text-white cursor-default"
