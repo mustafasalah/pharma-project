@@ -1,11 +1,12 @@
 import React from "react";
 
-const ManageBtns = ({ id, edited, onEdit }) => {
+const ManageBtns = ({ id, edited, onEdit, onDelete }) => {
     return (
         <>
             <button
                 title="Delete?"
                 className="manage-btn bg-red text-red-light hover:text-red hover:bg-white"
+                onClick={() => onDelete(id.value)}
             >
                 <i className="fas fa-trash-alt"></i>
             </button>

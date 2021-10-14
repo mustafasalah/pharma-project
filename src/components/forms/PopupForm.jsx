@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "./Form";
 
-const PopupForm = ({ title, children, state, className }) => {
+const PopupForm = ({ title, children, state, className, onSubmit }) => {
     const closeForm = state.set.bind(state, false);
     return (
         <>
@@ -30,7 +30,7 @@ const PopupForm = ({ title, children, state, className }) => {
                     </button>
                 </div>
                 <div className="px-5 py-6">
-                    <Form className={className} withDiscard>
+                    <Form className={className} onSubmit={onSubmit} withDiscard>
                         {children}
                     </Form>
                 </div>

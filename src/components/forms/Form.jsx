@@ -1,9 +1,14 @@
 import React from "react";
 import FormButtons from "./FormButtons";
 
-const Form = ({ children, className, withDiscard = false }) => {
+const Form = ({ children, className, onSubmit, withDiscard = false }) => {
     return (
-        <form action="#" method="post">
+        <form
+            onSubmit={(e) => {
+                e.preventDefault();
+                return onSubmit(e);
+            }}
+        >
             <div className={className}>{children}</div>
             <FormButtons withDiscard={withDiscard} />
         </form>

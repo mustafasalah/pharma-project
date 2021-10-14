@@ -77,15 +77,45 @@ function TableRow({ data, edited, form }) {
     );
 }
 
-function TableHead({ columns }) {
+function TableHead({ columns, sortColumn }) {
+    const sortColumnName = sortColumn.columnName.get();
+    const order = sortColumn.order.get();
+
     return (
         <thead>
             <tr>
-                {columns.map(({ title }) => (
-                    <th key={title} className="capitalize">
-                        {title}
-                    </th>
-                ))}
+                {columns.map(({ title, prop, sortable }) => {
+                    const isCurrentSortingColumn = sortColumnName === prop;
+                    return (
+                        <th
+                            key={title}
+                            className={`capitalize ${
+                                sortable !== false ? "cursor-pointer" : ""
+                            }`}
+                            onClick={() => {
+                                if (sortable !== false) {
+                                    sortColumn.set({
+                                        columnName: prop,
+                                        order: isCurrentSortingColumn
+                                            ? order === "desc"
+                                                ? "asc"
+                                                : "desc"
+                                            : "desc",
+                                    });
+                                }
+                            }}
+                        >
+                            {title}
+                            {isCurrentSortingColumn && (
+                                <i
+                                    className={`ml-1 fas fa-sort-${
+                                        order === "desc" ? "down" : "up"
+                                    }`}
+                                ></i>
+                            )}
+                        </th>
+                    );
+                })}
             </tr>
         </thead>
     );
@@ -122,7 +152,7 @@ function TableBody({ data, columns, form }) {
     );
 }
 
-function Table({ data, columns, form }) {
+function Table({ data, columns, form, sortColumn }) {
     if (data.length === 0)
         return (
             <p className="rounded shadow-lg bg-white mt-5 text-center text-gray-400 text-sm p-5 italic">
@@ -133,7 +163,7 @@ function Table({ data, columns, form }) {
     return (
         <>
             <table>
-                <TableHead columns={columns} />
+                <TableHead columns={columns} sortColumn={sortColumn} />
                 <TableBody columns={columns} data={data} form={form} />
             </table>
         </>
@@ -172,11 +202,46 @@ function paginateData(pagination, data) {
     return data.slice(start, end);
 }
 
-function DataTable({ columns, data, form, filters, filtersData, pagination }) {
+// function sortData({ columnName, order }, data) {
+//     columnName = columnName.get();
+//     order = order.get();
+//     const arr = [];
+//     Array.from(data).map((item) => {
+//         arr.push(item.get());
+//         return item;
+//     });
+//     // arr.sort((a, b) => {
+//     //     // console.log(a, b);
+//     //     const columnA = a[columnName];
+//     //     const columnB = b[columnName];
+//     //     if (order === "desc") {
+//     //         return columnA >= columnB ? -1 : 1;
+//     //     }
+//     //     return columnA <= columnB ? -1 : 1;
+//     // });
+//     console.log(arr);
+//     return data.set(arr);
+// }
+
+function DataTable({
+    columns,
+    data,
+    form,
+    filters,
+    filtersData,
+    pagination,
+    sortColumn,
+}) {
     const filteredData = useMemo(
         () => filterData(filters, filtersData, data),
         [filters, filtersData, data]
     );
+
+    // const sortedData = useMemo(
+    //     () => sortData(sortColumn, data),
+    //     [sortColumn, data]
+    // );
+
     const paginatedData = useMemo(
         () => paginateData(pagination, filteredData),
         [pagination, data]
@@ -189,7 +254,12 @@ function DataTable({ columns, data, form, filters, filtersData, pagination }) {
                 data={filtersData}
                 pagination={pagination}
             />
-            <Table data={paginatedData} columns={columns} form={form} />
+            <Table
+                data={paginatedData}
+                columns={columns}
+                sortColumn={sortColumn}
+                form={form}
+            />
             <Pagination
                 paginationData={pagination}
                 data={filteredData}

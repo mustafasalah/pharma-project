@@ -47,6 +47,10 @@
     .react-select__indicator {
         padding: 0 !important;
     }
+
+    .Toastify__toast {
+        font-family: "Poppins", san-serif;
+    }
 }
 
 @tailwind components;

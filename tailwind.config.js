@@ -29,9 +29,9 @@ module.exports = {
                 dark: colors.red[600],
             },
             green: {
-                light: colors.green[200],
+                light: "#90EF93",
                 DEFAULT: "#00D800",
-                dark: colors.green[600],
+                dark: "#237A23",
             },
             yellow: {
                 light: colors.yellow[100],
@@ -50,6 +50,7 @@ module.exports = {
             spacing: {
                 25: "6.25rem",
                 21.5: "5.375rem",
+                23.5: "6.125rem",
             },
             minWidth: {
                 2: "2rem",

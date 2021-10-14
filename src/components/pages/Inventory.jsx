@@ -8,13 +8,17 @@ import ProductCell from "../table/ProductCell";
 import InventoryForm from "../forms/InventoryForm";
 import { getCategories } from "../../services/categories";
 import InventoryPopupForm from "../forms/InventoryPopupForm";
+import { deleteInventoryItem } from "../../services/inventoryItems";
+import { toast } from "react-toastify";
 
 const Inventory = () => {
     const {
         tables: { inventory },
     } = useState(store);
-    const showState = useState(false);
     DevTools(inventory).label("Inventory");
+
+    const showState = useState(false);
+    const sortColumn = useState({ columnName: "arrival_date", order: "desc" });
 
     return (
         <>
@@ -33,8 +37,10 @@ const Inventory = () => {
                 filtersData={inventory.filters}
                 data={inventory.data}
                 columns={columns}
+                sortColumn={sortColumn}
                 form={(state) => <InventoryForm state={state} />}
                 pagination={inventory.pagination}
+                sortColumn={sortColumn}
             />
             <InventoryPopupForm showState={showState} />
         </>
@@ -66,8 +72,28 @@ const columns = [
     { title: "expair date", prop: "expair_date" },
     {
         title: "manage",
+        sortable: false,
         wrapper: ({ id, edited, handleEdit }) => (
-            <ManageBtns id={id} edited={edited} onEdit={handleEdit} />
+            <ManageBtns
+                id={id}
+                edited={edited}
+                onEdit={handleEdit}
+                onDelete={async () => {
+                    const isDelete = window.confirm(
+                        "Are you sure to delete this inventory item?"
+                    );
+                    if (isDelete === false) return;
+
+                    const { status } = await deleteInventoryItem(id.get());
+                    if (status >= 200 && status < 300) {
+                        toast.success(
+                            "Inventory Item has been deleted successfully!"
+                        );
+                    } else {
+                        toast.error("Network Error!");
+                    }
+                }}
+            />
         ),
     },
 ];
