@@ -4,6 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import TopBar from "./TopBar";
 import "react-toastify/dist/ReactToastify.css";
+import "animate.css";
 
 function App() {
     return (

@@ -34,8 +34,8 @@ module.exports = {
                 dark: "#237A23",
             },
             yellow: {
-                light: colors.yellow[100],
-                DEFAULT: colors.yellow[400],
+                light: "#F5F5DC",
+                DEFAULT: "#D8D800",
                 dark: colors.yellow[600],
             },
         },
@@ -50,7 +50,7 @@ module.exports = {
             spacing: {
                 25: "6.25rem",
                 21.5: "5.375rem",
-                23.5: "6.125rem",
+                26: "6.5rem",
             },
             minWidth: {
                 2: "2rem",

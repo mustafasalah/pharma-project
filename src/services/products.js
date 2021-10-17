@@ -12,7 +12,7 @@ export const getProducts = () => {
         {
             id: 2,
             name: "Ovex Family Pack Tablets",
-            barcode: "358982077023700",
+            barcode: "867250056943759",
             unit: "4x 100mg Tablets",
             category: "antibiotics",
             company: "Ovex",

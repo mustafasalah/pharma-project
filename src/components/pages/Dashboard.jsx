@@ -1,61 +1,76 @@
-import React from "react";
-import SectionHeader from "../common/SectionHeader";
-import StatisticsWidget from "../common/StatisticsWidget";
+import React, { useEffect, useState } from "react";
+import {
+    getProfitsStatistic,
+    getSalesStatistic,
+    getOrdersStatistic,
+} from "../../services/statistic";
+import LineChartSection from "../lineChartSection";
+import OverviewSection from "../OverviewSection";
+import PieChartSection from "../PieChartSection";
 
 const Dashboard = () => {
+    const [lineChartTime, setLineChartTime] = useState("week");
+    const [pieChartTime, setPieChartTime] = useState("week");
+    const [lineChartState, setLineChartState] = useState([
+        {
+            label: "Profits",
+            datasets: [],
+        },
+        {
+            label: "Sales",
+            datasets: [],
+        },
+    ]);
+
+    const [pieChartState, setPieChartState] = useState({
+        statusLabels: ["Finished", "Waiting", "Payment Confirmed", "Canceled"],
+        label: "Orders Status",
+        datasets: [],
+    });
+
+    useEffect(() => {
+        const ordersDatasets = getOrdersStatistic(pieChartTime);
+
+        setPieChartState({
+            ...pieChartState,
+            datasets: ordersDatasets,
+        });
+    }, [pieChartTime]);
+
+    useEffect(() => {
+        const profitsDatasets = getProfitsStatistic(lineChartTime);
+        const salesDatasets = getSalesStatistic(lineChartTime);
+
+        setLineChartState([
+            {
+                label: "Profits",
+                datasets: profitsDatasets,
+            },
+            {
+                label: "Sales",
+                datasets: salesDatasets,
+            },
+        ]);
+    }, [lineChartTime]);
+
     return (
-        <div>
-            <SectionHeader name="Today's Overview" faClass="fas fa-eye" />
-            <div className="grid gap-6 grid-cols-4">
-                <StatisticsWidget
-                    mainText="24,450 SDG"
-                    seconderyText="Today's Sales"
-                    percent={{
-                        value: 12.5,
-                        direction: "up",
-                    }}
-                    faClass="fas fa-piggy-bank"
-                    bgColor="bg-bright"
-                    iconColor="text-primary"
+        <>
+            <OverviewSection />
+            <div className="grid grid-cols-3 gap-x-6 mt-8">
+                <LineChartSection
+                    title="Sales & Profits"
+                    time={lineChartTime}
+                    data={lineChartState}
+                    onTimeChange={setLineChartTime}
                 />
-
-                <StatisticsWidget
-                    mainText="220"
-                    seconderyText="Today's Total Orders"
-                    percent={{
-                        value: 22.5,
-                        direction: "up",
-                    }}
-                    faClass="fas fa-cart-arrow-down"
-                    bgColor="bg-gray-100"
-                    iconColor="text-gray-400"
-                />
-
-                <StatisticsWidget
-                    mainText="4,350 SDG"
-                    seconderyText="Today's Profits"
-                    percent={{
-                        value: 22.5,
-                        direction: "up",
-                    }}
-                    faClass="fas fa-dollar-sign"
-                    bgColor="bg-green-light"
-                    iconColor="text-green-dark"
-                />
-
-                <StatisticsWidget
-                    mainText="1365"
-                    seconderyText="Today's Sold Products"
-                    percent={{
-                        value: 22.5,
-                        direction: "down",
-                    }}
-                    faClass="fas fa-pills"
-                    bgColor="bg-yellow-light"
-                    iconColor="text-yellow"
+                <PieChartSection
+                    title="Orders Overview"
+                    data={pieChartState}
+                    time={pieChartTime}
+                    onTimeChange={setPieChartTime}
                 />
             </div>
-        </div>
+        </>
     );
 };
 
