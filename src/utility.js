@@ -147,23 +147,16 @@ export function filterData(filters, filtersData, data) {
     });
 }
 
-// export function sortData({ columnName, order }, data) {
-//     columnName = columnName.get();
-//     order = order.get();
-//     const arr = [];
-//     Array.from(data).map((item) => {
-//         arr.push(item.get());
-//         return item;
-//     });
-//     // arr.sort((a, b) => {
-//     //     // console.log(a, b);
-//     //     const columnA = a[columnName];
-//     //     const columnB = b[columnName];
-//     //     if (order === "desc") {
-//     //         return columnA >= columnB ? -1 : 1;
-//     //     }
-//     //     return columnA <= columnB ? -1 : 1;
-//     // });
-//     console.log(arr);
-//     return data.set(arr);
-// }
+export function sortData({ columnName, order }, data) {
+    columnName = columnName.get();
+    order = order.get();
+    data.sort((a, b) => {
+        const columnA = a[columnName].value;
+        const columnB = b[columnName].value;
+        if (order === "desc") {
+            return columnA >= columnB ? -1 : 1;
+        }
+        return columnA <= columnB ? -1 : 1;
+    });
+    return data;
+}

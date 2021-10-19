@@ -1,11 +1,16 @@
 import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-function MenuItem({ title, link = "#", faClass, isActive = false }) {
+function MenuItem({ title, link, faClass, exact = false }) {
+    const { pathname } = useLocation();
+    const isActive = pathname === link;
     return (
         <li>
-            <a
-                href={link}
-                className={(isActive ? "active-" : "") + "menu-item group"}
+            <NavLink
+                to={link}
+                activeClassName="active-menu-item"
+                className="menu-item group"
+                exact
             >
                 <i
                     className={
@@ -30,7 +35,7 @@ function MenuItem({ title, link = "#", faClass, isActive = false }) {
                         isActive ? "" : "hidden group-hover:block"
                     }`}
                 ></i>
-            </a>
+            </NavLink>
         </li>
     );
 }

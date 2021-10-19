@@ -9,7 +9,7 @@ function Navigation() {
                     title="Dashboard"
                     faClass="fas fa-tachometer-alt"
                     link="/"
-                    isActive={true}
+                    exact
                 ></MenuItem>
 
                 <MenuItem

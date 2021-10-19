@@ -1,6 +1,20 @@
 import React from "react";
+import { useHistory, useLocation, useRouteMatch } from "react-router";
+
+const pagesName = new Map([
+    ["/", "Dashboard"],
+    ["/inventory", "Inventory"],
+    ["/orders", "Orders"],
+    ["/pos", "Point of Sale"],
+    ["/staff", "Staff"],
+    ["/pharmacy-settings", "Pharmacy Settings"],
+    ["/account-settings", "Account Settings"],
+]);
 
 function PagePath() {
+    let { pathname } = useLocation();
+    pathname = "/" + pathname.split("/")[1];
+
     return (
         <ul className="text-sm inline-flex items-center h-full pl-10">
             <li>
@@ -9,7 +23,7 @@ function PagePath() {
                 </a>
             </li>
 
-            <PagePathItem link="/" title="Dashboard" />
+            <PagePathItem link="/" title={pagesName.get(pathname)} />
         </ul>
     );
 }

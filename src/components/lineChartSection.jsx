@@ -101,7 +101,10 @@ function LineChartSection({ title, data, time, onTimeChange }) {
                 }}
             />
             <div className="bg-white shadow-md rounded p-5">
-                <div id="line-chart-container" className="mb-2"></div>
+                <div
+                    id="line-chart-container"
+                    className="mb-2 select-none"
+                ></div>
                 <canvas ref={canvas}></canvas>
             </div>
         </div>

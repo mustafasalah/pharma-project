@@ -18,7 +18,7 @@ const Inventory = () => {
     DevTools(inventory).label("Inventory");
 
     const showState = useState(false);
-    const sortColumn = useState({ columnName: "arrival_date", order: "desc" });
+    const sortColumn = useState({ columnName: "id", order: "asc" });
 
     return (
         <>
@@ -52,6 +52,7 @@ export default Inventory;
 const columns = [
     {
         title: "Products List",
+        sortProp: "id",
         wrapper: ({ name, photo, unit, id, edited, handleEdit }) => (
             <ProductCell
                 name={name.value}

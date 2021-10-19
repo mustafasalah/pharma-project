@@ -7,18 +7,19 @@ function TableHead({ columns, sortColumn }) {
     return (
         <thead>
             <tr>
-                {columns.map(({ title, prop, sortable }) => {
-                    const isCurrentSortingColumn = sortColumnName === prop;
+                {columns.map(({ title, prop, sortProp, sortable }) => {
+                    sortProp = sortProp || prop;
+                    const isCurrentSortingColumn = sortColumnName === sortProp;
                     return (
                         <th
                             key={title}
-                            className={`capitalize ${
+                            className={`capitalize select-none ${
                                 sortable !== false ? "cursor-pointer" : ""
                             }`}
                             onClick={() => {
                                 if (sortable !== false) {
                                     sortColumn.set({
-                                        columnName: prop,
+                                        columnName: sortProp,
                                         order: isCurrentSortingColumn
                                             ? order === "desc"
                                                 ? "asc"
