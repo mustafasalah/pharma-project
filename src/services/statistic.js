@@ -1,5 +1,34 @@
 import axios from "axios";
 
+export const getProductsStatistics = () => {
+    return [
+        {
+            id: 1,
+            name: "Diarrhoea. Relief - Loperamide Capsules",
+            unit: "6 Capsules",
+            photo: "/assets/images/5.jpg",
+            cost: 1000,
+            price: 1200,
+            sold: 375,
+            sales: 450000,
+            profits: 75000,
+            qty: 225,
+        },
+        {
+            id: 2,
+            name: "Ovex Family Pack Tablets",
+            unit: "4x 100mg Tablets",
+            photo: "/assets/images/3.jpg",
+            cost: 1200,
+            price: 1400,
+            sold: 253,
+            sales: 354000,
+            profits: 50000,
+            qty: 20,
+        },
+    ];
+};
+
 export const statisticOptions = [
     { label: "This Day", value: "day" },
     { label: "This Week", value: "week" },

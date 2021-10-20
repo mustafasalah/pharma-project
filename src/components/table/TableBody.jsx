@@ -13,7 +13,7 @@ function TableBody({ data, columns, form }) {
                 return (
                     <TableRow
                         key={item.id.value}
-                        form={form(item)}
+                        form={form && form(item)}
                         edited={edited}
                         data={columns.map(({ prop, wrapper }) =>
                             prop

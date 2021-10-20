@@ -1,6 +1,6 @@
 import React from "react";
 
-function TableRow({ data, edited, form }) {
+function TableRow({ data, edited = false, form }) {
     return (
         <>
             <tr>
@@ -8,7 +8,7 @@ function TableRow({ data, edited, form }) {
                     <td key={i}>{cell}</td>
                 ))}
             </tr>
-            {edited && (
+            {edited && form && (
                 <tr>
                     <td colSpan={data.length}>{form}</td>
                 </tr>

@@ -1,5 +1,5 @@
 import { useState, DevTools } from "@hookstate/core";
-import React from "react";
+import React, { useEffect } from "react";
 import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
@@ -8,7 +8,10 @@ import ProductCell from "../table/ProductCell";
 import InventoryForm from "../forms/InventoryForm";
 import { getCategories } from "../../services/categories";
 import InventoryPopupForm from "../forms/InventoryPopupForm";
-import { deleteInventoryItem } from "../../services/inventoryItems";
+import {
+    deleteInventoryItem,
+    getInventoryItems,
+} from "../../services/inventoryItems";
 import { toast } from "react-toastify";
 
 const Inventory = () => {
@@ -17,8 +20,13 @@ const Inventory = () => {
     } = useState(store);
     DevTools(inventory).label("Inventory");
 
-    const showState = useState(false);
+    const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "asc" });
+
+    useEffect(() => {
+        const inventoryData = getInventoryItems();
+        inventory.data.set(inventoryData);
+    }, []);
 
     return (
         <>
@@ -28,7 +36,7 @@ const Inventory = () => {
                 addButton={{
                     label: "Add New Product",
                     handler: () => {
-                        showState.set(true);
+                        showPopupForm.set(true);
                     },
                 }}
             />
@@ -40,9 +48,8 @@ const Inventory = () => {
                 sortColumn={sortColumn}
                 form={(state) => <InventoryForm state={state} />}
                 pagination={inventory.pagination}
-                sortColumn={sortColumn}
             />
-            <InventoryPopupForm showState={showState} />
+            <InventoryPopupForm showState={showPopupForm} />
         </>
     );
 };

@@ -19,6 +19,7 @@ function Filters({ filters, data, pagination }) {
                                 label={filter.label}
                                 value={data[filter.prop]}
                                 placeholder={filter.placeholder}
+                                onChange={filter.onChange}
                             />
                         );
 
@@ -29,6 +30,7 @@ function Filters({ filters, data, pagination }) {
                                 label={filter.label}
                                 value={data[filter.prop]}
                                 options={filter.options}
+                                onChange={filter.onChange}
                             />
                         );
                 }

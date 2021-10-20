@@ -9,22 +9,30 @@ function FormField({
     value,
     options = [],
     taggable = false,
+    inputOnly = false,
+    inputClassName = "",
     ...props
 }) {
     const currentValue = value.get();
     const onInputChange = ({ target }) => {
         value.set(target.value);
     };
+
     const onSelectChange = (selectedValue) => {
         value.set(selectedValue.value);
     };
-    const printInput = useCallback(() => {
+
+    const renderInput = useCallback(() => {
         switch (type) {
             case "select":
                 return (
                     <Select
                         styles={styleObject}
-                        className="border border-gray-300 rounded-sm py-1 px-2 shadow"
+                        className={
+                            inputClassName
+                                ? inputClassName
+                                : "border border-gray-300 rounded-sm py-1 px-2 shadow"
+                        }
                         classNamePrefix="react-select"
                         value={{
                             label: currentValue,
@@ -101,6 +109,7 @@ function FormField({
         }
     }, [props, options, taggable, type]);
 
+    if (inputOnly) return renderInput();
     return (
         <div className={className}>
             <label htmlFor={props.id} className="mb-2 font-medium capitalize">
@@ -109,7 +118,7 @@ function FormField({
                     <span className="text-red ml-0.5">*</span>
                 ) : undefined}
             </label>
-            {printInput()}
+            {renderInput()}
         </div>
     );
 }

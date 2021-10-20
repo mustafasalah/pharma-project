@@ -7,6 +7,7 @@ import {
 import LineChartSection from "../lineChartSection";
 import OverviewSection from "../OverviewSection";
 import PieChartSection from "../PieChartSection";
+import ProductsStatistics from "../ProductsStatistics";
 
 const Dashboard = () => {
     const [lineChartTime, setLineChartTime] = useState("week");
@@ -69,6 +70,9 @@ const Dashboard = () => {
                     time={pieChartTime}
                     onTimeChange={setPieChartTime}
                 />
+            </div>
+            <div className="mt-8">
+                <ProductsStatistics />
             </div>
         </>
     );

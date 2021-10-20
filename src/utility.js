@@ -70,18 +70,18 @@ export const getStatisticalLabels = (time) => {
 
         case "year":
             return [
-                "jan",
-                "feb",
-                "mar",
-                "apr",
-                "may",
-                "jun",
-                "jul",
-                "aug",
-                "sep",
-                "oct",
-                "nov",
-                "dec",
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
             ];
     }
 };
@@ -96,7 +96,7 @@ export function getMonthLength(month) {
 export function nFormatter(num, digits = 1) {
     const lookup = [
         { value: 1, symbol: "" },
-        { value: 1e3, symbol: "k" },
+        { value: 1e3, symbol: "K" },
         { value: 1e6, symbol: "M" },
         { value: 1e9, symbol: "G" },
         { value: 1e12, symbol: "T" },
@@ -125,10 +125,12 @@ export function paginateData(pagination, data) {
 export function filterData(filters, filtersData, data) {
     return data.filter((row) => {
         return filters.every((filter) => {
-            const filterData = filtersData[filter.prop].get();
-            const rowData = row[filter.by].get();
+            if (filter.isFilter === false) return true;
 
+            const filterData = filtersData[filter.prop].get();
             if (filterData === "") return true;
+
+            const rowData = row[filter.by].get();
 
             switch (filter.type) {
                 case "search":

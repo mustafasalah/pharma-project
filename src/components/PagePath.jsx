@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useLocation, useRouteMatch } from "react-router";
+import { useLocation } from "react-router";
 
 const pagesName = new Map([
     ["/", "Dashboard"],
