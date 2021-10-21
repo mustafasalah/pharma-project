@@ -92,7 +92,6 @@ const filters = [
     // {
     //     label: "Order By",
     //     type: "select",
-    //     isFilter: false,
     //     prop: "order",
     //     options: [
     //         {

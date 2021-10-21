@@ -46,7 +46,9 @@ const Inventory = () => {
                 data={inventory.data}
                 columns={columns}
                 sortColumn={sortColumn}
-                form={(state) => <InventoryForm state={state} />}
+                form={(state, closeForm) => (
+                    <InventoryForm state={state} closeForm={closeForm} />
+                )}
                 pagination={inventory.pagination}
             />
             <InventoryPopupForm showState={showPopupForm} />

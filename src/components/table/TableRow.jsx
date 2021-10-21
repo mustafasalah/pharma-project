@@ -1,6 +1,6 @@
 import React from "react";
 
-function TableRow({ data, edited = false, form }) {
+function TableRow({ data, edited = false, form, onEdit }) {
     return (
         <>
             <tr>

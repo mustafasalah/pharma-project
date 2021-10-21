@@ -291,6 +291,34 @@ export const setInventoryItem = async ({
     return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 
+export const updateInventoryItem = async ({
+    id,
+    cost,
+    price,
+    arrival_date,
+    expair_date,
+    online_order,
+    stock,
+    reserved,
+    supplier,
+}) => {
+    const data = {
+        cost,
+        price,
+        arrival_date,
+        expair_date,
+        online_order,
+        stock,
+        reserved,
+        supplier,
+    };
+
+    return await http.put(
+        `https://jsonplaceholder.typicode.com/posts/${id}`,
+        data
+    );
+};
+
 export const getInventoryItems = () => {
     return inventoryItems;
 };

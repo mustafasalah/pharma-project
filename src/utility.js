@@ -1,9 +1,40 @@
+import { toast } from "react-toastify";
+
 export function range(min, max) {
     const nums = [];
     for (let i = min; i <= max; i++) {
         nums.push(i);
     }
     return nums;
+}
+
+export function notify({
+    status,
+    waitMsg = "Please Wait...",
+    successMsg = "The process has been done successfully!",
+    errorMsg = "Network Error!",
+    successCallback,
+    errorCallback,
+}) {
+    const id = toast.loading(waitMsg);
+
+    if (status >= 200 && status < 300) {
+        //do something else
+        toast.update(id, {
+            render: successMsg,
+            type: "success",
+            isLoading: false,
+            autoClose: 5000,
+        });
+
+        // optional success callback for extra processing
+        typeof successCallback === "function" && successCallback();
+    } else {
+        toast.error(errorMsg);
+
+        // optional error callback for extra processing
+        typeof errorCallback === "function" && errorCallback();
+    }
 }
 
 function getMonthDays(month) {
@@ -125,8 +156,6 @@ export function paginateData(pagination, data) {
 export function filterData(filters, filtersData, data) {
     return data.filter((row) => {
         return filters.every((filter) => {
-            if (filter.isFilter === false) return true;
-
             const filterData = filtersData[filter.prop].get();
             if (filterData === "") return true;
 

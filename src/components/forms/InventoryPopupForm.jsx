@@ -11,6 +11,7 @@ import ProductsField from "./ProductsField";
 import { getProducts } from "../../services/products";
 import { setInventoryItem } from "../../services/inventoryItems";
 import { toast } from "react-toastify";
+import { notify } from "../../utility";
 
 const InventoryPopupForm = ({ showState }) => {
     const products = getProducts();
@@ -47,25 +48,16 @@ const InventoryPopupForm = ({ showState }) => {
             className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
             onSubmit={async () => {
                 const { status } = await setInventoryItem(data.get());
-                const id = toast.loading("Please wait...");
-
-                if (status >= 200 && status < 300) {
-                    //do something else
-                    toast.update(id, {
-                        render: "Inventory Item has been added successfully!",
-                        type: "success",
-                        isLoading: false,
-                        autoClose: 5000,
-                    });
-
-                    // Clear the form data
-                    state.set(inventoryFormState);
-
-                    // Close the popup form
-                    showState.set(false);
-                } else {
-                    toast.error("Network Error");
-                }
+                notify({
+                    status,
+                    successMsg: "Inventory Item has been added successfully!",
+                    successCallback: () => {
+                        // Clear the form data
+                        state.set(inventoryFormState);
+                        // Close the popup form
+                        showState.set(false);
+                    },
+                });
             }}
         >
             <Note className="col-span-4">

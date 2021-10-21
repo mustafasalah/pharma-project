@@ -35,7 +35,7 @@
 
     input,
     select {
-        @apply outline-none bg-gray;
+        @apply outline-none;
     }
 
     input:disabled,

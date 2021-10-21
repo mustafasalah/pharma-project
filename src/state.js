@@ -1,4 +1,5 @@
 import { createState, DevTools } from "@hookstate/core";
+import employeesState from "./states/employeesState";
 import inventoryState from "./states/inventoryState";
 import productsStatisticsState from "./states/productsStatisticsState";
 
@@ -18,6 +19,7 @@ const store = createState({
     tables: {
         productsStatistics: productsStatisticsState,
         inventory: inventoryState,
+        employees: employeesState,
     },
 });
 

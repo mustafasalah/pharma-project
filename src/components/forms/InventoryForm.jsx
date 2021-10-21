@@ -4,19 +4,40 @@ import CompaniesField from "./CompaniesField";
 import SuppliersField from "./SuppliersField";
 import Form from "./Form";
 import FormField from "./FormField";
+import { updateInventoryItem } from "../../services/inventoryItems";
+import { notify } from "../../utility";
+import { useState, DevTools } from "@hookstate/core";
 
 const InventoryForm = ({
     state,
+    closeForm,
     className = "grid gap-x-5 gap-y-6 grid-cols-6",
 }) => {
+    const formState = useState(JSON.parse(JSON.stringify(state.value)));
+    DevTools(formState).label("Inventory Edit Form State");
+
     return (
-        <Form className={className}>
+        <Form
+            className={className}
+            onSubmit={async () => {
+                const { status } = await updateInventoryItem(formState.get());
+                notify({
+                    status,
+                    waitMsg: "Updating Item...",
+                    successMsg: "Inventory Item has been updated successfully!",
+                    successCallback() {
+                        state.set(JSON.parse(JSON.stringify(formState.value)));
+                        closeForm();
+                    },
+                });
+            }}
+        >
             <FormField
                 className="flex flex-col col-span-3"
                 label="product name"
                 name="product_name"
                 id="1"
-                value={state.name}
+                value={formState.name}
                 placeholder="enter product name here..."
                 disabled
             />
@@ -26,7 +47,7 @@ const InventoryForm = ({
                 label="barcode"
                 name="barcode"
                 id="2"
-                value={state.barcode}
+                value={formState.barcode}
                 placeholder="barcode here..."
                 disabled
             />
@@ -36,7 +57,7 @@ const InventoryForm = ({
                 label="unit size"
                 name="unit_size"
                 id="3"
-                value={state.unit}
+                value={formState.unit}
                 placeholder="e.g. 6 Capsules"
                 disabled
             />
@@ -44,21 +65,21 @@ const InventoryForm = ({
             <CategoriesField
                 className="flex flex-col"
                 id="4"
-                value={state.category}
+                value={formState.category}
                 disabled
             />
 
             <CompaniesField
                 className="flex flex-col col-span-2"
                 id="5"
-                value={state.company}
+                value={formState.company}
                 disabled
             />
 
             <SuppliersField
                 className="flex flex-col"
                 id="6"
-                value={state.supplier}
+                value={formState.supplier}
             />
 
             <FormField
@@ -66,7 +87,7 @@ const InventoryForm = ({
                 label="cost"
                 name="cost"
                 id="7"
-                value={state.cost}
+                value={formState.cost}
                 type="number"
                 min="1"
             />
@@ -76,7 +97,7 @@ const InventoryForm = ({
                 label="price"
                 name="price"
                 id="8"
-                value={state.price}
+                value={formState.price}
                 type="number"
                 min="1"
             />
@@ -86,7 +107,7 @@ const InventoryForm = ({
                 label="Online Order?"
                 name="gender"
                 type="radio"
-                value={state.online_order}
+                value={formState.online_order}
                 options={[
                     {
                         label: "Enable",
@@ -104,7 +125,7 @@ const InventoryForm = ({
                 label="in stock"
                 name="in_stock"
                 id="9"
-                value={state.stock}
+                value={formState.stock}
                 type="number"
                 min="0"
             />
@@ -114,7 +135,7 @@ const InventoryForm = ({
                 label="Reserved"
                 name="reserved"
                 id="10"
-                value={state.reserved}
+                value={formState.reserved}
                 type="number"
                 min="0"
             />
@@ -124,8 +145,8 @@ const InventoryForm = ({
                 label="arrival date"
                 name="arrival_date"
                 id="11"
-                value={state.arrival_date}
-                max={state.expair_date.value}
+                value={formState.arrival_date}
+                max={formState.expair_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"
             />
@@ -135,8 +156,8 @@ const InventoryForm = ({
                 label="expire date"
                 name="expire_date"
                 id="12"
-                value={state.expair_date}
-                min={state.arrival_date.value}
+                value={formState.expair_date}
+                min={formState.arrival_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"
             />
