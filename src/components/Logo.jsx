@@ -2,7 +2,7 @@ import React from "react";
 
 function Logo() {
     return (
-        <div className="flex items-center py-6 border-b border-r border-gray-200">
+        <div className="flex items-center py-6 border-b-2 border-r border-gray-200">
             <div id="logo" className="px-6">
                 <a href="/">
                     <img src="/assets/images/logo.png" alt="Pharma Logo" />

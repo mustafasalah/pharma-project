@@ -1,25 +1,22 @@
 import { createState, DevTools } from "@hookstate/core";
 import employeesState from "./states/employeesState";
 import inventoryState from "./states/inventoryState";
+import ordersState from "./states/ordersState";
 import productsStatisticsState from "./states/productsStatisticsState";
 
 const store = createState({
-    notifications: [
-        {
-            id: 1,
-            type: "new_order",
-            content: "New Order #1 From Mustafa Salah!",
-        },
-        {
-            id: 2,
-            type: "new_pharmacy",
-            content: "New Pharmacy joining the pharma platform",
-        },
-    ],
+    loggedUser: {},
+    pharmacyBranch: {},
+    notifications: [],
     tables: {
         productsStatistics: productsStatisticsState,
         inventory: inventoryState,
         employees: employeesState,
+        orders: ordersState,
+    },
+    showPopupWindow: {
+        state: false,
+        data: {},
     },
 });
 

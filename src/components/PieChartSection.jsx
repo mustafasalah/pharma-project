@@ -62,7 +62,6 @@ function PieChartSection({ title, data, time, onTimeChange }) {
         const chart = initPieChart(ctx);
 
         if (chart) {
-            console.log(data.statusLabels);
             chart.data.labels = data.statusLabels;
             chart.data.datasets[0].label = data.label;
             chart.data.datasets[0].data = data.datasets;

@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "./http";
 
 export const getProductsStatistics = () => {
     return [

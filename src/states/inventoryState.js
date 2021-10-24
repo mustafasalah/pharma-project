@@ -6,7 +6,7 @@ const inventoryState = {
     filters: {
         search: "",
         category: "",
-        stock: "",
+        status: "",
     },
     pagination: configs.pagination,
 };

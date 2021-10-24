@@ -127,7 +127,7 @@ const filters = [
         label: "Status",
         type: "select",
         by: "stock",
-        prop: "stock",
+        prop: "status",
         handler: (status, stock) => {
             return status === "in-stock" ? stock > 0 : stock <= 0;
         },

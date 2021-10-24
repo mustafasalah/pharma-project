@@ -1,9 +1,7 @@
 import { useState } from "@hookstate/core";
 import React, { useRef } from "react";
-import store from "../state";
 
-function NotificationsList({ active }) {
-    const { notifications } = useState(store);
+function NotificationsList({ notifications }) {
     return (
         <>
             {notifications.map(({ id, type, content }) => (

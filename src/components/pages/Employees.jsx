@@ -8,6 +8,7 @@ import { deleteEmployee, getEmployees } from "../../services/employees";
 import { toast } from "react-toastify";
 import EmployeeForm from "../forms/EmployeeForm";
 import EmployeePopupForm from "../forms/EmployeePopupForm";
+import { useParams } from "react-router";
 
 const Employees = () => {
     const {
@@ -15,12 +16,17 @@ const Employees = () => {
     } = useState(store);
     DevTools(employees).label("Employees");
 
+    let { id: employeeId } = useParams();
     const showPopupForm = useState(false);
-    const sortColumn = useState({ columnName: "id", order: "asc" });
+    const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
         const employeesData = getEmployees();
         employees.data.set(employeesData);
+        if (typeof +employeeId === "number") {
+            const emp = employeesData.find((emp) => emp.id === +employeeId);
+            emp && employees.filters.search.set(emp.full_name);
+        }
     }, []);
 
     return (
@@ -58,13 +64,12 @@ const columns = [
         title: "full name",
         sortProp: "full_name",
         wrapper: ({ id, full_name, edited, handleEdit }) => (
-            <a
-                href={`#${full_name.get()}`}
+            <button
                 onClick={() => handleEdit(edited ? null : id.value)}
-                className="text-smd"
+                className="text-smd text-secondary underline font-medium hover:text-primary"
             >
                 {full_name.get()}
-            </a>
+            </button>
         ),
     },
     { title: "username", prop: "username" },

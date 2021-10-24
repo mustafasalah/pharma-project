@@ -1,12 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 
 const pagesName = new Map([
     ["/", "Dashboard"],
     ["/inventory", "Inventory"],
     ["/orders", "Orders"],
     ["/pos", "Point of Sale"],
-    ["/staff", "Staff"],
+    ["/staff", "Staff Management"],
     ["/pharmacy-settings", "Pharmacy Settings"],
     ["/account-settings", "Account Settings"],
 ]);
@@ -23,7 +24,7 @@ function PagePath() {
                 </a>
             </li>
 
-            <PagePathItem link="/" title={pagesName.get(pathname)} />
+            <PagePathItem link={pathname} title={pagesName.get(pathname)} />
         </ul>
     );
 }
@@ -32,9 +33,9 @@ function PagePathItem({ link = "/", title }) {
     return (
         <li>
             <i className="fas fa-chevron-right text-xs text-gray-300 mr-2"></i>
-            <a href="/" className="font-medium capitalize">
+            <Link to={link} className="font-medium capitalize">
                 {title}
-            </a>
+            </Link>
         </li>
     );
 }

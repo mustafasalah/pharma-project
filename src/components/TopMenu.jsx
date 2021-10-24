@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import AccountMenu from "./AccountMenu";
 import Notifications from "./Notifications";
-
+import store from "../state";
+import { useHookstate } from "@hookstate/core";
 function TopMenu() {
     const [activeMenu, changeActive] = useState(0);
+    const { notifications } = useHookstate(store);
+
     return (
         <ul className="flex">
             <TopMenuItem
-                submenu={<Notifications />}
+                submenu={<Notifications notifications={notifications} />}
                 active={activeMenu === 1}
                 onClick={() =>
                     activeMenu === 1 ? changeActive(0) : changeActive(1)
                 }
             >
                 <i className="fas fa-bellfas fa-bell text-primary"></i>
+                {notifications.length !== 0 && (
+                    <span className="rounded-full w-3.5 h-3.5 absolute bg-red top-7 right-5 text-xxs text-white">
+                        {notifications.length}
+                    </span>
+                )}
             </TopMenuItem>
 
             <TopMenuItem

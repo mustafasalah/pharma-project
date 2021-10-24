@@ -1,9 +1,11 @@
 import React from "react";
 import { DevTools, useState } from "@hookstate/core";
 import TableRow from "./TableRow";
+import store from "../../state";
 
 function TableBody({ data, columns, form }) {
     const editedRow = useState(null);
+    const { showPopupWindow } = useState(store);
     DevTools(editedRow).label("edited_row");
 
     return (
@@ -24,6 +26,8 @@ function TableBody({ data, columns, form }) {
                                       handleEdit: (id) => {
                                           editedRow.set(id);
                                       },
+                                      showPopupWindow,
+                                      item,
                                   })
                         )}
                     />

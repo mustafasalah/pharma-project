@@ -159,13 +159,14 @@ export function filterData(filters, filtersData, data) {
             const filterData = filtersData[filter.prop].get();
             if (filterData === "") return true;
 
-            const rowData = row[filter.by].get();
+            let rowData = row[filter.by].get();
 
             switch (filter.type) {
                 case "search":
                     return (
-                        rowData.search(new RegExp(`.*${filterData}.*`, "i")) !==
-                        -1
+                        rowData
+                            .toString()
+                            .search(new RegExp(`.*${filterData}.*`, "i")) !== -1
                     );
 
                 default:
