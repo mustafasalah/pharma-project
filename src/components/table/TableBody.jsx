@@ -5,7 +5,7 @@ import store from "../../state";
 
 function TableBody({ data, columns, form }) {
     const editedRow = useState(null);
-    const { showPopupWindow } = useState(store);
+    const { popupWindow } = useState(store);
     DevTools(editedRow).label("edited_row");
 
     return (
@@ -17,18 +17,19 @@ function TableBody({ data, columns, form }) {
                         key={item.id.value}
                         form={form && form(item, () => editedRow.set(null))}
                         edited={edited}
-                        data={columns.map(({ prop, wrapper }) =>
-                            prop
-                                ? item[prop].value
-                                : wrapper({
-                                      ...item,
-                                      edited,
-                                      handleEdit: (id) => {
-                                          editedRow.set(id);
-                                      },
-                                      showPopupWindow,
-                                      item,
-                                  })
+                        data={columns.map(
+                            ({ prop, wrapper, defaultValue = "" }) =>
+                                prop
+                                    ? item[prop].value || defaultValue
+                                    : wrapper({
+                                          ...item,
+                                          edited,
+                                          handleEdit: (id) => {
+                                              editedRow.set(id);
+                                          },
+                                          popupWindow,
+                                          item,
+                                      })
                         )}
                     />
                 );

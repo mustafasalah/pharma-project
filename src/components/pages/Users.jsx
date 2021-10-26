@@ -4,38 +4,38 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { deleteEmployee, getEmployees } from "../../services/employees";
-import EmployeeForm from "../forms/EmployeeForm";
-import EmployeePopupForm from "../forms/EmployeePopupForm";
+import { deleteUser, getUsers } from "../../services/users";
+import UserForm from "../forms/UserForm";
+import UserPopupForm from "../forms/UserPopupForm";
 import { useParams } from "react-router";
 import { notify } from "../../utility";
 
-const Employees = () => {
+const Users = () => {
     const {
-        tables: { employees },
+        tables: { users },
     } = useState(store);
-    DevTools(employees).label("Employees");
+    DevTools(users).label("Users");
 
-    let { id: employeeId } = useParams();
+    let { id: userId } = useParams();
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    useEffect(() => {
-        const employeesData = getEmployees();
-        employees.data.set(employeesData);
-        if (typeof +employeeId === "number") {
-            const emp = employeesData.find((emp) => emp.id === +employeeId);
-            emp && employees.filters.search.set(emp.full_name);
+    useEffect(async () => {
+        const usersData = await getUsers();
+        users.data.set(usersData.data);
+        if (typeof +userId === "number") {
+            const user = usersData.data.find((user) => user.id === +userId);
+            user && users.filters.search.set(user.first_name);
         }
     }, []);
 
     return (
         <>
             <SectionHeader
-                name="Staff Management"
-                faClass="fas fa-user-tie"
+                name="Users Management"
+                faClass="fas fa-users"
                 addButton={{
-                    label: "Add New Employee",
+                    label: "Add New User",
                     handler: () => {
                         showPopupForm.set(true);
                     },
@@ -43,37 +43,37 @@ const Employees = () => {
             />
             <DataTable
                 filters={filters}
-                filtersData={employees.filters}
-                data={employees.data}
+                filtersData={users.filters}
+                data={users.data}
                 columns={columns}
                 sortColumn={sortColumn}
                 form={(state, closeForm) => (
-                    <EmployeeForm state={state} closeForm={closeForm} />
+                    <UserForm state={state} closeForm={closeForm} />
                 )}
-                pagination={employees.pagination}
+                pagination={users.pagination}
             />
-            <EmployeePopupForm showState={showPopupForm} />
+            <UserPopupForm showState={showPopupForm} />
         </>
     );
 };
 
-export default Employees;
+export default Users;
 
 const columns = [
     {
         title: "full name",
         sortProp: "full_name",
-        wrapper: ({ id, full_name, edited, handleEdit }) => (
+        wrapper: ({ id, first_name, last_name, edited, handleEdit }) => (
             <button
                 onClick={() => handleEdit(edited ? null : id.value)}
                 className="text-smd text-secondary underline font-medium hover:text-primary"
             >
-                {full_name.get()}
+                {`${first_name.get()} ${last_name.get()}`}
             </button>
         ),
     },
     { title: "username", prop: "username" },
-    { title: "phone number", prop: "phone_number" },
+    { title: "email", prop: "email" },
     {
         title: "gender",
         sortProp: "gender",
@@ -82,17 +82,7 @@ const columns = [
         },
     },
     { title: "role", prop: "role" },
-    {
-        title: "work time",
-        sortable: false,
-        wrapper: ({
-            work_from: { value: work_from },
-            work_to: { value: work_to },
-        }) => {
-            if (work_from && work_to) return `${work_from} to ${work_to}`;
-            else return "-";
-        },
-    },
+    { title: "status", prop: "status" },
     { title: "last seen", sortable: false, prop: "last_seen" },
     { title: "joining date", prop: "joining_date" },
     {
@@ -105,16 +95,16 @@ const columns = [
                 onEdit={handleEdit}
                 onDelete={async () => {
                     const isDelete = window.confirm(
-                        "Are you sure to delete this employee item?"
+                        "Are you sure to delete this user item?"
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteEmployee(id.get());
+                    const { status } = await deleteUser(id.get());
 
                     notify({
                         status,
-                        waitMsg: "Deleting Employee...",
-                        successMsg: "Employee has been deleted successfully!",
+                        waitMsg: "Deleting User...",
+                        successMsg: "User has been deleted successfully!",
                     });
                 }}
             />
@@ -126,8 +116,32 @@ const filters = [
     {
         label: "Search",
         type: "search",
-        by: "full_name",
+        by: "first_name",
         prop: "search",
-        placeholder: "enter the employee name here...",
+        placeholder: "enter the user name here...",
+    },
+    {
+        label: "Role",
+        type: "select",
+        by: "role",
+        prop: "role",
+        options: [
+            { label: "All", value: "" },
+            { label: "Admin", value: "admin" },
+            { label: "Pharmacy Owner", value: "pharmacy owner" },
+            { label: "User", value: "user" },
+        ],
+    },
+    {
+        label: "Status",
+        type: "select",
+        by: "status",
+        prop: "status",
+        options: [
+            { label: "All", value: "" },
+            { label: "Activated", value: "active" },
+            { label: "Non-activated", value: "non-active" },
+            { label: "banned", value: "banned" },
+        ],
     },
 ];

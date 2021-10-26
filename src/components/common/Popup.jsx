@@ -1,6 +1,12 @@
 import React from "react";
 
-function Popup({ title, children, state, faClass = "fas fa-plus-square" }) {
+function Popup({
+    title,
+    children,
+    state,
+    faClass = "fas fa-plus-square",
+    style = {},
+}) {
     const closeForm = state.set.bind(state, false);
     const visiable = state.get();
 
@@ -16,6 +22,7 @@ function Popup({ title, children, state, faClass = "fas fa-plus-square" }) {
                 className={`dialog max-h-screen fixed w-1/2 z-50 bg-white rounded overflow-hidden shadow-xl duration-75 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-0 ${
                     visiable ? "scale-100 duration-500" : ""
                 }`}
+                style={style}
             >
                 <div className="flex justify-between py-4 px-5 bg-gray shadow-md font-semibold">
                     <h3>

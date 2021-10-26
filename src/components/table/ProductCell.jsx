@@ -10,7 +10,7 @@ const ProductCell = ({ id, name, photo, unit, edited, onEdit }) => {
                 }}
             ></div>
             <div className="inline-flex flex-col h-full">
-                {edited && onEdit ? (
+                {onEdit ? (
                     <a
                         href={`#${name}`}
                         onClick={() => onEdit(edited ? null : id.value)}

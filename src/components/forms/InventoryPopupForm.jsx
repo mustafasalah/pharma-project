@@ -1,5 +1,5 @@
-import { DevTools, useState } from "@hookstate/core";
-import React, { useEffect } from "react";
+import { DevTools, useHookstate } from "@hookstate/core";
+import React, { useEffect, useState } from "react";
 import inventoryFormState from "../../states/inventoryFormState";
 import Note from "../common/Note";
 import CategoriesField from "./CategoriesField";
@@ -10,14 +10,18 @@ import SuppliersField from "./SuppliersField";
 import ProductsField from "./ProductsField";
 import { getProducts } from "../../services/products";
 import { setInventoryItem } from "../../services/inventoryItems";
-import { toast } from "react-toastify";
 import { notify } from "../../utility";
 
 const InventoryPopupForm = ({ showState }) => {
-    const products = getProducts();
-    let state = useState(inventoryFormState);
+    let [products, setProducts] = useState([]);
+    let state = useHookstate(inventoryFormState);
     const { data, errors } = state;
     DevTools(state).label("Inventory Popup Form");
+
+    useEffect(async () => {
+        const { data } = await getProducts();
+        setProducts(data);
+    }, []);
 
     useEffect(() => {
         let scanneredBarcode = "";

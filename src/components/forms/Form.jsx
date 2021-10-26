@@ -1,7 +1,7 @@
 import React from "react";
-import FormButtons from "./FormButtons";
+import FormButton from "./FormButton";
 
-const Form = ({ children, className, onSubmit, withDiscard = false }) => {
+const Form = ({ children, className, onSubmit, formButtons = [{}] }) => {
     return (
         <form
             onSubmit={(e) => {
@@ -10,7 +10,11 @@ const Form = ({ children, className, onSubmit, withDiscard = false }) => {
             }}
         >
             <div className={className}>{children}</div>
-            <FormButtons withDiscard={withDiscard} />
+            <div className="flex justify-end mt-6">
+                {formButtons.map((props, i) => (
+                    <FormButton key={i} {...props} />
+                ))}
+            </div>
         </form>
     );
 };

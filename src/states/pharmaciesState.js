@@ -1,13 +1,11 @@
 import configs from "../configs";
 
-const inventoryState = {
+const pharmaciesState = {
     data: [],
     filters: {
         search: "",
-        category: "",
-        status: "",
     },
     pagination: configs.pagination,
 };
 
-export default inventoryState;
+export default pharmaciesState;

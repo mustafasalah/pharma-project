@@ -13,9 +13,21 @@ function Navigation() {
                 ></MenuItem>
 
                 <MenuItem
+                    title="Pharmacies"
+                    faClass="fas fa-clinic-medical"
+                    link="/pharmacies"
+                ></MenuItem>
+
+                <MenuItem
                     title="Inventory"
                     faClass="fas fa-boxes"
                     link="/inventory"
+                ></MenuItem>
+
+                <MenuItem
+                    title="Products Catalog"
+                    faClass="fas fa-boxes"
+                    link="/products"
                 ></MenuItem>
 
                 <MenuItem
@@ -28,6 +40,12 @@ function Navigation() {
                     title="Staff"
                     faClass="fas fa-user-tie"
                     link="/staff"
+                ></MenuItem>
+
+                <MenuItem
+                    title="Users"
+                    faClass="fas fa-users"
+                    link="/users"
                 ></MenuItem>
 
                 <MenuItem

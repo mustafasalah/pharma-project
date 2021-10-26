@@ -1,26 +1,10 @@
 import React from "react";
+import DeleteBtn from "../common/DeleteBtn";
 
-const ManageBtns = ({ id, edited, onEdit, onDelete, onView, onPrint }) => {
+const ManageBtns = ({ id, edited, onEdit, onDelete, onView }) => {
     return (
-        <>
-            {onDelete && (
-                <button
-                    title="Delete?"
-                    className="manage-btn bg-red text-red-light hover:text-red hover:bg-white"
-                    onClick={() => onDelete(id.value)}
-                >
-                    <i className="fas fa-trash-alt"></i>
-                </button>
-            )}
-            {onPrint && (
-                <button
-                    title="Print?"
-                    className="manage-btn shadow bg-gray-200 text-gray-600 hover:text-black hover:bg-white"
-                    onClick={onPrint}
-                >
-                    <i className="fas fa-print"></i>
-                </button>
-            )}
+        <div className="flex">
+            {onDelete && <DeleteBtn onDelete={() => onDelete(id.value)} />}
             {onEdit && (
                 <button
                     title="Edit?"
@@ -50,7 +34,7 @@ const ManageBtns = ({ id, edited, onEdit, onDelete, onView, onPrint }) => {
                     <span>View Detials</span>
                 </button>
             )}
-        </>
+        </div>
     );
 };
 

@@ -1,15 +1,17 @@
 import React from "react";
 
-function TableRow({ data, edited = false, form, onEdit }) {
+function TableRow({ data, edited = false, form }) {
     return (
         <>
-            <tr>
+            <tr className="last:rounded-b">
                 {data.map((cell, i) => (
-                    <td key={i}>{cell}</td>
+                    <td key={i} className="first:rounded-bl last:rounded-br">
+                        {cell}
+                    </td>
                 ))}
             </tr>
             {edited && form && (
-                <tr>
+                <tr className="last:rounded-b">
                     <td colSpan={data.length}>{form}</td>
                 </tr>
             )}

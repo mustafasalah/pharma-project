@@ -25,12 +25,12 @@ const OrderDetials = ({
                     className="shadow-lg text-smd font-semibold bg-primary text-white px-3 py-1.5 hover:bg-secondary rounded-sm shadow-md"
                 >
                     <i className="fas fa-print text-bright mr-2"></i>
-                    Print Invoice
+                    Print
                 </button>
             </div>
             <div className="printable bg-gray-100 border-2 border-gray-300 border-dashed rounded p-5">
                 <section className="mb-6">
-                    <h2 className="text-center font-semibold text-xl">
+                    <h2 className="text-center font-semibold text-xl mb-5">
                         CVS Pharmacy
                     </h2>
                     <table>
@@ -43,7 +43,7 @@ const OrderDetials = ({
                         </thead>
                         <tbody>
                             {products.map((product) => (
-                                <tr>
+                                <tr key={product.name}>
                                     <td>{product.name}</td>
                                     <td>{product.qty}</td>
                                     <td>{product.price * product.qty} SDG</td>
@@ -53,7 +53,9 @@ const OrderDetials = ({
                     </table>
                 </section>
                 <section className="mb-6">
-                    <h3 className="font-semibold">Order Summary</h3>
+                    <h3 className="font-semibold mb-5 border-b pb-2">
+                        Order Summary
+                    </h3>
                     <table>
                         <tbody>
                             <tr>

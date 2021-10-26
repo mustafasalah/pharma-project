@@ -13,7 +13,8 @@ function FormField({
     inputClassName = "",
     ...props
 }) {
-    const currentValue = value.get();
+    const currentValue = value !== undefined ? value.get() : "";
+
     const onInputChange = ({ target }) => {
         value.set(target.value);
     };
@@ -31,7 +32,7 @@ function FormField({
                         className={
                             inputClassName
                                 ? inputClassName
-                                : "border border-gray-300 rounded-sm py-1 px-2 shadow"
+                                : "border border-gray-300 bg-white rounded-sm py-1 px-2 shadow"
                         }
                         classNamePrefix="react-select"
                         value={{
@@ -72,12 +73,43 @@ function FormField({
                     </div>
                 );
 
+            case "textarea":
+                return (
+                    <textarea
+                        className="border h-25 border-gray-300 rounded-sm py-1 px-2 shadow"
+                        value={currentValue}
+                        onChange={onInputChange}
+                    />
+                );
+
+            case "file":
+                return (
+                    <>
+                        <label
+                            htmlFor={props.id}
+                            className="inline-block cursor-pointer bg-primary text-white text-xxs rounded-sm shadow-md font-semibold px-2 py-1.5 hover:bg-secondary"
+                        >
+                            <i className="fas fa-upload text-bright mr-1"></i>{" "}
+                            {props.btnLabel || "Upload"}
+                        </label>
+                        <input
+                            className="hidden"
+                            type={type}
+                            value=""
+                            onChange={({ target }) => {
+                                value.set(target.files[0]);
+                            }}
+                            {...props}
+                        />
+                    </>
+                );
+
             default:
                 if (taggable) {
                     return (
                         <CreatableSelect
                             styles={styleObject}
-                            className="border border-gray-300 rounded-sm py-1 px-2 shadow"
+                            className="border border-gray-300 bg-white rounded-sm py-1 px-2 shadow"
                             classNamePrefix="react-select"
                             value={{
                                 label: currentValue,

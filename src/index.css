@@ -12,24 +12,24 @@
         @apply text-secondary underline font-medium hover:text-primary;
     }
 
-    table:not(.invoice-table) {
-        @apply overflow-hidden rounded shadow-lg bg-white w-full mt-5 text-left;
+    table {
+        @apply rounded shadow-lg bg-white w-full text-left;
     }
 
-    table:not(.invoice-table) tbody tr {
+    table tbody tr {
         @apply border-b-2 border-gray-200 last:border-0 even:bg-gray;
     }
 
-    table:not(.invoice-table) thead tr {
+    table thead tr {
         @apply border-b-2 border-gray-200;
     }
 
-    table:not(.invoice-table) th,
-    table:not(.invoice-table) td {
+    table th,
+    table td {
         @apply py-5 text-smd pr-4 first:pl-5 last:pr-5;
     }
 
-    table:not(.invoice-table) th {
+    table th {
         @apply font-semibold text-gray-600 bg-gray;
     }
 
@@ -41,15 +41,16 @@
     input:disabled,
     select:disabled,
     .react-select--is-disabled {
-        @apply bg-gray-100 opacity-75;
+        @apply bg-gray-100 opacity-75 !important;
     }
 
     .react-select__indicator {
         padding: 0 !important;
     }
 
-    .Toastify__toast {
+    .Toastify__toast-body {
         font-family: "Poppins", san-serif;
+        @apply text-sm text-gray-600 font-medium;
     }
 }
 

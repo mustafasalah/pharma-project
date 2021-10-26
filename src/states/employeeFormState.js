@@ -1,4 +1,4 @@
-const inventoryFormState = {
+const employeeFormState = {
     data: {
         full_name: "",
         username: "",
@@ -11,4 +11,4 @@ const inventoryFormState = {
     errors: {},
 };
 
-export default inventoryFormState;
+export default employeeFormState;

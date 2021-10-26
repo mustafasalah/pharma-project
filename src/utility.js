@@ -179,12 +179,20 @@ export function filterData(filters, filtersData, data) {
     });
 }
 
+function getNestedProperty(props, obj) {
+    props = props.split(".");
+    for (const prop of props) {
+        obj = obj[prop];
+    }
+    return obj;
+}
+
 export function sortData({ columnName, order }, data) {
     columnName = columnName.get();
     order = order.get();
     data.sort((a, b) => {
-        const columnA = a[columnName].value;
-        const columnB = b[columnName].value;
+        const columnA = getNestedProperty(columnName, a).value;
+        const columnB = getNestedProperty(columnName, b).value;
         if (order === "desc") {
             return columnA >= columnB ? -1 : 1;
         }

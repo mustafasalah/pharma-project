@@ -4,7 +4,7 @@ import SelectFilter from "./SelectFilter";
 
 function Filters({ filters, data, pagination }) {
     return (
-        <div className="text-xs">
+        <div className="text-xs mb-5">
             <div className="inline-block font-semibold">
                 <i className="fas fa-filter text-bright mr-1"></i> Filters
                 <span className="mx-4">|</span>

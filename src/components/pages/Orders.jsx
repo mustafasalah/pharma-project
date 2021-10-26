@@ -4,17 +4,18 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { getOrders } from "../../services/orders";
-import EmployeeForm from "../forms/EmployeeForm";
+import { getOrders, updateOrderStatus } from "../../services/orders";
 import { Link } from "react-router-dom";
 import Popup from "../common/Popup";
 import OrderDetials from "../OrderDetails";
 import { useParams } from "react-router";
+import FormField from "../forms/FormField";
+import { notify } from "../../utility";
 
 const Orders = () => {
     const {
         tables: { orders },
-        showPopupWindow,
+        popupWindow,
     } = useState(store);
     DevTools(orders).label("Orders");
 
@@ -38,34 +39,33 @@ const Orders = () => {
                 data={orders.data}
                 columns={columns}
                 sortColumn={sortColumn}
-                form={(state, closeForm) => (
-                    <EmployeeForm state={state} closeForm={closeForm} />
-                )}
                 pagination={orders.pagination}
             />
             <Popup
-                state={showPopupWindow.state}
+                style={
+                    popupWindow.type.get() === "payment-proof"
+                        ? { width: 400 }
+                        : {}
+                }
+                state={popupWindow.display}
                 faClass={`fas fa-file-invoice${
-                    showPopupWindow.data &&
-                    showPopupWindow.data.type.get() === "payment-proof"
-                        ? "-dollar"
-                        : ""
+                    popupWindow.type.get() === "payment-proof" ? "-dollar" : ""
                 }`}
                 title={`Order ${
-                    showPopupWindow.data &&
-                    showPopupWindow.data.type.get() === "payment-proof"
+                    popupWindow.type.get() === "payment-proof"
                         ? "Payment Proof"
-                        : `Invoice - #${showPopupWindow.data.id.value}`
+                        : `Invoice - #${popupWindow.data.id.get()}`
                 }`}
             >
-                {showPopupWindow.data.type.get() === "payment-proof" ? (
+                {popupWindow.type.get() === "payment-proof" ? (
                     <img
-                        src={showPopupWindow.data.proof_screenshot.get()}
-                        style={{ height: 400 }}
+                        className="mx-auto"
+                        src={popupWindow.data.proof_screenshot.get()}
+                        style={{ height: 600 }}
                         alt="Payment Proof"
                     />
                 ) : (
-                    <OrderDetials data={showPopupWindow.data.get()} />
+                    <OrderDetials data={popupWindow.data.get()} />
                 )}
             </Popup>
         </>
@@ -78,14 +78,15 @@ const columns = [
     {
         title: "order ID",
         sortProp: "id",
-        wrapper: ({ id, showPopupWindow, item }) => (
+        wrapper: ({ id, popupWindow, item }) => (
             <a
                 href={`#${id.get()}`}
                 onClick={() => {
-                    showPopupWindow.data.set(
+                    popupWindow.data.set(
                         JSON.parse(JSON.stringify(item.value))
                     );
-                    showPopupWindow.state.set(true);
+                    popupWindow.type.set("order-invoice");
+                    popupWindow.display.set(true);
                 }}
                 className="text-smd"
             >
@@ -96,6 +97,7 @@ const columns = [
     { title: "type", prop: "type" },
     {
         title: "total price",
+        sortProp: "products_amount",
         wrapper: ({ products_amount, vat, discount, delivery }) => {
             return `${
                 products_amount.value +
@@ -105,9 +107,43 @@ const columns = [
             } SDG`;
         },
     },
-    { title: "status", prop: "status" },
+    {
+        title: "status",
+        sortProp: "status",
+        wrapper: ({ status }) => {
+            return (
+                <FormField
+                    name="status"
+                    type="select"
+                    value={status}
+                    onChange={async (selectedValue) => {
+                        const { status: responseStatus } =
+                            await updateOrderStatus(
+                                status.get(),
+                                selectedValue.value
+                            );
+                        notify({
+                            status: responseStatus,
+                            waitMsg: "Changing Order Status...",
+                            successMsg: `Order status has been changed to '${selectedValue.label}' successfully!`,
+                            successCallback() {
+                                status.set(selectedValue.value);
+                            },
+                        });
+                    }}
+                    options={[
+                        { label: "Finished", value: "finished" },
+                        { label: "Pending", value: "pending" },
+                        { label: "Payment Confirmed", value: "confirmed" },
+                        { label: "Canceled", value: "canceled" },
+                    ]}
+                />
+            );
+        },
+    },
     {
         title: "handled by",
+        sortProp: "handled_by.name",
         wrapper: ({ handled_by: { id, name } }) => {
             return <Link to={`/staff/${id.get()}`}>{name.get()}</Link>;
         },
@@ -115,7 +151,8 @@ const columns = [
     { title: "date", prop: "date" },
     {
         title: "payment method",
-        wrapper: ({ showPopupWindow, payment: { method, proof } }) => {
+        sortProp: "payment.method",
+        wrapper: ({ popupWindow, payment: { method, proof } }) => {
             return (
                 <>
                     <span className="align-middle">{method.get()}</span>
@@ -123,13 +160,11 @@ const columns = [
                         type="button"
                         className="ml-2 px-2 py-1 rounded-sm text-white bg-green hover:text-green hover:bg-white hover:shadow-md transition-none shadow font-semibold text-xxs"
                         onClick={() => {
-                            showPopupWindow.data.set({
+                            popupWindow.data.set({
                                 proof_screenshot: proof.get(),
                             });
-                            showPopupWindow.data.merge({
-                                type: "payment-proof",
-                            });
-                            showPopupWindow.state.set(true);
+                            popupWindow.type.set("payment-proof");
+                            popupWindow.display.set(true);
                         }}
                     >
                         <i className="fas fa-file-invoice-dollar mr-1"></i>{" "}
@@ -142,16 +177,16 @@ const columns = [
     {
         title: "manage",
         sortable: false,
-        wrapper: ({ showPopupWindow, item }) => {
+        wrapper: ({ popupWindow, item }) => {
             return (
                 <ManageBtns
                     id={item.id}
                     onView={() => {
-                        showPopupWindow.data.set(
+                        popupWindow.data.set(
                             JSON.parse(JSON.stringify(item.value))
                         );
-                        showPopupWindow.data.merge({ type: "order-invoice" });
-                        showPopupWindow.state.set(true);
+                        popupWindow.type.set("order-invoice");
+                        popupWindow.display.set(true);
                     }}
                 />
             );
@@ -186,7 +221,9 @@ const filters = [
         options: [
             { label: "All", value: "" },
             { label: "Finished", value: "finished" },
-            { label: "Pending", value: "online" },
+            { label: "Pending", value: "pending" },
+            { label: "Payment Confirmed", value: "confirmed" },
+            { label: "Canceled", value: "canceled" },
         ],
     },
 ];

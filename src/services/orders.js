@@ -38,8 +38,8 @@ const orders = [
         price: 5400,
         status: "pending",
         handled_by: {
-            id: 1,
-            name: "Mustafa Salah",
+            id: 2,
+            name: "Ali Osman",
         },
         date: "24-09-2021 12:34:03 PM",
         payment: {
@@ -65,7 +65,8 @@ export const getOrders = () => {
 };
 
 export const updateOrderStatus = async (id, status) => {
-    return await http.put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-        status,
-    });
+    return await Promise.resolve({ data: { status }, status: 200 });
+    // return await http.put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    //     status,
+    // });
 };

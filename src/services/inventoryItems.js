@@ -319,6 +319,6 @@ export const updateInventoryItem = async ({
     );
 };
 
-export const getInventoryItems = () => {
-    return inventoryItems;
+export const getInventoryItems = async () => {
+    return await Promise.resolve({ data: inventoryItems });
 };

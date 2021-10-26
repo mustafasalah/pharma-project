@@ -6,14 +6,14 @@ function TableHead({ columns, sortColumn }) {
 
     return (
         <thead>
-            <tr>
+            <tr className="rounded-t">
                 {columns.map(({ title, prop, sortProp, sortable }) => {
                     sortProp = sortProp || prop;
                     const isCurrentSortingColumn = sortColumnName === sortProp;
                     return (
                         <th
                             key={title}
-                            className={`capitalize select-none ${
+                            className={`first:rounded-tl last:rounded-tr capitalize select-none ${
                                 sortable !== false ? "cursor-pointer" : ""
                             }`}
                             onClick={() => {

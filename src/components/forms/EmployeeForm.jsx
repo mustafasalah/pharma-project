@@ -20,7 +20,7 @@ const EmployeeForm = ({
                 const { status } = await updateEmployee(state.get());
                 notify({
                     status,
-                    waitMsg: "Updating Item...",
+                    waitMsg: "Updating Employee Information...",
                     successMsg:
                         "Employee information has been updated successfully!",
                     successCallback() {

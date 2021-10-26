@@ -5,33 +5,32 @@ import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
 import ProductCell from "../table/ProductCell";
-import InventoryForm from "../forms/InventoryForm";
+import ProductForm from "../forms/ProductForm";
 import { getCategories } from "../../services/categories";
-import InventoryPopupForm from "../forms/InventoryPopupForm";
-import {
-    deleteInventoryItem,
-    getInventoryItems,
-} from "../../services/inventoryItems";
+import ProductPopupForm from "../forms/ProductPopupForm";
+import { deleteProduct, getProducts } from "../../services/products";
 import { notify } from "../../utility";
+import { getCompanies } from "../../services/companies";
 
-const Inventory = () => {
+const Products = () => {
     const {
-        tables: { inventory },
+        tables: { products },
+        uploads: { productPhoto },
     } = useState(store);
-    DevTools(inventory).label("Inventory");
+    DevTools(products).label("Product");
 
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(async () => {
-        const inventoryData = await getInventoryItems();
-        inventory.data.set(inventoryData.data);
+        const productsData = await getProducts();
+        products.data.set(productsData.data);
     }, []);
 
     return (
         <>
             <SectionHeader
-                name="Inventory Management"
+                name="Products Catalog"
                 faClass="fas fa-boxes"
                 addButton={{
                     label: "Add New Product",
@@ -42,21 +41,27 @@ const Inventory = () => {
             />
             <DataTable
                 filters={filters}
-                filtersData={inventory.filters}
-                data={inventory.data}
+                filtersData={products.filters}
+                data={products.data}
                 columns={columns}
                 sortColumn={sortColumn}
                 form={(state, closeForm) => (
-                    <InventoryForm state={state} closeForm={closeForm} />
+                    <ProductForm
+                        state={state}
+                        closeForm={() => {
+                            closeForm();
+                            productPhoto.set("");
+                        }}
+                    />
                 )}
-                pagination={inventory.pagination}
+                pagination={products.pagination}
             />
-            <InventoryPopupForm showState={showPopupForm} />
+            <ProductPopupForm showState={showPopupForm} />
         </>
     );
 };
 
-export default Inventory;
+export default Products;
 
 const columns = [
     {
@@ -73,13 +78,20 @@ const columns = [
             />
         ),
     },
-    { title: "cost", prop: "cost" },
-    { title: "price", prop: "price" },
-    { title: "supplier", prop: "supplier" },
-    { title: "stock", prop: "stock" },
-    { title: "reserved", prop: "reserved" },
-    { title: "arrival date", prop: "arrival_date" },
-    { title: "expair date", prop: "expair_date" },
+    { title: "barcode", prop: "barcode" },
+    { title: "category", prop: "category" },
+    { title: "company", prop: "company" },
+    {
+        title: "ingredient",
+        sortProp: "ingredient",
+        wrapper: ({ ingredient }) => ingredient.value || "Unknown",
+    },
+    {
+        title: "need perspection?",
+        sortProp: "need_perspection",
+        wrapper: ({ need_perspection }) =>
+            need_perspection.value ? "Yes" : "No",
+    },
     {
         title: "manage",
         sortable: false,
@@ -87,20 +99,22 @@ const columns = [
             <ManageBtns
                 id={id}
                 edited={edited}
-                onEdit={handleEdit}
+                onEdit={(e) => {
+                    handleEdit(e);
+                    store.uploads.productPhoto.set("");
+                }}
                 onDelete={async () => {
                     const isDelete = window.confirm(
-                        "Are you sure to delete this inventory item?"
+                        "Are you sure to delete this product?"
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteInventoryItem(id.get());
+                    const { status } = await deleteProduct(id.get());
 
                     notify({
                         status,
-                        waitMsg: "Deleting Inventory Item...",
-                        successMsg:
-                            "Inventory Item has been deleted successfully!",
+                        waitMsg: "Deleting Product...",
+                        successMsg: "Product has been deleted successfully!",
                     });
                 }}
             />
@@ -124,17 +138,10 @@ const filters = [
         options: [{ label: "All", value: "" }, ...getCategories()],
     },
     {
-        label: "Status",
+        label: "Company",
         type: "select",
-        by: "stock",
-        prop: "status",
-        handler: (status, stock) => {
-            return status === "in-stock" ? stock > 0 : stock <= 0;
-        },
-        options: [
-            { label: "All", value: "" },
-            { label: "In Stock", value: "in-stock" },
-            { label: "Out of Stock", value: "out-of-stock" },
-        ],
+        by: "company",
+        prop: "company",
+        options: [{ label: "All", value: "" }, ...getCompanies()],
     },
 ];

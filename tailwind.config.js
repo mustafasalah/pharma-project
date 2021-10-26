@@ -59,6 +59,9 @@ module.exports = {
                 xxs: "0.625rem",
                 smd: "0.8125rem",
             },
+            boxShadow: {
+                lg: "0 5px 10px rgba(0, 0, 0, 0.15)",
+            },
         },
     },
     variants: {
@@ -66,6 +69,7 @@ module.exports = {
             margin: ["first", "last"],
             padding: ["first", "last"],
             borderWidth: ["last"],
+            borderRadius: ["last", "first"],
             backgroundColor: ["active", "even"],
             textColor: ["active"],
             borderColor: ["active"],

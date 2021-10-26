@@ -7,7 +7,8 @@ const pagesName = new Map([
     ["/inventory", "Inventory"],
     ["/orders", "Orders"],
     ["/pos", "Point of Sale"],
-    ["/staff", "Staff Management"],
+    ["/staff", "Staff"],
+    ["/users", "Users"],
     ["/pharmacy-settings", "Pharmacy Settings"],
     ["/account-settings", "Account Settings"],
 ]);
@@ -19,9 +20,9 @@ function PagePath() {
     return (
         <ul className="text-sm inline-flex items-center h-full pl-10">
             <li>
-                <a href="/">
+                <Link to="/">
                     <i className="fas fa-home text-primary mr-2"></i>
-                </a>
+                </Link>
             </li>
 
             <PagePathItem link={pathname} title={pagesName.get(pathname)} />

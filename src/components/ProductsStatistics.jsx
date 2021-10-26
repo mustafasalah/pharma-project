@@ -55,23 +55,31 @@ const columns = [
             />
         ),
     },
-    { title: "cost", wrapper: ({ cost }) => `${cost.get()} SDG` },
+    {
+        title: "cost",
+        sortProp: "cost",
+        wrapper: ({ cost }) => `${cost.get()} SDG`,
+    },
     {
         title: "price",
+        sortProp: "price",
         wrapper: ({ price }) => `${price.get()} SDG`,
     },
-    { title: "item sold", prop: "sold" },
+    { title: "item sold", sortProp: "sold", prop: "sold" },
     {
         title: "total sales",
+        sortProp: "sales",
         wrapper: ({ sales }) => `${nFormatter(sales.get())} SDG`,
     },
     {
         title: "profits",
+        sortProp: "profits",
         wrapper: ({ profits }) => `${nFormatter(profits.get())} SDG`,
     },
     { title: "remaining qty", prop: "qty" },
     {
         title: "status",
+        sortProp: "status",
         wrapper: ({ qty }) =>
             qty.value > 0 ? (
                 <strong className="text-green font-semibold">In Stock</strong>
