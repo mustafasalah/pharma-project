@@ -264,31 +264,31 @@ export const deleteInventoryItem = async (id) => {
     );
 };
 
-export const setInventoryItem = async ({
-    productId,
-    cost,
-    price,
-    arrival_date,
-    expair_date,
-    online_order,
-    stock,
-    reserved,
-    supplier,
-}) => {
+export const setInventoryItem = async (item) => {
     const data = {
         pharmacyBranchId: 1,
-        productId,
-        cost,
-        price,
-        arrival_date,
-        expair_date,
-        online_order,
-        stock,
-        reserved,
-        supplier,
+        productId: item.productId,
+        cost: item.cost,
+        price: item.price,
+        arrival_date: item.arrival_date,
+        expair_date: item.expair_date,
+        online_order: item.online_order,
+        stock: item.stock,
+        reserved: item.reserved,
+        supplier: item.supplier,
     };
 
-    return await http.post("https://jsonplaceholder.typicode.com/posts", data);
+    const response = await Promise.resolve({
+        data: {
+            id: inventoryItems.length + Math.round(Math.random() * 100),
+            ...item,
+        },
+        status: 200,
+    });
+
+    inventoryItems.push(response.data);
+    return response;
+    // return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 
 export const updateInventoryItem = async ({

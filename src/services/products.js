@@ -1,3 +1,4 @@
+import store from "../state";
 import http from "./http";
 
 const products = [
@@ -8,8 +9,7 @@ const products = [
         unit: "6 Capsules",
         category: "antibiotics",
         company: "Diarrhoea",
-        photo: "/assets/images/5.jpg",
-        photo_size: 123000,
+        photo: { url: "/assets/images/5.jpg", size: 123000 },
         ingredient: "loperamide hydrochloride",
         need_perspection: false,
         description: "",
@@ -24,8 +24,7 @@ const products = [
         unit: "4x 100mg Tablets",
         category: "antibiotics",
         company: "Ovex",
-        photo: "/assets/images/3.jpg",
-        photo_size: 86000,
+        photo: { url: "/assets/images/3.jpg", size: 86000 },
         ingredient: "mebendazole",
         need_perspection: false,
         description: `Ovex Family Pack Tablets are a treatment for threadworms.
@@ -45,8 +44,7 @@ Ovex Family tablets are to be taken orally.`,
         unit: "12 Tablets",
         category: "antibiotics",
         company: "ORS",
-        photo: "/assets/images/2.jpg",
-        photo_size: 52000,
+        photo: { url: "/assets/images/2.jpg", size: 52000 },
         ingredient: "",
         need_perspection: false,
         description: "",
@@ -61,8 +59,10 @@ Ovex Family tablets are to be taken orally.`,
         unit: "12 Soft Capsules",
         category: "antianxiety drugs",
         company: "Flarin",
-        photo: "/assets/images/1.jpg",
-        photo_size: 66000,
+        photo: {
+            url: "/assets/images/1.jpg",
+            size: 66000,
+        },
         ingredient: "Ibuprofen",
         need_perspection: true,
         description: "",
@@ -77,8 +77,10 @@ Ovex Family tablets are to be taken orally.`,
         unit: "6 Capsules",
         category: "antibacterials",
         company: "Anadin",
-        photo: "/assets/images/4.jpg",
-        photo_size: 83000,
+        photo: {
+            url: "/assets/images/4.jpg",
+            size: 83000,
+        },
         ingredient: "Aspirin, Paracetamol",
         need_perspection: false,
         description: "",
@@ -98,15 +100,40 @@ export const deleteProduct = async (id) => {
     );
 };
 
-export const setProduct = (data) => {
-    return Promise.resolve({ data, status: 200 });
-    //return await http.post("https://jsonplaceholder.typicode.com/posts", data);
+export const setProduct = async (data) => {
+    const response = await Promise.resolve({
+        data: {
+            id: products.length + Math.round(Math.random() * 100),
+            ...data,
+        },
+        status: 200,
+    });
+    products.push(response.data);
+    return response;
+    // return http.post("localhost", data);
 };
 
 export const updateProduct = (data) => {
     return Promise.resolve({ data, status: 200 });
-    // return await http.put(
-    //     `https://jsonplaceholder.typicode.com/posts/${id}`,
-    //     data
-    // );
+    //return http.put(`localhost/${data.id}`, data);
+};
+
+export const uploadProductPhoto = (id) => {
+    let image = "";
+    store.uploads.productPhoto.set((p) => {
+        image = p;
+        return p;
+    });
+
+    if (image === "") return;
+
+    const formData = new FormData();
+    formData.append("product_id", id);
+    formData.append("product_photo", image);
+
+    return Promise.resolve({
+        status: 200,
+        data: { url: "/assets/images/6.jpg", size: 12334 },
+    });
+    //return http.put(`localhost/${id}`, formData);
 };

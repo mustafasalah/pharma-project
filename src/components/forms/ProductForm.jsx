@@ -3,7 +3,7 @@ import CategoriesField from "./CategoriesField";
 import CompaniesField from "./CompaniesField";
 import Form from "./Form";
 import FormField from "./FormField";
-import { updateProduct } from "../../services/products";
+import { updateProduct, uploadProductPhoto } from "../../services/products";
 import { notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
 import ProductPhoto from "./ProductPhoto";
@@ -20,24 +20,36 @@ const ProductForm = ({
         <Form
             className={className}
             onSubmit={async () => {
-                const { status } = await updateProduct(formState.get());
+                const { status } = await updateProduct(formState.value);
                 notify({
                     status,
                     waitMsg: "Updating Product Information...",
                     successMsg: "Product has been updated successfully!",
-                    successCallback() {
-                        state.set(JSON.parse(JSON.stringify(formState.value)));
-                        closeForm();
+                    async successCallback() {
+                        const { status, data } = await uploadProductPhoto(
+                            formState.id.value
+                        );
+                        notify({
+                            status,
+                            waitMsg: "Uploading Product Photo...",
+                            successMsg:
+                                "Product Photo has been uploaded successfully!",
+                            successCallback() {
+                                state.set(
+                                    JSON.parse(JSON.stringify(formState.value))
+                                );
+                                state.photo.merge(data);
+                                closeForm();
+                            },
+                        });
                     },
                 });
             }}
         >
             <ProductPhoto
                 className="col-span-2 row-span-2"
-                label="Product Photo"
-                name="product_photo"
-                photoPath={formState.photo.value}
-                photoSize={formState.photo_size.value}
+                url={formState.photo.url}
+                size={formState.photo.size}
             />
 
             <FormField

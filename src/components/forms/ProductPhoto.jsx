@@ -6,8 +6,8 @@ import FormField from "./FormField";
 
 const ProductPhoto = ({
     className,
-    photoPath,
-    photoSize,
+    url,
+    size,
     label = "Product Photo",
     name = "product_photo",
 }) => {
@@ -16,9 +16,8 @@ const ProductPhoto = ({
     } = useState(store);
 
     if (productPhoto.value) {
-        console.log(productPhoto.value);
-        photoPath = productPhoto.get().name;
-        photoSize = productPhoto.get().size;
+        url = { value: productPhoto.get().name };
+        size = { value: productPhoto.get().size };
     }
 
     return (
@@ -30,10 +29,10 @@ const ProductPhoto = ({
                 <div
                     className="flex-shrink-0 border bg-white shadow p-2 bg-center bg-origin-content bg-no-repeat rounded-sm bg-contain w-1/3"
                     style={{
-                        backgroundImage: `url('${photoPath}')`,
+                        backgroundImage: `url('${url.value}')`,
                     }}
                 >
-                    {photoPath === "" || productPhoto.value ? (
+                    {url.value === "" || productPhoto.value ? (
                         <i className="far fa-image text-5xl block text-center mt-6 text-gray-300"></i>
                     ) : (
                         ""
@@ -46,19 +45,30 @@ const ProductPhoto = ({
                                 Name:
                             </dt>
                             <dd className="inline-block">
-                                {photoPath.split("/").pop()}
+                                {url.value.split("/").pop()}
                             </dd>
                             <br />
                             <dt className="inline-block font-semibold mr-2">
                                 Size:
                             </dt>
                             <dd className="inline-block">
-                                {(photoSize / 1000).toFixed(1)} KB
+                                {(size.value / 1000).toFixed(1)} KB
                             </dd>
                         </dl>
                     </p>
-                    <div className="mt-3">
-                        <DeleteBtn />
+                    <div className="mt-3 leading-4">
+                        {url.value !== "" && (
+                            <DeleteBtn
+                                onDelete={() => {
+                                    if (productPhoto.value === "") {
+                                        url.set("");
+                                        size.set("");
+                                    } else {
+                                        productPhoto.set("");
+                                    }
+                                }}
+                            />
+                        )}
                         <FormField
                             id="0"
                             name={name}

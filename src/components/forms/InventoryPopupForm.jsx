@@ -14,13 +14,18 @@ import { notify } from "../../utility";
 
 const InventoryPopupForm = ({ showState }) => {
     let [products, setProducts] = useState([]);
-    let state = useHookstate(inventoryFormState);
+    let state = useHookstate({
+        data: { ...inventoryFormState.data },
+        errors: { ...inventoryFormState.errors },
+    });
     const { data, errors } = state;
     DevTools(state).label("Inventory Popup Form");
 
-    useEffect(async () => {
-        const { data } = await getProducts();
-        setProducts(data);
+    useEffect(() => {
+        (async () => {
+            const { data } = await getProducts();
+            setProducts(data);
+        })();
     }, []);
 
     useEffect(() => {
@@ -33,6 +38,7 @@ const InventoryPopupForm = ({ showState }) => {
                 if (product) {
                     data.productId.set(product.id);
                     data.name.set(product.name);
+                    data.photo.set(product.photo.url);
                     data.barcode.set(product.barcode);
                     data.unit.set(product.unit);
                     data.category.set(product.category);
@@ -57,7 +63,7 @@ const InventoryPopupForm = ({ showState }) => {
                     successMsg: "Inventory Item has been added successfully!",
                     successCallback: () => {
                         // Clear the form data
-                        state.set(inventoryFormState);
+                        data.set({ ...inventoryFormState.data });
                         // Close the popup form
                         showState.set(false);
                     },
@@ -81,6 +87,7 @@ const InventoryPopupForm = ({ showState }) => {
                     );
                     data.productId.set(product.id);
                     data.name.set(product.name);
+                    data.photo.set(product.photo.url);
                     data.barcode.set(product.barcode);
                     data.unit.set(product.unit);
                     data.category.set(product.category);

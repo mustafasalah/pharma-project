@@ -23,11 +23,13 @@ const Orders = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        const ordersData = getOrders();
-        orders.data.set(ordersData);
-        if (!isNaN(orderId)) {
-            orders.filters.search.set(orderId);
-        }
+        (async () => {
+            const { data: ordersData } = await getOrders();
+            orders.data.set(ordersData);
+            if (!isNaN(orderId)) {
+                orders.filters.search.set(orderId);
+            }
+        })();
     }, []);
 
     return (

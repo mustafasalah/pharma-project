@@ -4,6 +4,7 @@ const DeleteBtn = ({ onDelete, title = "Delete?" }) => {
     return (
         <button
             title={title}
+            type="button"
             className="manage-btn bg-red text-red-light hover:text-red hover:bg-white"
             onClick={onDelete}
         >

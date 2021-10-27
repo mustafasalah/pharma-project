@@ -21,12 +21,14 @@ const Employees = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        const employeesData = getEmployees();
-        employees.data.set(employeesData);
-        if (typeof +employeeId === "number") {
-            const emp = employeesData.find((emp) => emp.id === +employeeId);
-            emp && employees.filters.search.set(emp.full_name);
-        }
+        (async () => {
+            const { data: employeesData } = await getEmployees();
+            employees.data.set(employeesData);
+            if (typeof +employeeId === "number") {
+                const emp = employeesData.find((emp) => emp.id === +employeeId);
+                emp && employees.filters.search.set(emp.full_name);
+            }
+        })();
     }, []);
 
     return (

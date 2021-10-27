@@ -40,7 +40,7 @@ const employees = [
 ];
 
 export const getEmployees = () => {
-    return employees;
+    return Promise.resolve({ data: employees, status: 200 });
 };
 
 export const deleteEmployee = async (id) => {
@@ -68,8 +68,11 @@ export const setEmployee = async ({
         work_from,
         work_to,
     };
-
-    return await http.post("https://jsonplaceholder.typicode.com/posts", data);
+    return Promise.resolve({
+        data: { id: employees.length, ...data },
+        status: 200,
+    });
+    //return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 
 export const updateEmployee = async ({

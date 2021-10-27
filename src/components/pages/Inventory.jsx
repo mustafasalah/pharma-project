@@ -23,10 +23,13 @@ const Inventory = () => {
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    useEffect(async () => {
-        const inventoryData = await getInventoryItems();
-        inventory.data.set(inventoryData.data);
-    }, []);
+    useEffect(() => {
+        if (showPopupForm.value) return;
+        (async () => {
+            const inventoryData = await getInventoryItems();
+            inventory.data.set(inventoryData.data);
+        })();
+    }, [showPopupForm.value]);
 
     return (
         <>

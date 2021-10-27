@@ -61,7 +61,7 @@ const orders = [
 ];
 
 export const getOrders = () => {
-    return orders;
+    return Promise.resolve({ data: orders, status: 200 });
 };
 
 export const updateOrderStatus = async (id, status) => {

@@ -7,7 +7,10 @@ import { setEmployee } from "../../services/employees";
 import { notify } from "../../utility";
 
 const EmployeePopupForm = ({ showState }) => {
-    let state = useState(employeeFormState);
+    let state = useState({
+        data: { ...employeeFormState.data },
+        errors: { ...employeeFormState.errors },
+    });
     const { data, errors } = state;
     DevTools(state).label("Employee Popup Form");
 
@@ -23,7 +26,7 @@ const EmployeePopupForm = ({ showState }) => {
                     successMsg: "Employee Item has been added successfully!",
                     successCallback: () => {
                         // Clear the form data
-                        state.set(employeeFormState);
+                        data.set({ ...employeeFormState.data });
                         // Close the popup form
                         showState.set(false);
                     },

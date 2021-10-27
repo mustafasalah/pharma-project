@@ -7,7 +7,10 @@ import { setUser } from "../../services/users";
 import { notify } from "../../utility";
 
 const UserPopupForm = ({ showState }) => {
-    let state = useState(userFormState);
+    let state = useState({
+        data: { ...userFormState.data },
+        errors: { ...userFormState.errors },
+    });
     const { data, errors } = state;
     DevTools(state).label("User Popup Form");
 
@@ -23,7 +26,7 @@ const UserPopupForm = ({ showState }) => {
                     successMsg: "User has been created successfully!",
                     successCallback: () => {
                         // Clear the form data
-                        state.set(userFormState);
+                        data.set({ ...userFormState.data });
                         // Close the popup form
                         showState.set(false);
                     },

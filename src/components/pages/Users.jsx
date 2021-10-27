@@ -20,13 +20,15 @@ const Users = () => {
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    useEffect(async () => {
-        const usersData = await getUsers();
-        users.data.set(usersData.data);
-        if (typeof +userId === "number") {
-            const user = usersData.data.find((user) => user.id === +userId);
-            user && users.filters.search.set(user.first_name);
-        }
+    useEffect(() => {
+        (async () => {
+            const usersData = await getUsers();
+            users.data.set(usersData.data);
+            if (typeof +userId === "number") {
+                const user = usersData.data.find((user) => user.id === +userId);
+                user && users.filters.search.set(user.first_name);
+            }
+        })();
     }, []);
 
     return (

@@ -1,4 +1,26 @@
+import React from "react";
 import { toast } from "react-toastify";
+
+export const handleUploadProgress = (uploadMsg) => {
+    let toastId = React.createRef();
+    return {
+        toastId,
+        onUploadProgress: (p) => {
+            const progress = p.loaded / p.total;
+
+            // check if we already displayed a toast
+            if (toastId.current === null) {
+                toastId.current = toast(uploadMsg || "Upload in Progress", {
+                    progress: progress,
+                });
+            } else {
+                toast.update(toastId.current, {
+                    progress: progress,
+                });
+            }
+        },
+    };
+};
 
 export function range(min, max) {
     const nums = [];
@@ -16,17 +38,16 @@ export function notify({
     successCallback,
     errorCallback,
 }) {
-    const id = toast.loading(waitMsg);
+    let toastId = toast.loading(waitMsg);
 
     if (status >= 200 && status < 300) {
         //do something else
-        toast.update(id, {
+        toast.update(toastId, {
             render: successMsg,
             type: "success",
             isLoading: false,
             autoClose: 5000,
         });
-
         // optional success callback for extra processing
         typeof successCallback === "function" && successCallback();
     } else {

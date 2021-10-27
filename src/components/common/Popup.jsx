@@ -4,10 +4,14 @@ function Popup({
     title,
     children,
     state,
+    onClose,
     faClass = "fas fa-plus-square",
     style = {},
 }) {
-    const closeForm = state.set.bind(state, false);
+    const closeForm = () => {
+        state.set(false);
+        onClose && onClose();
+    };
     const visiable = state.get();
 
     return (

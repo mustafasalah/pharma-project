@@ -22,10 +22,13 @@ const Products = () => {
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    useEffect(async () => {
-        const productsData = await getProducts();
-        products.data.set(productsData.data);
-    }, []);
+    useEffect(() => {
+        if (showPopupForm.value) return;
+        (async () => {
+            const productsData = await getProducts();
+            products.data.set(productsData.data);
+        })();
+    }, [showPopupForm.value]);
 
     return (
         <>
@@ -70,7 +73,7 @@ const columns = [
         wrapper: ({ name, photo, unit, id, edited, handleEdit }) => (
             <ProductCell
                 name={name.value}
-                photo={photo.value}
+                photo={photo.url.value}
                 unit={unit.value}
                 id={id}
                 edited={edited}
