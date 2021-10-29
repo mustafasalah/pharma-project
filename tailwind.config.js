@@ -60,6 +60,7 @@ module.exports = {
                 smd: "0.8125rem",
             },
             boxShadow: {
+                md: "0 3px 6px rgba(0, 0, 0, 0.15)",
                 lg: "0 5px 10px rgba(0, 0, 0, 0.15)",
             },
         },

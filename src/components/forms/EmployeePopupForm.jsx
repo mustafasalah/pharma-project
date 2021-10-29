@@ -19,6 +19,12 @@ const EmployeePopupForm = ({ showState }) => {
             title="Add New Employee"
             state={showState}
             className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
+            formButtons={[
+                {
+                    label: "Add Employee",
+                    faClass: "fas fa-plus",
+                },
+            ]}
             onSubmit={async () => {
                 const { status } = await setEmployee(data.get());
                 notify({

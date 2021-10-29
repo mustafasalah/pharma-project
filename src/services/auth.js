@@ -10,6 +10,14 @@ export const login = async (username, password) => {
             last_name: "Salah",
             gender: "m",
             role: "pharmacy owner",
+            state: "khartoum",
+            city: "omdurman",
+            address: "Al thwrah, al harah 59, al shingety street",
         },
     });
+};
+
+export const changePassword = (id, data) => {
+    console.dir(data);
+    return Promise.resolve({ data, status: 200 });
 };

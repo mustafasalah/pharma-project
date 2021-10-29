@@ -19,6 +19,12 @@ const UserPopupForm = ({ showState }) => {
             title="Add New User"
             state={showState}
             className="grid gap-x-5 gap-y-6 grid-cols-3 text-sm"
+            formButtons={[
+                {
+                    label: "Add User",
+                    faClass: "fas fa-plus",
+                },
+            ]}
             onSubmit={async () => {
                 const { status } = await setUser(data.get());
                 notify({

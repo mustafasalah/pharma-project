@@ -88,7 +88,7 @@ const columns = [
             </a>
         ),
     },
-    { title: "branch name", prop: "branch", defaultValue: "-" },
+    { title: "branch name", prop: "branch", defaultValue: "Main Branch" },
     {
         title: "status",
         sortProp: "status",

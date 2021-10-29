@@ -20,7 +20,9 @@ function TableBody({ data, columns, form }) {
                         data={columns.map(
                             ({ prop, wrapper, defaultValue = "" }) =>
                                 prop
-                                    ? item[prop].value || defaultValue
+                                    ? item[prop].value === ""
+                                        ? defaultValue
+                                        : item[prop].value
                                     : wrapper({
                                           ...item,
                                           edited,

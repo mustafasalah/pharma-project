@@ -28,6 +28,12 @@ const ProductPopupForm = ({ showState }) => {
             onClose={() => {
                 productPhoto.set("");
             }}
+            formButtons={[
+                {
+                    label: "Add Product",
+                    faClass: "fas fa-plus",
+                },
+            ]}
             className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
             onSubmit={async () => {
                 const { status, data: productData } = await setProduct(

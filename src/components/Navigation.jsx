@@ -56,7 +56,7 @@ function Navigation() {
 
                 <MenuItem
                     title="Pharmacy Settings"
-                    faClass="fas fa-clinic-medical"
+                    faClass="fas fa-cogs"
                     link="/pharmacy-settings"
                 ></MenuItem>
 

@@ -11,12 +11,25 @@ function FormField({
     taggable = false,
     inputOnly = false,
     inputClassName = "",
+    booleanValue = false,
     ...props
 }) {
     const currentValue = value !== undefined ? value.get() : "";
 
     const onInputChange = ({ target }) => {
-        value.set(target.value);
+        if (booleanValue) {
+            switch (target.value.toLowerCase()) {
+                case "no":
+                case "false":
+                case "0":
+                    value.set(false);
+                    break;
+                default:
+                    value.set(true);
+            }
+        } else {
+            value.set(target.value);
+        }
     };
 
     const onSelectChange = (selectedValue) => {
@@ -56,7 +69,6 @@ function FormField({
                                 className="inline-block mr-4 last:mr-0"
                             >
                                 <input
-                                    id={`${label}_${i}`}
                                     className="mr-1 align-middle"
                                     type="radio"
                                     value={value}
@@ -66,6 +78,7 @@ function FormField({
                                         value.toString()
                                     }
                                     {...props}
+                                    id={`${label}_${i}`}
                                 />
                                 <label htmlFor={`${label}_${i}`}>{label}</label>
                             </div>
@@ -76,7 +89,7 @@ function FormField({
             case "textarea":
                 return (
                     <textarea
-                        className="border h-25 border-gray-300 rounded-sm py-1 px-2 shadow"
+                        className="border w-full h-25 border-gray-300 rounded-sm py-1 px-2 shadow"
                         value={currentValue}
                         onChange={onInputChange}
                     />
@@ -109,7 +122,7 @@ function FormField({
                     return (
                         <CreatableSelect
                             styles={styleObject}
-                            className="border border-gray-300 bg-white rounded-sm py-1 px-2 shadow"
+                            className="border w-full border-gray-300 bg-white rounded-sm py-1 px-2 shadow"
                             classNamePrefix="react-select"
                             value={{
                                 label: currentValue,
@@ -131,7 +144,7 @@ function FormField({
 
                 return (
                     <input
-                        className="border border-gray-300 rounded-sm py-1 px-2 shadow"
+                        className="border w-full border-gray-300 rounded-sm py-1 px-2 shadow"
                         type={type}
                         value={currentValue}
                         onChange={onInputChange}
@@ -144,7 +157,10 @@ function FormField({
     if (inputOnly) return renderInput();
     return (
         <div className={className}>
-            <label htmlFor={props.id} className="mb-2 font-medium capitalize">
+            <label
+                htmlFor={props.id}
+                className="mb-2 block font-medium capitalize"
+            >
                 {label}
                 {props.required ? (
                     <span className="text-red ml-0.5">*</span>

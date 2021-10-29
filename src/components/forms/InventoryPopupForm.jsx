@@ -55,6 +55,12 @@ const InventoryPopupForm = ({ showState }) => {
         <PopupForm
             title="Add New Product"
             state={showState}
+            formButtons={[
+                {
+                    label: "Add Product to Inventory",
+                    faClass: "fas fa-plus",
+                },
+            ]}
             className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
             onSubmit={async () => {
                 const { status } = await setInventoryItem(data.get());
