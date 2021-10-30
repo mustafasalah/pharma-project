@@ -1,11 +1,19 @@
 import React from "react";
 
-function TableRow({ data, edited = false, form }) {
+function TableRow({ data, edited = false, form, columnsWidth }) {
     return (
         <>
             <tr className="last:rounded-b">
                 {data.map((cell, i) => (
-                    <td key={i} className="first:rounded-bl last:rounded-br">
+                    <td
+                        key={i}
+                        style={
+                            columnsWidth[i]
+                                ? { width: columnsWidth[i] }
+                                : undefined
+                        }
+                        className="first:rounded-bl last:rounded-br"
+                    >
                         {cell}
                     </td>
                 ))}

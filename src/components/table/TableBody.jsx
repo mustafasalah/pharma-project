@@ -17,6 +17,7 @@ function TableBody({ data, columns, form }) {
                         key={item.id.value}
                         form={form && form(item, () => editedRow.set(null))}
                         edited={edited}
+                        columnsWidth={columns.map((col) => col.width)}
                         data={columns.map(
                             ({ prop, wrapper, defaultValue = "" }) =>
                                 prop

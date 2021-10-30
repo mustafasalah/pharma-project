@@ -9,6 +9,7 @@ import Users from "./pages/Users";
 import Products from "./pages/Products";
 import PharmacySettings from "./pages/PharmacySettings";
 import AccountSettings from "./pages/AccountSettings";
+import PointOfSale from "./pages/PointOfSale";
 
 function Main() {
     return (
@@ -17,6 +18,7 @@ function Main() {
             style={{ minHeight: "calc(100vh - 100px)" }}
         >
             <Switch>
+                <Route path="/pos" component={PointOfSale} />
                 <Route path="/account-settings" component={AccountSettings} />
                 <Route path="/pharmacy-settings" component={PharmacySettings} />
                 <Route path="/Inventory" component={Inventory} />

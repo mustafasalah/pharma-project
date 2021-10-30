@@ -28,6 +28,11 @@ const store = createState({
         type: "",
         data: {},
     },
+    pos: {
+        list: [],
+        discount: 0,
+        vat: 0,
+    },
 });
 
 DevTools(store).label("Store");

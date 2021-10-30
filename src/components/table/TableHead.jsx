@@ -1,15 +1,20 @@
 import React from "react";
 
 function TableHead({ columns, sortColumn }) {
-    const sortColumnName = sortColumn.columnName.get();
-    const order = sortColumn.order.get();
+    const sortColumnName = sortColumn ? sortColumn.columnName.get() : "";
+    const order = sortColumn ? sortColumn.order.get() : "";
 
     return (
         <thead>
             <tr className="rounded-t">
                 {columns.map(({ title, prop, sortProp, sortable }) => {
-                    sortProp = sortProp || prop;
-                    const isCurrentSortingColumn = sortColumnName === sortProp;
+                    let isCurrentSortingColumn;
+                    if (sortColumn === undefined) {
+                        sortable = isCurrentSortingColumn = false;
+                    } else {
+                        sortProp = sortProp || prop;
+                        isCurrentSortingColumn = sortColumnName === sortProp;
+                    }
                     return (
                         <th
                             key={title}

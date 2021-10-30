@@ -36,16 +36,20 @@ function Filters({ filters, data, pagination }) {
                 }
             })}
 
-            <SelectFilter
-                label="Items per Page"
-                name="items_per_page"
-                className="float-right"
-                value={pagination.itemsPerPage}
-                options={pagination.itemsPerPageOptions.get().map((option) => ({
-                    label: option,
-                    value: option,
-                }))}
-            />
+            {pagination && (
+                <SelectFilter
+                    label="Items per Page"
+                    name="items_per_page"
+                    className="float-right"
+                    value={pagination.itemsPerPage}
+                    options={pagination.itemsPerPageOptions
+                        .get()
+                        .map((option) => ({
+                            label: option,
+                            value: option,
+                        }))}
+                />
+            )}
         </div>
     );
 }

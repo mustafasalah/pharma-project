@@ -320,5 +320,5 @@ export const updateInventoryItem = async ({
 };
 
 export const getInventoryItems = async () => {
-    return await Promise.resolve({ data: inventoryItems });
+    return await Promise.resolve({ data: inventoryItems, status: 200 });
 };

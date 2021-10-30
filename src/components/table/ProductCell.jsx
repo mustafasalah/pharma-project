@@ -19,7 +19,7 @@ const ProductCell = ({ id, name, photo, unit, edited, onEdit }) => {
                         {name}
                     </a>
                 ) : (
-                    <span className="text-sm">{name}</span>
+                    <span className="text-sm select-none">{name}</span>
                 )}
                 <span className="text-gray-500 text-xs mt-1">({unit})</span>
             </div>

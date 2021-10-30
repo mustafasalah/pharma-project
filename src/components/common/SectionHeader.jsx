@@ -1,7 +1,7 @@
 import React from "react";
 
 const SectionHeader = ({
-    name,
+    name = "",
     faClass = "",
     addButton = false,
     selectMenu = false,

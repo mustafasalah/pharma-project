@@ -14,38 +14,42 @@ function DataTable({
     sortColumn,
 }) {
     const filteredData = useMemo(
-        () => filterData(filters, filtersData, data),
+        () => (filters ? filterData(filters, filtersData, data) : data),
         [filters, filtersData, data]
     );
 
     const sortedData = useMemo(
-        () => sortData(sortColumn, filteredData),
+        () => (sortColumn ? sortData(sortColumn, filteredData) : filteredData),
         [sortColumn, filteredData]
     );
 
     const paginatedData = useMemo(
-        () => paginateData(pagination, sortedData),
+        () => (pagination ? paginateData(pagination, sortedData) : sortedData),
         [pagination, sortedData]
     );
 
     return (
         <div className="animate__animated animate__fadeIn">
-            <Filters
-                filters={filters}
-                data={filtersData}
-                pagination={pagination}
-            />
+            {filters && (
+                <Filters
+                    filters={filters}
+                    data={filtersData}
+                    pagination={pagination}
+                />
+            )}
             <Table
                 data={paginatedData}
                 columns={columns}
                 sortColumn={sortColumn}
                 form={form}
             />
-            <Pagination
-                paginationData={pagination}
-                data={filteredData}
-                onPaginate={pagination.currentPage.set}
-            />
+            {pagination && (
+                <Pagination
+                    paginationData={pagination}
+                    data={filteredData}
+                    onPaginate={pagination.currentPage.set}
+                />
+            )}
         </div>
     );
 }

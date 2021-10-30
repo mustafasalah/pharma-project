@@ -1,5 +1,5 @@
 import { useHookstate } from "@hookstate/core";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { setPaymentOption } from "../services/pharmacyBranch";
 import { notify } from "../utility";
 import ATMCardOption from "./ATMCardOption";
