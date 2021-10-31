@@ -4,7 +4,6 @@ const orders = [
     {
         id: 23820,
         type: "local",
-        price: 5400,
         status: "finished",
         handled_by: {
             id: 1,
@@ -35,7 +34,6 @@ const orders = [
     {
         id: 12038,
         type: "online",
-        price: 5400,
         status: "pending",
         handled_by: {
             id: 2,
@@ -62,6 +60,14 @@ const orders = [
 
 export const getOrders = () => {
     return Promise.resolve({ data: orders, status: 200 });
+};
+
+export const setOrder = (data) => {
+    console.log(data);
+    return Promise.resolve({
+        data: { id: orders.length + Math.round(Math.random() * 100), ...data },
+        status: 200,
+    });
 };
 
 export const updateOrderStatus = async (id, status) => {

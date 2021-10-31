@@ -12,8 +12,9 @@ import ProductCell from "../table/ProductCell";
 
 const PointOfSale = () => {
     const searchValue = useHookstate("");
-    const { discount, list, vat } = useHookstate(store.pos);
+    const { discount, products } = useHookstate(store.pos);
     const inventoryItems = useHookstate(store.tables.inventory.data);
+    const { vat } = useHookstate(store.pharmacyBranch);
 
     useEffect(() => {
         let scanneredBarcode = "";
@@ -23,7 +24,7 @@ const PointOfSale = () => {
                     ({ barcode }) => barcode === scanneredBarcode
                 );
                 if (product) {
-                    list.set((oldList) => {
+                    products.set((oldList) => {
                         let alreadyExist = false;
                         oldList.forEach((item) => {
                             if (+item.id === +product.id.value) {
@@ -56,7 +57,7 @@ const PointOfSale = () => {
                             className="flex-shrink-0"
                             label="Products Search"
                             placeholder="Search Product By Name Here..."
-                            list={list}
+                            products={products}
                             value={searchValue}
                         />
                         <Note>
@@ -66,11 +67,15 @@ const PointOfSale = () => {
                         </Note>
                     </div>
                     <div className="mt-5">
-                        <DataTable data={list} columns={columns} />
+                        <DataTable data={products} columns={columns} />
                     </div>
                 </div>
                 <section className="col-span-1">
-                    <OrderSummary list={list} discount={discount} vat={vat} />
+                    <OrderSummary
+                        products={products}
+                        discount={discount}
+                        vat={vat}
+                    />
                 </section>
             </div>
         </>
@@ -122,7 +127,7 @@ const columns = [
         wrapper: ({ id }) => (
             <DeleteBtn
                 onDelete={() =>
-                    store.pos.list.set((p) => {
+                    store.pos.products.set((p) => {
                         return p.filter((item) => item.id !== id.value);
                     })
                 }

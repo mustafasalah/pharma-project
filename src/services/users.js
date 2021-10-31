@@ -88,7 +88,6 @@ export const setUser = async ({
         address,
     };
     return await Promise.resolve({ status: 200 });
-
     // return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 

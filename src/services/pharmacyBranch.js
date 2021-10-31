@@ -30,6 +30,7 @@ export const getPharmacyBranchInfo = async (id) => {
             address: "Alwadi Street, near Alrwdah hospital",
             support_delivery: false,
             delivery_cost: 0,
+            vat: 0,
             payment_options: {
                 mbok: {
                     account_no: "5678293",

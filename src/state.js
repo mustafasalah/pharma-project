@@ -29,9 +29,8 @@ const store = createState({
         data: {},
     },
     pos: {
-        list: [],
-        discount: 0,
-        vat: 0,
+        products: [],
+        discount: { amount: 0, unit: "SDG" },
     },
 });
 

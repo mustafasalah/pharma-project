@@ -7,7 +7,7 @@ const ProductsSearch = ({
     label = "Products Search",
     placeholder = "",
     className = "",
-    list,
+    products,
     value,
 }) => {
     const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ const ProductsSearch = ({
                                 <ResultItem
                                     result={result}
                                     onSelect={() => {
-                                        list.set((oldList) => {
+                                        products.set((oldList) => {
                                             let alreadyExist = false;
                                             oldList.forEach((item) => {
                                                 if (

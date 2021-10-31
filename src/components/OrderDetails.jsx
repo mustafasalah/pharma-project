@@ -10,19 +10,19 @@ const OrderDetials = ({
         products_amount,
         vat,
         discount,
-        delivery,
+        delivery = 0,
         handled_by,
     },
 }) => {
     const {
-        pharmacyBranch: { phone_numbers, email, website },
+        pharmacyBranch: { name, branch, phone_numbers, email, website },
     } = useState(store);
     return (
         <>
             <div className="mb-5 text-right">
                 <button
                     onClick={window.print}
-                    className="shadow-lg text-smd font-semibold bg-primary text-white px-3 py-1.5 hover:bg-secondary rounded-sm shadow-md"
+                    className="text-smd font-semibold bg-primary text-white px-3 py-1.5 hover:bg-secondary rounded-sm shadow-md"
                 >
                     <i className="fas fa-print text-bright mr-2"></i>
                     Print
@@ -31,7 +31,7 @@ const OrderDetials = ({
             <div className="printable bg-gray-100 border-2 border-gray-300 border-dashed rounded p-5">
                 <section className="mb-6">
                     <h2 className="text-center font-semibold text-xl mb-5">
-                        CVS Pharmacy
+                        {name.get()} - {branch.get()}
                     </h2>
                     <table>
                         <thead>
@@ -85,7 +85,8 @@ const OrderDetials = ({
                                         {products_amount -
                                             discount +
                                             vat +
-                                            delivery}
+                                            delivery}{" "}
+                                        SDG
                                     </strong>
                                 </td>
                             </tr>

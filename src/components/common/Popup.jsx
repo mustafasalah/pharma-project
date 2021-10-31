@@ -12,6 +12,7 @@ function Popup({
         state.set(false);
         onClose && onClose();
     };
+
     const visiable = state.get();
 
     return (
