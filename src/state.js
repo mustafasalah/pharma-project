@@ -2,12 +2,16 @@ import { createState, DevTools } from "@hookstate/core";
 import employeesState from "./states/employeesState";
 import inventoryState from "./states/inventoryState";
 import ordersState from "./states/ordersState";
+import overviewStatisticState from "./states/overviewStatisticState";
 import pharmaciesState from "./states/pharmaciesState";
 import productsState from "./states/productsState";
 import productsStatisticsState from "./states/productsStatisticsState";
 import usersState from "./states/usersState";
 
 const store = createState({
+    statistics: {
+        overview: overviewStatisticState,
+    },
     loggedUser: {},
     pharmacyBranch: {},
     notifications: [],

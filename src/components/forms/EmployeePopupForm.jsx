@@ -3,14 +3,16 @@ import React from "react";
 import employeeFormState from "../../states/employeeFormState";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
-import { setEmployee } from "../../services/employees";
+import { getEmployees, setEmployee } from "../../services/employees";
 import { notify } from "../../utility";
+import store from "../../state";
 
 const EmployeePopupForm = ({ showState }) => {
     let state = useState({
         data: { ...employeeFormState.data },
         errors: { ...employeeFormState.errors },
     });
+    const employeesData = useState(store.tables.employees.data);
     const { data, errors } = state;
     DevTools(state).label("Employee Popup Form");
 
@@ -18,7 +20,7 @@ const EmployeePopupForm = ({ showState }) => {
         <PopupForm
             title="Add New Employee"
             state={showState}
-            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
+            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm gray-inputs"
             formButtons={[
                 {
                     label: "Add Employee",
@@ -30,9 +32,14 @@ const EmployeePopupForm = ({ showState }) => {
                 notify({
                     status,
                     successMsg: "Employee Item has been added successfully!",
-                    successCallback: () => {
+                    successCallback: async () => {
                         // Clear the form data
                         data.set({ ...employeeFormState.data });
+
+                        // Update employees data list
+                        const { data: newEmployeesData } = await getEmployees();
+                        employeesData.set(newEmployeesData);
+
                         // Close the popup form
                         showState.set(false);
                     },
@@ -69,6 +76,7 @@ const EmployeePopupForm = ({ showState }) => {
                 pattern="\+[0-9]{10,12}"
                 value={data.phone_number}
                 placeholder="e.g. +2499XXXXXXXX"
+                required
             />
 
             <FormField

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function StatisticsWidget({
     mainText,
@@ -7,6 +8,7 @@ function StatisticsWidget({
     faClass,
     bgColor,
     iconColor,
+    link,
 }) {
     return (
         <div className="animate__animated animate__flipInX rounded overflow-hidden flex bg-white shadow-md relative">
@@ -21,16 +23,22 @@ function StatisticsWidget({
                     {seconderyText}
                 </span>
                 <span className="text-xs text-gray-400 absolute top-2.5 right-2.5">
-                    <i
-                        className={`fas fa-long-arrow-alt-${
-                            percent.direction
-                        } ${
-                            percent.direction === "up"
-                                ? "text-green"
-                                : "text-red"
-                        }`}
-                    ></i>{" "}
-                    {percent.value}%
+                    {percent ? (
+                        <>
+                            <i
+                                className={`fas fa-long-arrow-alt-${
+                                    percent.direction
+                                } ${
+                                    percent.direction === "up"
+                                        ? "text-green"
+                                        : "text-red"
+                                }`}
+                            ></i>{" "}
+                            {percent.value}%
+                        </>
+                    ) : (
+                        link && <Link to={link.url}>{link.label}</Link>
+                    )}
                 </span>
             </div>
         </div>

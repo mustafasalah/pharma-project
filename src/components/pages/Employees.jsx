@@ -4,7 +4,7 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { deleteEmployee, getEmployees } from "../../services/employees";
+import { deleteEmployee } from "../../services/employees";
 import EmployeeForm from "../forms/EmployeeForm";
 import EmployeePopupForm from "../forms/EmployeePopupForm";
 import { useParams } from "react-router";
@@ -21,14 +21,12 @@ const Employees = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        (async () => {
-            const { data: employeesData } = await getEmployees();
-            employees.data.set(employeesData);
-            if (typeof +employeeId === "number") {
-                const emp = employeesData.find((emp) => emp.id === +employeeId);
-                emp && employees.filters.search.set(emp.full_name);
-            }
-        })();
+        if (typeof +employeeId === "number") {
+            const emp = employees.data.find(
+                (emp) => emp.id.value === +employeeId
+            );
+            emp && employees.filters.search.set(emp.full_name.value);
+        }
     }, []);
 
     return (

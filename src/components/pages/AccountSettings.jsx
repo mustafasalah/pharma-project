@@ -12,14 +12,18 @@ const AccountSettings = () => {
         <>
             <SectionHeader name="Account Settings" faClass="fas fa-user-cog" />
             <div className="grid grid-cols-3 gap-5 items-start">
-                <Section label="Personal Information" className="col-span-2">
+                <Section
+                    label="Personal Information"
+                    className="col-span-2"
+                    contentClassName="p-5 gray-inputs"
+                >
                     <PersonalInformationForm data={loggedUser} />
                 </Section>
 
                 <aside>
                     <Section
                         label="Change your password"
-                        contentClassName="p-5"
+                        contentClassName="p-5 gray-inputs"
                     >
                         <PasswordChangeForm />
                     </Section>

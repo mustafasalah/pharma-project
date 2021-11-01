@@ -33,7 +33,10 @@ function Main() {
                     component={Pharmacies}
                 />
                 <Route path={["/orders/:id", "/orders"]} component={Orders} />
-                <Route path="/" component={Dashboard} />
+                <Route
+                    path="/"
+                    render={() => <Dashboard type="pharmacy owner" />}
+                />
             </Switch>
         </main>
     );

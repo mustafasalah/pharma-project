@@ -27,13 +27,9 @@ const Pharmacies = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        (async () => {
-            const pharmaciesData = await getPharmacies();
-            pharmacies.data.set(pharmaciesData.data);
-            if (!isNaN(pharmacyId)) {
-                pharmacies.filters.search.set(pharmacyId);
-            }
-        })();
+        if (!isNaN(pharmacyId)) {
+            pharmacies.filters.search.set(pharmacyId);
+        }
     }, []);
 
     return (

@@ -3,22 +3,25 @@ import React from "react";
 import userFormState from "../../states/userFormState";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
-import { setUser } from "../../services/users";
+import { getUsers, setUser } from "../../services/users";
 import { notify } from "../../utility";
+import store from "../../state";
 
 const UserPopupForm = ({ showState }) => {
     let state = useState({
         data: { ...userFormState.data },
         errors: { ...userFormState.errors },
     });
+    const usersData = useState(store.tables.users.data);
     const { data, errors } = state;
+
     DevTools(state).label("User Popup Form");
 
     return (
         <PopupForm
             title="Add New User"
             state={showState}
-            className="grid gap-x-5 gap-y-6 grid-cols-3 text-sm"
+            className="grid gap-x-5 gap-y-6 grid-cols-3 text-sm gray-inputs"
             formButtons={[
                 {
                     label: "Add User",
@@ -30,9 +33,14 @@ const UserPopupForm = ({ showState }) => {
                 notify({
                     status,
                     successMsg: "User has been created successfully!",
-                    successCallback: () => {
+                    successCallback: async () => {
                         // Clear the form data
                         data.set({ ...userFormState.data });
+
+                        // Update users data list
+                        const { data: newUsersData } = await getUsers();
+                        usersData.set(newUsersData);
+
                         // Close the popup form
                         showState.set(false);
                     },

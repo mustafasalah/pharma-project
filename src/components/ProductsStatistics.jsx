@@ -17,8 +17,8 @@ function ProductsStatistics() {
         order: "desc",
     });
 
-    useEffect(() => {
-        const productsStatisticsData = getProductsStatistics();
+    useEffect(async () => {
+        const { data: productsStatisticsData } = await getProductsStatistics();
         productsStatistics.data.set(productsStatisticsData);
     }, []);
 

@@ -8,7 +8,7 @@ import ProductCell from "../table/ProductCell";
 import ProductForm from "../forms/ProductForm";
 import { getCategories } from "../../services/categories";
 import ProductPopupForm from "../forms/ProductPopupForm";
-import { deleteProduct, getProducts } from "../../services/products";
+import { deleteProduct } from "../../services/products";
 import { notify } from "../../utility";
 import { getCompanies } from "../../services/companies";
 
@@ -22,13 +22,13 @@ const Products = () => {
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    useEffect(() => {
-        if (showPopupForm.value) return;
-        (async () => {
-            const productsData = await getProducts();
-            products.data.set(productsData.data);
-        })();
-    }, [showPopupForm.value]);
+    // useEffect(() => {
+    //     if (showPopupForm.value) return;
+    //     (async () => {
+    //         const productsData = await getProducts();
+    //         products.data.set(productsData.data);
+    //     })();
+    // }, [showPopupForm.value]);
 
     return (
         <>

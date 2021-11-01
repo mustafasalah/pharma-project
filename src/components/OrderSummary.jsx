@@ -1,6 +1,6 @@
 import { useHookstate } from "@hookstate/core";
 import React from "react";
-import { setOrder } from "../services/orders";
+import { getOrders, setOrder } from "../services/orders";
 import store from "../state";
 import { notify } from "../utility";
 import Popup from "./common/Popup";
@@ -102,7 +102,7 @@ const OrderSummary = ({ products, discount, vat }) => {
                                             qty: qty.get(),
                                         })
                                     ),
-                                    products_amount: total,
+                                    products_amount: basketTotal,
                                     discount: actualDiscountAmount,
                                     vat: vat.get(),
                                 });
@@ -115,6 +115,15 @@ const OrderSummary = ({ products, discount, vat }) => {
                                     successCallback() {
                                         orderDetails.data.set(data);
                                         orderDetails.display.set(true);
+
+                                        // Update orders data list
+                                        (async () => {
+                                            const { data: ordersData } =
+                                                await getOrders();
+                                            store.tables.orders.data.set(
+                                                ordersData
+                                            );
+                                        })();
                                     },
                                 });
                             }}

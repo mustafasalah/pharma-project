@@ -1,5 +1,9 @@
 import http from "./http";
 
+export const setVATOption = (id, data) => {
+    return Promise.resolve({ data, status: 200 });
+};
+
 export const setDeliveryOption = (id, data) => {
     return Promise.resolve({ data, status: 200 });
 };

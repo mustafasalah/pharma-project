@@ -11,6 +11,7 @@ module.exports = {
             primary: "#00B4D8",
             secondary: "#0077B6",
             bright: "#90E0EF",
+            brighter: "rgba(144, 224, 239, 0.5)",
             white: colors.white,
             black: "#060D16",
             gray: {
@@ -23,12 +24,16 @@ module.exports = {
                 600: colors.gray[600],
                 700: colors.gray[700],
             },
+            blue: {
+                light: "rgba(140, 203, 237, 0.5)",
+            },
             red: {
                 light: colors.red[200],
                 DEFAULT: "#D80000",
                 dark: colors.red[600],
             },
             green: {
+                lighter: "rgba(147, 240, 147, 0.5)",
                 light: "#90EF93",
                 DEFAULT: "#00D800",
                 dark: "#237A23",

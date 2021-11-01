@@ -1,6 +1,6 @@
 import http from "./http";
 
-const inventoryItems = [
+export const inventoryItems = [
     {
         id: 1,
         name: "Diarrhoea. Relief - Loperamide Capsules",

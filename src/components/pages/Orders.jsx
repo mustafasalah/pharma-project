@@ -23,13 +23,9 @@ const Orders = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        (async () => {
-            const { data: ordersData } = await getOrders();
-            orders.data.set(ordersData);
-            if (!isNaN(orderId)) {
-                orders.filters.search.set(orderId);
-            }
-        })();
+        if (!isNaN(orderId)) {
+            orders.filters.search.set(orderId);
+        }
     }, []);
 
     return (

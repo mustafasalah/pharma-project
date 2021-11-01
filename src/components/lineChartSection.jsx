@@ -9,7 +9,7 @@ Chart.defaults.font.family = "Poppins";
 Chart.defaults.font.size = "12px";
 Chart.defaults.color = "#A3A3A3";
 
-function initLineChart(ctx) {
+function initLineChart(ctx, type) {
     const chart = new Chart(ctx, {
         type: "line",
         options: {
@@ -31,7 +31,10 @@ function initLineChart(ctx) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function (value, index, values) {
-                            return nFormatter(value) + " SDG";
+                            return (
+                                nFormatter(value) +
+                                (type === "admin" ? "" : " SDG")
+                            );
                         },
                     },
                 },
@@ -65,12 +68,12 @@ function initLineChart(ctx) {
     return chart;
 }
 
-function LineChartSection({ title, data, time, onTimeChange }) {
+function LineChartSection({ title, data, time, onTimeChange, type = "admin" }) {
     const canvas = useRef(null);
 
     useEffect(() => {
         const ctx = canvas.current.getContext("2d");
-        const chart = initLineChart(ctx);
+        const chart = initLineChart(ctx, type);
 
         if (chart) {
             chart.data.labels = getStatisticalLabels(time);
@@ -79,8 +82,6 @@ function LineChartSection({ title, data, time, onTimeChange }) {
             chart.data.datasets[1].label = data[1].label;
             chart.data.datasets[1].data = data[1].datasets;
             chart.update({ duration: 2000 });
-        } else {
-            console.log("work");
         }
 
         return () => chart.destroy();

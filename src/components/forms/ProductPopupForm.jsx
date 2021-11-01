@@ -5,7 +5,11 @@ import CategoriesField from "./CategoriesField";
 import CompaniesField from "./CompaniesField";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
-import { setProduct, uploadProductPhoto } from "../../services/products";
+import {
+    getProducts,
+    setProduct,
+    uploadProductPhoto,
+} from "../../services/products";
 import { notify } from "../../utility";
 import ProductPhoto from "./ProductPhoto";
 import store from "../../state";
@@ -17,6 +21,9 @@ const ProductPopupForm = ({ showState }) => {
     });
     const {
         uploads: { productPhoto },
+        tables: {
+            products: { data: productsData },
+        },
     } = useHookstate(store);
     const { data, errors } = state;
     DevTools(state).label("Product Popup Form");
@@ -34,7 +41,7 @@ const ProductPopupForm = ({ showState }) => {
                     faClass: "fas fa-plus",
                 },
             ]}
-            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
+            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm gray-inputs"
             onSubmit={async () => {
                 const { status, data: productData } = await setProduct(
                     data.get()
@@ -49,6 +56,11 @@ const ProductPopupForm = ({ showState }) => {
 
                             // Close the popup form
                             showState.set(false);
+
+                            // Update inventory data list
+                            const { data: newProductsData } =
+                                await getProducts();
+                            productsData.set(newProductsData);
                         } else {
                             const { status, data: photoData } =
                                 await uploadProductPhoto(productData.id);
@@ -67,6 +79,13 @@ const ProductPopupForm = ({ showState }) => {
 
                                     // Close the popup form
                                     showState.set(false);
+
+                                    // Update inventory data list
+                                    (async () => {
+                                        const { data: newProductsData } =
+                                            await getProducts();
+                                        productsData.set(newProductsData);
+                                    })();
                                 },
                             });
                         }

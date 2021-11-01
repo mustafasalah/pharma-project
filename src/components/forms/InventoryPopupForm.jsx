@@ -9,8 +9,13 @@ import PopupForm from "./PopupForm";
 import SuppliersField from "./SuppliersField";
 import ProductsField from "./ProductsField";
 import { getProducts } from "../../services/products";
-import { setInventoryItem } from "../../services/inventoryItems";
+import {
+    getInventoryItems,
+    inventoryItems,
+    setInventoryItem,
+} from "../../services/inventoryItems";
 import { notify } from "../../utility";
+import store from "../../state";
 
 const InventoryPopupForm = ({ showState }) => {
     let [products, setProducts] = useState([]);
@@ -18,6 +23,7 @@ const InventoryPopupForm = ({ showState }) => {
         data: { ...inventoryFormState.data },
         errors: { ...inventoryFormState.errors },
     });
+    const inventoryData = useHookstate(store.tables.inventory.data);
     const { data, errors } = state;
     DevTools(state).label("Inventory Popup Form");
 
@@ -61,17 +67,23 @@ const InventoryPopupForm = ({ showState }) => {
                     faClass: "fas fa-plus",
                 },
             ]}
-            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm"
+            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm gray-inputs"
             onSubmit={async () => {
                 const { status } = await setInventoryItem(data.get());
                 notify({
                     status,
                     successMsg: "Inventory Item has been added successfully!",
-                    successCallback: () => {
+                    successCallback: async () => {
                         // Clear the form data
                         data.set({ ...inventoryFormState.data });
+
                         // Close the popup form
                         showState.set(false);
+
+                        // Update inventory data list
+                        const { data: newInventoryData } =
+                            await getInventoryItems();
+                        inventoryData.set(newInventoryData);
                     },
                 });
             }}

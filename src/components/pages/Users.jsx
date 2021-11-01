@@ -4,7 +4,7 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { deleteUser, getUsers } from "../../services/users";
+import { deleteUser } from "../../services/users";
 import UserForm from "../forms/UserForm";
 import UserPopupForm from "../forms/UserPopupForm";
 import { useParams } from "react-router";
@@ -21,14 +21,10 @@ const Users = () => {
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        (async () => {
-            const usersData = await getUsers();
-            users.data.set(usersData.data);
-            if (typeof +userId === "number") {
-                const user = usersData.data.find((user) => user.id === +userId);
-                user && users.filters.search.set(user.first_name);
-            }
-        })();
+        if (typeof +userId === "number") {
+            const user = users.data.find((user) => user.id.value === +userId);
+            user && users.filters.search.set(user.first_name.value);
+        }
     }, []);
 
     return (

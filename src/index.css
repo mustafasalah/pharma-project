@@ -38,15 +38,17 @@
         @apply outline-none;
     }
 
-    input:disabled,
-    select:disabled {
-        @apply opacity-75 !important;
+    .gray-inputs input,
+    .gray-inputs select,
+    .gray-inputs textarea,
+    .gray-inputs .css-b62m3t-container {
+        @apply bg-gray !important;
     }
 
     input:disabled,
     select:disabled,
     .react-select--is-disabled {
-        @apply bg-gray-100 !important;
+        @apply bg-gray-100 text-gray-500 cursor-not-allowed !important;
     }
 
     .react-select__indicator {
