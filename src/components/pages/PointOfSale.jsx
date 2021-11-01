@@ -70,6 +70,7 @@ const PointOfSale = () => {
                         <DataTable data={products} columns={columns} />
                     </div>
                 </div>
+
                 <section className="col-span-1">
                     <OrderSummary
                         products={products}

@@ -157,21 +157,25 @@ const columns = [
         wrapper: ({ popupWindow, payment: { method, proof } }) => {
             return (
                 <>
-                    <span className="align-middle">{method.get()}</span>
-                    <button
-                        type="button"
-                        className="ml-2 px-2 py-1 rounded-sm text-white bg-green hover:text-green hover:bg-white hover:shadow-md transition-none shadow font-semibold text-xxs"
-                        onClick={() => {
-                            popupWindow.data.set({
-                                proof_screenshot: proof.get(),
-                            });
-                            popupWindow.type.set("payment-proof");
-                            popupWindow.display.set(true);
-                        }}
-                    >
-                        <i className="fas fa-file-invoice-dollar mr-1"></i>{" "}
-                        Proof
-                    </button>
+                    <span className="capitalize align-middle">
+                        {method.get()}
+                    </span>
+                    {proof.get() && (
+                        <button
+                            type="button"
+                            className="ml-2 px-2 py-1 rounded-sm text-white bg-green hover:text-green hover:bg-white hover:shadow-md transition-none shadow font-semibold text-xxs"
+                            onClick={() => {
+                                popupWindow.data.set({
+                                    proof_screenshot: proof.get(),
+                                });
+                                popupWindow.type.set("payment-proof");
+                                popupWindow.display.set(true);
+                            }}
+                        >
+                            <i className="fas fa-file-invoice-dollar mr-1"></i>{" "}
+                            Proof
+                        </button>
+                    )}
                 </>
             );
         },

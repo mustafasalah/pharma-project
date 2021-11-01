@@ -136,6 +136,9 @@ const OrderSummary = ({ products, discount, vat }) => {
                 state={orderDetails.display}
                 faClass="fas fa-file-invoice"
                 title={`Order Invoice`}
+                onClose={() => {
+                    products.set([]);
+                }}
             >
                 <OrderDetials data={orderDetails.data.get()} />
             </Popup>

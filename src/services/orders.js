@@ -12,7 +12,7 @@ const orders = [
         date: "24-09-2021 12:34:03 PM",
         payment: {
             method: "cash",
-            proof: "/assets/images/pay.jpg",
+            proof: "",
         },
         products: [
             {
@@ -63,9 +63,20 @@ export const getOrders = () => {
 };
 
 export const setOrder = (data) => {
-    console.log(data);
+    const newOrder = {
+        id: orders.length + Math.round(Math.random() * 100),
+        payment: {
+            method: "cash",
+            proof: "",
+        },
+        delivery: 0,
+        ...data,
+    };
+
+    orders.push(newOrder);
+
     return Promise.resolve({
-        data: { id: orders.length + Math.round(Math.random() * 100), ...data },
+        data: newOrder,
         status: 200,
     });
 };
