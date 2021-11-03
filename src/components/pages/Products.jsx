@@ -22,14 +22,6 @@ const Products = () => {
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
-    // useEffect(() => {
-    //     if (showPopupForm.value) return;
-    //     (async () => {
-    //         const productsData = await getProducts();
-    //         products.data.set(productsData.data);
-    //     })();
-    // }, [showPopupForm.value]);
-
     return (
         <>
             <SectionHeader

@@ -93,7 +93,12 @@ const columns = [
             else return "-";
         },
     },
-    { title: "last seen", sortable: false, prop: "last_seen" },
+    {
+        title: "last seen",
+        sortable: false,
+        prop: "last_seen",
+        defaultValue: "Not logged in yet",
+    },
     { title: "joining date", prop: "joining_date" },
     {
         title: "manage",

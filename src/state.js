@@ -13,6 +13,7 @@ const store = createState({
         overview: overviewStatisticState,
     },
     loggedUser: {},
+    pharmacyBranches: [],
     pharmacyBranch: {},
     notifications: [],
     uploads: {

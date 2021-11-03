@@ -8,38 +8,29 @@ import FormField from "./FormField";
 import PopupForm from "./PopupForm";
 import SuppliersField from "./SuppliersField";
 import ProductsField from "./ProductsField";
-import { getProducts } from "../../services/products";
 import {
     getInventoryItems,
-    inventoryItems,
     setInventoryItem,
 } from "../../services/inventoryItems";
 import { notify } from "../../utility";
 import store from "../../state";
 
 const InventoryPopupForm = ({ showState }) => {
-    let [products, setProducts] = useState([]);
     let state = useHookstate({
         data: { ...inventoryFormState.data },
         errors: { ...inventoryFormState.errors },
     });
+    const productsData = useHookstate(store.tables.products.data);
     const inventoryData = useHookstate(store.tables.inventory.data);
     const { data, errors } = state;
     DevTools(state).label("Inventory Popup Form");
 
     useEffect(() => {
-        (async () => {
-            const { data } = await getProducts();
-            setProducts(data);
-        })();
-    }, []);
-
-    useEffect(() => {
         let scanneredBarcode = "";
         window.onkeypress = ({ keyCode, key }) => {
             if (keyCode === 13) {
-                const product = products.find(
-                    ({ barcode }) => barcode === scanneredBarcode
+                const product = productsData.find(
+                    ({ barcode }) => barcode.value === scanneredBarcode
                 );
                 if (product) {
                     data.productId.set(product.id);
@@ -100,8 +91,8 @@ const InventoryPopupForm = ({ showState }) => {
                 type="select"
                 value={data.name}
                 onChange={({ value: selectedId }) => {
-                    const product = products.find(
-                        ({ id }) => id === selectedId
+                    const product = productsData.find(
+                        ({ id }) => id.value === selectedId
                     );
                     data.productId.set(product.id);
                     data.name.set(product.name);
@@ -121,13 +112,13 @@ const InventoryPopupForm = ({ showState }) => {
                 type="select"
                 id="2"
                 value={data.barcode}
-                options={products.map(({ barcode, id }) => ({
-                    label: barcode,
-                    value: id,
+                options={productsData.map(({ barcode, id }) => ({
+                    label: barcode.value,
+                    value: id.value,
                 }))}
                 onChange={({ value: selectedId }) => {
-                    const product = products.find(
-                        ({ id }) => id === selectedId
+                    const product = productsData.find(
+                        ({ id }) => id.value === selectedId
                     );
                     data.productId.set(product.id);
                     data.name.set(product.name);

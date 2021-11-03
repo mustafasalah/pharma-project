@@ -49,10 +49,7 @@ const PharmacySettings = () => {
                         />
                     </Section>
 
-                    <Section
-                        label="VAT Option"
-                        className="mt-5 text-sm gray-inputs"
-                    >
+                    <Section label="VAT Option" className="mt-5 gray-inputs">
                         <Note className="text-smd mb-5">
                             <strong>Note:</strong> This VAT will be added to the
                             total price of online and local orders.
@@ -73,6 +70,7 @@ const PharmacySettings = () => {
                                     },
                                 });
                             }}
+                            className="text-smd"
                         >
                             <FormField
                                 label="VAT amount (SDG)"
@@ -90,7 +88,7 @@ const PharmacySettings = () => {
 
                     <Section
                         label="Delivery Option"
-                        className="mt-5 text-sm gray-inputs"
+                        className="mt-5 gray-inputs"
                     >
                         <Note className="text-smd mb-5">
                             <strong>Note:</strong> If home delivery is enabled,

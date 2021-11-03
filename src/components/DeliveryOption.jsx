@@ -41,7 +41,7 @@ const DeliveryOption = ({ data: { id, support_delivery, delivery_cost } }) => {
     };
 
     return (
-        <form onSubmit={handleSave} className="grid gap-y-5">
+        <form onSubmit={handleSave} className="grid gap-y-5 text-smd">
             <FormField
                 className="flex flex-col"
                 id="support_delivery"

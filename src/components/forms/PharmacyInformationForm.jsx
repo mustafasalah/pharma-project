@@ -33,7 +33,7 @@ const PharmacyInformationForm = ({ data }) => {
                 });
             }}
         >
-            <div className="grid grid-cols-4 gap-5 text-sm">
+            <div className="grid grid-cols-4 gap-5 text-smd">
                 <FormField
                     className="flex flex-col col-span-2"
                     label="pharmacy name"

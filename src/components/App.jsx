@@ -1,53 +1,43 @@
-import React, { useEffect, useState } from "react";
+import { useHookstate } from "@hookstate/core";
+import React, { useCallback, useEffect } from "react";
+import { Route, Switch } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import { login } from "../services/auth";
-import { getEmployees } from "../services/employees";
-import { getInventoryItems } from "../services/inventoryItems";
-import { getNotifications } from "../services/notifications";
-import { getOrders } from "../services/orders";
-import { getPharmacies } from "../services/pharmacies";
-import { getPharmacyBranchInfo } from "../services/pharmacyBranch";
-import { getProducts } from "../services/products";
-import { getUsers } from "../services/users";
 import store from "../state";
-import Header from "./Header";
+import ControlPanel from "./ControlPanel";
 import Loading from "./Loading";
-import Main from "./Main";
-import TopBar from "./TopBar";
+import MyPharmacies from "./pages/MyPharmacies";
 
 function App() {
-    const [loading, setLoading] = useState(true);
-    const { loggedUser, pharmacyBranch, notifications, tables, statistics } =
-        store;
-    useEffect(async () => {
-        try {
-            const appData = await Promise.all([
-                login(),
-                getPharmacyBranchInfo(),
-                getNotifications(),
-                getInventoryItems(),
-                getEmployees(),
-                getUsers(),
-                getOrders(),
-                getPharmacies(),
-                getProducts(),
-            ]);
+    const { loggedUser, pharmacyBranch } = useHookstate(store);
+    const loading = useHookstate(true);
 
-            loggedUser.set(appData[0].data);
-            pharmacyBranch.set(appData[1].data);
-            notifications.set(appData[2].data);
-            tables.inventory.data.set(appData[3].data);
-            tables.employees.data.set(appData[4].data);
-            tables.users.data.set(appData[5].data);
-            tables.orders.data.set(appData[6].data);
-            tables.pharmacies.data.set(appData[7].data);
-            tables.products.data.set(appData[8].data);
-
-            window.setTimeout(() => setLoading(false), 800);
-        } catch (ex) {
-            toast.error("Server Error!");
-        }
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data: loggedUserData } = await login();
+                loggedUser.set(loggedUserData);
+                loading.set(false);
+            } catch (ex) {
+                toast.error("Login Error!");
+            }
+        })();
     }, []);
+
+    const renderControlPanel = useCallback(
+        ({ history }) => {
+            const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
+            const isPharmacyBranchSelected =
+                pharmacyBranch.id.value !== undefined;
+
+            if (isPharmacyOwner && !isPharmacyBranchSelected) {
+                history.replace("/my-pharmacies");
+            }
+
+            return <ControlPanel />;
+        },
+        [loggedUser.role.value, pharmacyBranch.id.ornull]
+    );
 
     return (
         <>
@@ -62,14 +52,19 @@ function App() {
                 draggable
                 pauseOnHover
             />
-            {loading ? (
+            {loading.get() ? (
                 <Loading />
             ) : (
-                <>
-                    <TopBar />
-                    <Header />
-                    <Main />
-                </>
+                <Switch>
+                    {loggedUser.role.get() === "pharmacy owner" && (
+                        <Route
+                            path="/my-pharmacies"
+                            component={MyPharmacies}
+                            exact
+                        />
+                    )}
+                    <Route path="/" render={renderControlPanel} />
+                </Switch>
             )}
         </>
     );

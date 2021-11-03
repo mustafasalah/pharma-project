@@ -87,7 +87,15 @@ export const setUser = async ({
         city,
         address,
     };
-    return await Promise.resolve({ status: 200 });
+
+    const newUser = {
+        id: users.length + Math.round(Math.random() * 100),
+        ...data,
+    };
+
+    users.push(newUser);
+
+    return await Promise.resolve({ data: newUser, status: 200 });
     // return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 

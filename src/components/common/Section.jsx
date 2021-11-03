@@ -17,7 +17,7 @@ const Section = ({ label, className, children, contentClassName = "p-5" }) => {
                 onClick={handleDisplay}
                 className={`${
                     display ? "rounded-t" : "rounded"
-                } bg-gray cursor-pointer items-center flex text-sm text-gray-700 border-b-2 px-4 py-3 font-semibold`}
+                } bg-gray cursor-pointer items-center flex text-sm text-gray-600 select-none border-b-2 px-4 py-3 font-semibold`}
             >
                 {label}
                 <i

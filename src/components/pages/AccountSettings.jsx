@@ -15,7 +15,7 @@ const AccountSettings = () => {
                 <Section
                     label="Personal Information"
                     className="col-span-2"
-                    contentClassName="p-5 gray-inputs"
+                    contentClassName="p-5 gray-inputs text-smd"
                 >
                     <PersonalInformationForm data={loggedUser} />
                 </Section>
@@ -23,7 +23,7 @@ const AccountSettings = () => {
                 <aside>
                     <Section
                         label="Change your password"
-                        contentClassName="p-5 gray-inputs"
+                        contentClassName="p-5 gray-inputs text-smd"
                     >
                         <PasswordChangeForm />
                     </Section>

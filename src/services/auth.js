@@ -14,6 +14,7 @@ export const login = async (username, password) => {
             city: "omdurman",
             address: "Al thwrah, al harah 59, al shingety street",
         },
+        status: 200,
     });
 };
 

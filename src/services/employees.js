@@ -68,11 +68,25 @@ export const setEmployee = async ({
         work_from,
         work_to,
     };
+
+    const newEmployee = {
+        id: employees.length + Math.round(Math.random() * 100),
+        joining_date: new Date()
+            .toJSON()
+            .slice(0, 10)
+            .split("-")
+            .reverse()
+            .join("-"),
+        last_seen: "",
+        ...data,
+    };
+
+    employees.push(newEmployee);
+
     return Promise.resolve({
-        data: { id: employees.length, ...data },
+        data: newEmployee,
         status: 200,
     });
-    //return await http.post("https://jsonplaceholder.typicode.com/posts", data);
 };
 
 export const updateEmployee = async ({
