@@ -6,7 +6,6 @@ import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
 import {
     deletePharmacy,
-    getPharmacies,
     updatePharmacyStatus,
 } from "../../services/pharmacies";
 import { Link } from "react-router-dom";
@@ -28,9 +27,12 @@ const Pharmacies = () => {
 
     useEffect(() => {
         if (!isNaN(pharmacyId)) {
-            pharmacies.filters.search.set(pharmacyId);
+            const pharmacy = pharmacies.data.find(
+                (pharmacy) => pharmacy.id.value === +pharmacyId
+            );
+            pharmacy && pharmacies.filters.search.set(pharmacy.name.value);
         }
-    }, []);
+    }, [pharmacyId]);
 
     return (
         <>

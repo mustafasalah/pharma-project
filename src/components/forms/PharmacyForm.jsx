@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Form from "./Form";
 import FormField from "./FormField";
-import { notify } from "../../utility";
+import { getCityOptions, notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
 import { updatePharmacyStatus } from "../../services/pharmacies";
 
@@ -154,6 +154,8 @@ const PharmacyForm = ({
                 label="city"
                 name="city"
                 id="8"
+                type="select"
+                options={getCityOptions()}
                 value={formState.city}
                 placeholder="city name here..."
                 required

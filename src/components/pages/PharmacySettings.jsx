@@ -18,7 +18,7 @@ const PharmacySettings = () => {
     return (
         <>
             <SectionHeader name="Pharmacy Settings" faClass="fas fa-cogs" />
-            <div className="grid grid-cols-3 gap-5 items-start">
+            <div className="grid grid-cols-3 gap-5 items-start animate__animated animate__fadeIn">
                 <Section
                     label="Pharmacy Information"
                     className="col-span-2"

@@ -4,7 +4,7 @@ import userFormState from "../../states/userFormState";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
 import { getUsers, setUser } from "../../services/users";
-import { notify } from "../../utility";
+import { getCityOptions, notify } from "../../utility";
 import store from "../../state";
 
 const UserPopupForm = ({ showState }) => {
@@ -163,6 +163,8 @@ const UserPopupForm = ({ showState }) => {
                 name="city"
                 id="10"
                 value={data.city}
+                type="select"
+                options={getCityOptions()}
                 placeholder="city name here..."
             />
 

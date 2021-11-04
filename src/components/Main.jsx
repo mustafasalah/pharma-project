@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router";
+import { Switch, Route, Redirect } from "react-router";
 import Inventory from "./pages/Inventory";
 import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
@@ -41,6 +41,7 @@ function Main() {
                         path="/account-settings"
                         component={AccountSettings}
                     />
+                    <Redirect to="/" />
                 </Switch>
             ) : (
                 <Switch>
@@ -58,7 +59,10 @@ function Main() {
                         path={["/staff/:id", "/staff"]}
                         component={Employees}
                     />
-                    <Route path="/Inventory" component={Inventory} />
+                    <Route
+                        path={["/Inventory/:id", "/Inventory"]}
+                        component={Inventory}
+                    />
                     <Route
                         path="/pharmacy-settings"
                         component={PharmacySettings}
@@ -67,6 +71,7 @@ function Main() {
                         path="/account-settings"
                         component={AccountSettings}
                     />
+                    <Redirect to="/" />
                 </Switch>
             )}
         </main>

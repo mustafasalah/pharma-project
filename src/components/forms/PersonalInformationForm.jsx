@@ -2,7 +2,7 @@ import React from "react";
 import Form from "./Form";
 import FormField from "./FormField";
 import { updateUser } from "../../services/users";
-import { notify } from "../../utility";
+import { getCityOptions, notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
 
 const PersonalInformationForm = ({ data: state }) => {
@@ -114,6 +114,8 @@ const PersonalInformationForm = ({ data: state }) => {
                 name="city"
                 id="10"
                 value={formState.city}
+                type="select"
+                options={getCityOptions()}
                 placeholder="city name here..."
             />
 

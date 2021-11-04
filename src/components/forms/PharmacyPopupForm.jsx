@@ -8,7 +8,7 @@ import {
     getPharmacyBasicInfo,
     updatePharmacyBranch,
 } from "../../services/pharmacies";
-import { notify } from "../../utility";
+import { getCityOptions, notify } from "../../utility";
 import store from "../../state";
 import { setPharmacyBranch } from "../../services/pharmacies";
 import Note from "../common/Note";
@@ -208,6 +208,8 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 label="city"
                 name="city"
                 id="8"
+                type="select"
+                options={getCityOptions()}
                 value={data.city}
                 placeholder="city name here..."
                 required

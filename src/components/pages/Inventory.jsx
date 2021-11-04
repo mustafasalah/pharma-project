@@ -8,11 +8,9 @@ import ProductCell from "../table/ProductCell";
 import InventoryForm from "../forms/InventoryForm";
 import { getCategories } from "../../services/categories";
 import InventoryPopupForm from "../forms/InventoryPopupForm";
-import {
-    deleteInventoryItem,
-    getInventoryItems,
-} from "../../services/inventoryItems";
+import { deleteInventoryItem } from "../../services/inventoryItems";
 import { notify } from "../../utility";
+import { useParams } from "react-router";
 
 const Inventory = () => {
     const {
@@ -22,6 +20,16 @@ const Inventory = () => {
 
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
+    let { id: inventoryItemId } = useParams();
+
+    useEffect(() => {
+        if (typeof +inventoryItemId === "number") {
+            const item = inventory.data.find(
+                (item) => item.id.value === +inventoryItemId
+            );
+            item && inventory.filters.search.set(item.name.value);
+        }
+    }, [inventoryItemId]);
 
     return (
         <>

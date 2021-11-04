@@ -25,7 +25,7 @@ const Users = () => {
             const user = users.data.find((user) => user.id.value === +userId);
             user && users.filters.search.set(user.first_name.value);
         }
-    }, []);
+    }, [userId]);
 
     return (
         <>

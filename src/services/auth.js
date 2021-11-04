@@ -10,6 +10,7 @@ export const login = async (username, password) => {
             last_name: "Salah",
             gender: "m",
             role: "pharmacy owner",
+            // role: "admin",
             state: "khartoum",
             city: "omdurman",
             address: "Al thwrah, al harah 59, al shingety street",

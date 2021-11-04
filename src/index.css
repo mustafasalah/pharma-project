@@ -38,7 +38,7 @@
         @apply outline-none;
     }
 
-    .gray-inputs input,
+    .gray-inputs input:not(.react-select__input),
     .gray-inputs select,
     .gray-inputs textarea,
     .gray-inputs .css-b62m3t-container {
@@ -89,6 +89,18 @@
 }
 
 @tailwind utilities;
+
+@layer utilities {
+    .highlighted {
+        animation: highlight 2s ease-in-out 4 alternate;
+    }
+
+    @keyframes highlight {
+        100% {
+            @apply bg-brighter;
+        }
+    }
+}
 
 @media print {
     * {

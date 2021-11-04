@@ -1,9 +1,9 @@
 import React from "react";
 
-function TableRow({ data, edited = false, form, columnsWidth }) {
+function TableRow({ data, edited = false, form, columnsWidth, highlight }) {
     return (
         <>
-            <tr className="last:rounded-b">
+            <tr className={`last:rounded-b ${highlight ? "highlighted" : ""}`}>
                 {data.map((cell, i) => (
                     <td
                         key={i}

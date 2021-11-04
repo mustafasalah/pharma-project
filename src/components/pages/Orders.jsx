@@ -26,7 +26,7 @@ const Orders = () => {
         if (!isNaN(orderId)) {
             orders.filters.search.set(orderId);
         }
-    }, []);
+    }, [orderId]);
 
     return (
         <>

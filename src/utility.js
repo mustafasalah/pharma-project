@@ -1,6 +1,14 @@
 import React from "react";
 import { toast } from "react-toastify";
 
+export const getCityOptions = () => {
+    return [
+        { label: "Khartoum", value: "khartoum" },
+        { label: "Omdurman", value: "omdurman" },
+        { label: "Bhary", value: "bhary" },
+    ];
+};
+
 export const handleUploadProgress = (uploadMsg) => {
     let toastId = React.createRef();
     return {

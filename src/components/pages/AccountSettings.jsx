@@ -11,7 +11,7 @@ const AccountSettings = () => {
     return (
         <>
             <SectionHeader name="Account Settings" faClass="fas fa-user-cog" />
-            <div className="grid grid-cols-3 gap-5 items-start">
+            <div className="grid grid-cols-3 gap-5 items-start animate__animated animate__fadeIn">
                 <Section
                     label="Personal Information"
                     className="col-span-2"

@@ -1,7 +1,7 @@
 import { useHookstate } from "@hookstate/core";
 import React from "react";
 import { setPharmacyInformation } from "../../services/pharmacyBranch";
-import { notify } from "../../utility";
+import { getCityOptions, notify } from "../../utility";
 import FormButton from "./FormButton";
 import FormField from "./FormField";
 
@@ -105,6 +105,8 @@ const PharmacyInformationForm = ({ data }) => {
                     label="city"
                     name="city"
                     id="10"
+                    type="select"
+                    options={getCityOptions()}
                     value={formData.city}
                     placeholder="city name here..."
                 />

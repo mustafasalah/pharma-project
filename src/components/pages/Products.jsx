@@ -11,6 +11,7 @@ import ProductPopupForm from "../forms/ProductPopupForm";
 import { deleteProduct } from "../../services/products";
 import { notify } from "../../utility";
 import { getCompanies } from "../../services/companies";
+import { useParams } from "react-router";
 
 const Products = () => {
     const {
@@ -19,8 +20,18 @@ const Products = () => {
     } = useState(store);
     DevTools(products).label("Product");
 
+    let { id: productId } = useParams();
     const showPopupForm = useState(false);
     const sortColumn = useState({ columnName: "id", order: "desc" });
+
+    useEffect(() => {
+        if (typeof +productId === "number") {
+            const product = products.data.find(
+                (product) => product.id.value === +productId
+            );
+            product && products.filters.search.set(product.name.value);
+        }
+    }, [productId]);
 
     return (
         <>

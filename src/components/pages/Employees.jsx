@@ -27,7 +27,7 @@ const Employees = () => {
             );
             emp && employees.filters.search.set(emp.full_name.value);
         }
-    }, []);
+    }, [employeeId]);
 
     return (
         <>
