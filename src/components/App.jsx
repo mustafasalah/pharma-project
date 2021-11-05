@@ -24,21 +24,6 @@ function App() {
         })();
     }, []);
 
-    const renderControlPanel = useCallback(
-        ({ history }) => {
-            const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
-            const isPharmacyBranchSelected =
-                pharmacyBranch.id.value !== undefined;
-
-            if (isPharmacyOwner && !isPharmacyBranchSelected) {
-                history.replace("/my-pharmacies");
-            }
-
-            return <ControlPanel />;
-        },
-        [loggedUser.role.value, pharmacyBranch.id.ornull]
-    );
-
     return (
         <>
             <ToastContainer
@@ -52,20 +37,7 @@ function App() {
                 draggable
                 pauseOnHover
             />
-            {loading.get() ? (
-                <Loading />
-            ) : (
-                <Switch>
-                    {loggedUser.role.get() === "pharmacy owner" && (
-                        <Route
-                            path="/my-pharmacies"
-                            component={MyPharmacies}
-                            exact
-                        />
-                    )}
-                    <Route path="/" render={renderControlPanel} />
-                </Switch>
-            )}
+            {loading.get() ? <Loading /> : <ControlPanel />}
         </>
     );
 }

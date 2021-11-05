@@ -48,7 +48,7 @@ const ControlPanel = () => {
                     tables.orders.data.set(appData[3].data);
                     tables.products.data.set(appData[4].data);
                 }
-                window.setTimeout(() => setLoading(false), 800);
+                window.setTimeout(() => setLoading(false), 500);
             })();
         } catch (ex) {
             toast.error("Network Error in loading resourse.");

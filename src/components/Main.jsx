@@ -12,16 +12,41 @@ import AccountSettings from "./pages/AccountSettings";
 import PointOfSale from "./pages/PointOfSale";
 import { useState } from "@hookstate/core";
 import store from "../state";
+import MyPharmacies from "./pages/MyPharmacies";
 
 function Main() {
-    const { loggedUser } = useState(store);
+    const { loggedUser, pharmacyBranch, collapseMenu } = useState(store);
+    const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
+    const isPharmacyBranchSelected = pharmacyBranch.id.value !== undefined;
+
+    // const renderControlPanel = useCallback(
+    //     ({ history }) => {
+    //         if (isPharmacyOwner && !isPharmacyBranchSelected) {
+    //             history.replace("/my-pharmacies");
+    //         }
+
+    //         return <ControlPanel />;
+    //     },
+    //     [loggedUser.role.value, pharmacyBranch.id.ornull]
+    // );
 
     return (
         <main
-            className="mt-21.5 ml-64 py-8 px-8 overflow-hidden"
+            className={`${
+                collapseMenu.value ? "ml-24" : "ml-64"
+            } mt-21.5 py-8 px-8 overflow-hidden transition-all`}
             style={{ minHeight: "calc(100vh - 100px)" }}
         >
-            {loggedUser.role.get() === "admin" ? (
+            {!isPharmacyBranchSelected ? (
+                <Switch>
+                    <Route
+                        path="/account-settings"
+                        component={AccountSettings}
+                    />
+                    <Route path="/my-pharmacies" component={MyPharmacies} />
+                    <Redirect from="/" to="/my-pharmacies" />
+                </Switch>
+            ) : !isPharmacyOwner ? (
                 <Switch>
                     <Route
                         path="/"
@@ -50,6 +75,7 @@ function Main() {
                         exact
                         render={() => <Dashboard type="pharmacy owner" />}
                     />
+                    <Route path="/my-pharmacies" component={MyPharmacies} />
                     <Route
                         path={["/orders/:id", "/orders"]}
                         component={Orders}

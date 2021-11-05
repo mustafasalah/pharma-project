@@ -5,7 +5,6 @@ import store from "../../state";
 import SectionHeader from "../common/SectionHeader";
 import PharmacyPopupForm from "../forms/PharmacyPopupForm";
 import Loading from "../Loading";
-import TopBar from "../TopBar";
 
 const MyPharmacies = ({ history }) => {
     const pharmacyBranches = useState(store.pharmacyBranches);
@@ -13,6 +12,9 @@ const MyPharmacies = ({ history }) => {
     const loading = useState(true);
     const displayPopupForm = useState(false);
     const pharmacyBranchFormState = useState(undefined);
+
+    // Reset selected pharmacy branch to nothing
+    pharmacyBranch.id.ornull && pharmacyBranch.set({});
 
     const handlePharmacySelection = (selectedPharmacyBranch) => {
         switch (selectedPharmacyBranch.status) {
@@ -47,34 +49,31 @@ const MyPharmacies = ({ history }) => {
         <Loading />
     ) : (
         <>
-            <TopBar withLogo />
-            <main className="px-6 mt-8">
-                <SectionHeader
-                    name="Your Pharmacies"
-                    faClass="fas fa-clinic-medical"
-                />
-                <div className="grid grid-cols-4 gap-10">
-                    {pharmacyBranches.map((pharmacyBranch) => (
-                        <PharmacyCard
-                            key={pharmacyBranch.id.get()}
-                            data={pharmacyBranch.get()}
-                            onClick={() =>
-                                handlePharmacySelection(pharmacyBranch.get())
-                            }
-                        />
-                    ))}
-                    <AddPharmacyBranchCard
-                        onClick={() => {
-                            pharmacyBranchFormState.set(undefined);
-                            displayPopupForm.set(true);
-                        }}
+            <SectionHeader
+                name="Your Pharmacies"
+                faClass="fas fa-clinic-medical"
+            />
+            <div className="grid grid-cols-4 gap-8">
+                {pharmacyBranches.map((pharmacyBranch) => (
+                    <PharmacyCard
+                        key={pharmacyBranch.id.get()}
+                        data={pharmacyBranch.get()}
+                        onClick={() =>
+                            handlePharmacySelection(pharmacyBranch.get())
+                        }
                     />
-                </div>
-                <PharmacyPopupForm
-                    showState={displayPopupForm}
-                    formState={pharmacyBranchFormState.get()}
+                ))}
+                <AddPharmacyBranchCard
+                    onClick={() => {
+                        pharmacyBranchFormState.set(undefined);
+                        displayPopupForm.set(true);
+                    }}
                 />
-            </main>
+            </div>
+            <PharmacyPopupForm
+                showState={displayPopupForm}
+                formState={pharmacyBranchFormState.get()}
+            />
         </>
     );
 };

@@ -9,6 +9,7 @@ import productsStatisticsState from "./states/productsStatisticsState";
 import usersState from "./states/usersState";
 
 const store = createState({
+    collapseMenu: localStorage.getItem("collapse_menu") === "true",
     statistics: {
         overview: overviewStatisticState,
     },

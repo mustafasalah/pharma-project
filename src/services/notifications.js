@@ -15,7 +15,6 @@ let notifications = [
         data: {
             id: 3,
             name: "CVS Pharmacy",
-            branch: "Bhary Branch",
             owner: "Mustafa Salah",
         },
     },

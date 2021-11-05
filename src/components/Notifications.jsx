@@ -109,7 +109,7 @@ function Notification({ content }) {
                 }}
             >
                 <span
-                    className={`bg-${colorsMap.current[type]} capitalize py-0.5 px-2 inline-block mb-1.5 rounded-sm font-semibold text-xxs text-white`}
+                    className={`bg-${colorsMap.current[type]} shadow capitalize py-0.5 px-2 inline-block mb-1.5 rounded-sm font-semibold text-xxs text-white`}
                 >
                     {type.replace(/_/g, " ")}
                 </span>

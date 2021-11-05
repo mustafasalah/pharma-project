@@ -1,33 +1,41 @@
+import { useState } from "@hookstate/core";
 import React from "react";
+import { Link } from "react-router-dom";
+import store from "../state";
+import CollapseBtn from "./CollapseBtn";
 
 function Logo({
     className = "flex items-center py-6 border-b-2 border-r border-gray-200",
     withoutCollapseBtn = false,
 }) {
+    const { collapseMenu } = useState(store);
+
     return (
         <div className={className}>
             <div id="logo" className="px-6">
-                <a className="block" href="/">
-                    <img src="/assets/images/logo.png" alt="Pharma Logo" />
-                </a>
+                <Link className="block" to="/">
+                    {collapseMenu.value && !withoutCollapseBtn ? (
+                        <img
+                            src="/assets/images/mini-logo.png"
+                            alt="Pharma Logo"
+                            style={{
+                                width: 47,
+                                height: 39.16,
+                            }}
+                        />
+                    ) : (
+                        <img
+                            src="/assets/images/logo.png"
+                            alt="Pharma Logo"
+                            style={{
+                                width: 178.5,
+                                height: 37.19,
+                            }}
+                        />
+                    )}
+                </Link>
             </div>
-            {!withoutCollapseBtn && (
-                <button
-                    id="collapse-btn"
-                    className="
-            text-xs
-            px-2.5
-            py-1.5
-            text-gray-300
-            bg-gray-100
-            rounded-l
-            border border-r-0 border-gray-200 transition-none
-            active:bg-primary active:border-primary active:text-white
-        "
-                >
-                    <i className="fas fa-chevron-left"></i>
-                </button>
-            )}
+            {!withoutCollapseBtn && !collapseMenu.value && <CollapseBtn />}
         </div>
     );
 }

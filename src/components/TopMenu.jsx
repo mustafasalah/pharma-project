@@ -67,7 +67,7 @@ function TopMenuItem({ children, submenu, onClick, active }) {
             </button>
             {submenu && (
                 <ul
-                    className={`absolute z-40 top-full border-t max-h-72 overflow-y-auto border-gray-200 right-0 bg-white shadow-lg border-1 w-80 text-sm rounded-b transform origin-top-right transition-transform duration-500 scale-0${
+                    className={`absolute z-40 top-full border-t max-h-80 overflow-y-auto border-gray-200 right-0 bg-white shadow-lg border-1 w-80 text-sm rounded-b transform origin-top-right transition-transform duration-500 scale-0${
                         active ? " scale-100" : ""
                     }`}
                 >

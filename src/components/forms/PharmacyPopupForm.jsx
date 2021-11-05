@@ -34,7 +34,6 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                       email: data.email.get(),
                   }
         );
-        console.log(data.phone_numbers);
     }, [formState]);
 
     useEffect(() => {

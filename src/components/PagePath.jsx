@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const pagesName = new Map([
     ["/", "Dashboard"],
+    ["/my-pharmacies", "My Pharmacies"],
     ["/inventory", "Inventory"],
     ["/pharmacies", "Pharmacies"],
     ["/products", "Products"],
