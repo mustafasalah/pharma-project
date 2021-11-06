@@ -19,17 +19,6 @@ function Main() {
     const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
     const isPharmacyBranchSelected = pharmacyBranch.id.value !== undefined;
 
-    // const renderControlPanel = useCallback(
-    //     ({ history }) => {
-    //         if (isPharmacyOwner && !isPharmacyBranchSelected) {
-    //             history.replace("/my-pharmacies");
-    //         }
-
-    //         return <ControlPanel />;
-    //     },
-    //     [loggedUser.role.value, pharmacyBranch.id.ornull]
-    // );
-
     return (
         <main
             className={`${
@@ -37,7 +26,7 @@ function Main() {
             } mt-21.5 py-8 px-8 overflow-hidden transition-all`}
             style={{ minHeight: "calc(100vh - 100px)" }}
         >
-            {!isPharmacyBranchSelected ? (
+            {!isPharmacyBranchSelected && isPharmacyOwner ? (
                 <Switch>
                     <Route
                         path="/account-settings"

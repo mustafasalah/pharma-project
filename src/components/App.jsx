@@ -1,28 +1,28 @@
 import { useHookstate } from "@hookstate/core";
-import React, { useCallback, useEffect } from "react";
-import { Route, Switch } from "react-router";
-import { toast, ToastContainer } from "react-toastify";
-import { login } from "../services/auth";
+import React from "react";
+import { Redirect, Route, useHistory } from "react-router";
+import { ToastContainer } from "react-toastify";
 import store from "../state";
+import Authentication from "./Authentication";
 import ControlPanel from "./ControlPanel";
 import Loading from "./Loading";
-import MyPharmacies from "./pages/MyPharmacies";
 
 function App() {
-    const { loggedUser, pharmacyBranch } = useHookstate(store);
+    const { loggedUser } = useHookstate(store);
+    const { history } = useHistory();
     const loading = useHookstate(true);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const { data: loggedUserData } = await login();
-                loggedUser.set(loggedUserData);
-                loading.set(false);
-            } catch (ex) {
-                toast.error("Login Error!");
-            }
-        })();
-    }, []);
+    // useEffect(() => {
+    //     (async () => {
+    //         try {
+    //             const { data: loggedUserData } = await login();
+    //             loggedUser.set(loggedUserData);
+    //             loading.set(false);
+    //         } catch (ex) {
+    //             toast.error("Login Error!");
+    //         }
+    //     })();
+    // }, []);
 
     return (
         <>
@@ -37,7 +37,17 @@ function App() {
                 draggable
                 pauseOnHover
             />
-            {loading.get() ? <Loading /> : <ControlPanel />}
+            {loggedUser.id.ornull ? (
+                loading.get() ? (
+                    <Loading />
+                ) : (
+                    <ControlPanel />
+                )
+            ) : (
+                <>
+                    <Authentication />
+                </>
+            )}
         </>
     );
 }

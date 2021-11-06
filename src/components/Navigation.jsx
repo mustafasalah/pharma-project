@@ -7,6 +7,7 @@ import MenuItem from "./MenuItem";
 function Navigation() {
     const { loggedUser, collapseMenu, pharmacyBranch } = useState(store);
     const isPharmacyBranchSelected = pharmacyBranch.id.value !== undefined;
+    const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
 
     return (
         <nav id="main-nav" className="text-sm">
@@ -16,7 +17,7 @@ function Navigation() {
                         <CollapseBtn className="menu-item w-full justify-center transition-none text-gray-400 hover:bg-gray-100 hover:text-primary" />
                     </li>
                 )}
-                {!isPharmacyBranchSelected ? (
+                {!isPharmacyBranchSelected && isPharmacyOwner ? (
                     <MenuItem
                         title="My Pharmacies"
                         faClass="fas fa-clinic-medical"

@@ -40,28 +40,56 @@ function TopMenu({ withoutNotifications = false }) {
                 </TopMenuItem>
             )}
 
-            <TopMenuItem
-                submenu={<AccountMenu />}
-                active={activeMenu === 2}
-                onClick={() =>
-                    activeMenu === 2 ? changeActive(0) : changeActive(2)
-                }
-            >
-                <span>My Account</span>
-                <i className="fas fa-user-circle ml-2 text-primary"></i>
-            </TopMenuItem>
+            {loggedUser.id.ornull ? (
+                <TopMenuItem
+                    submenu={<AccountMenu />}
+                    active={activeMenu === 2}
+                    onClick={() =>
+                        activeMenu === 2 ? changeActive(0) : changeActive(2)
+                    }
+                >
+                    <span>My Account</span>
+                    <i className="fas fa-user-circle ml-2 text-primary"></i>
+                </TopMenuItem>
+            ) : (
+                <>
+                    <TopMenuItem
+                        active={location.pathname === "/login"}
+                        onClick={() => history.push("/login")}
+                    >
+                        <span>Login</span>
+                        <i className="fas fa-sign-in-alt ml-2 text-primary"></i>
+                    </TopMenuItem>
+
+                    <TopMenuItem
+                        active={location.pathname === "/sign-up"}
+                        onClick={() => history.push("/sign-up")}
+                        className={
+                            location.pathname === "/sign-up"
+                                ? ""
+                                : "bg-primary group text-white"
+                        }
+                    >
+                        <span>Sign Up</span>
+                        <i
+                            className={`fas fa-plus-square ml-2 group-hover:text-primary`}
+                        ></i>
+                    </TopMenuItem>
+                </>
+            )}
         </ul>
     );
 }
 
-function TopMenuItem({ children, submenu, onClick, active }) {
+function TopMenuItem({ children, submenu, onClick, active, className = "" }) {
     return (
         <li className="relative">
             <button
                 onClick={onClick}
                 className={`border-l-2 border-gray-200 h-full px-8 font-semibold hover:bg-gray-100 hover:text-secondary ${
                     active ? "bg-gray-100 text-secondary" : ""
-                }`}
+                } ${className}`}
+                style={{ transitionProperty: "background" }}
             >
                 {children}
             </button>

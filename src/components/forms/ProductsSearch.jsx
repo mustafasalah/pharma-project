@@ -25,6 +25,7 @@ const ProductsSearch = ({
                 type="search"
                 placeholder={placeholder}
                 type="search"
+                autoComplete="off"
                 value={value.get()}
                 onInput={() => {
                     setLoading(true);

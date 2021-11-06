@@ -12,6 +12,8 @@ function FormField({
     inputOnly = false,
     inputClassName = "",
     booleanValue = false,
+    inputWrapper = false,
+    contentAfter,
     ...props
 }) {
     const currentValue = value !== undefined ? value.get() : "";
@@ -144,7 +146,10 @@ function FormField({
 
                 return (
                     <input
-                        className="border w-full border-gray-300 rounded-sm py-1 px-2 shadow"
+                        className={
+                            inputClassName ||
+                            `border w-full border-gray-300 rounded-sm py-1 px-2 shadow`
+                        }
                         type={type}
                         value={currentValue}
                         onChange={onInputChange}
@@ -166,7 +171,15 @@ function FormField({
                     <span className="text-red ml-0.5">*</span>
                 ) : undefined}
             </label>
-            {renderInput()}
+            {inputWrapper ? (
+                <div className="relative">
+                    {renderInput()} {contentAfter}
+                </div>
+            ) : (
+                <>
+                    {renderInput()} {contentAfter}
+                </>
+            )}
         </div>
     );
 }

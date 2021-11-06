@@ -55,9 +55,23 @@ let notifications = [
     },
 ];
 
+export const getPharmaciesNotifications = () => {
+    return Promise.resolve({
+        data: notifications.filter(
+            (notification) =>
+                notification.type === "new_pharmacy" ||
+                notification.type === "new_branch"
+        ),
+    });
+};
+
 export const getNotifications = () => {
     return Promise.resolve({
-        data: notifications,
+        data: notifications.filter(
+            (notification) =>
+                notification.type !== "new_pharmacy" &&
+                notification.type !== "new_branch"
+        ),
     });
 };
 
