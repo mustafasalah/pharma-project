@@ -95,6 +95,10 @@
         @apply shadow text-xs px-2.5 py-1.5 text-gray-300 bg-gray-100 rounded-l border border-r-0 border-gray-200 transition-none hover:bg-primary hover:border-primary hover:text-white;
     }
 
+    .mx-auto-important {
+        @apply mx-auto !important;
+    }
+
     .highlighted {
         animation: highlight 2s ease-in-out 4 alternate;
     }

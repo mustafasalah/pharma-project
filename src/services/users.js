@@ -1,6 +1,6 @@
 import http from "./http";
 
-const users = [
+export const users = [
     {
         id: 1,
         first_name: "Mustafa",
@@ -19,6 +19,22 @@ const users = [
     },
     {
         id: 2,
+        username: "mustafasalah",
+        email: "mustafasalah99@gmail.com",
+        first_name: "Mustafa",
+        last_name: "Salah",
+        gender: "m",
+        phone_number: "+249121297015",
+        role: "pharmacy owner",
+        state: "khartoum",
+        city: "omdurman",
+        address: "Al thwrah, al harah 59, al shingety street",
+        status: "active",
+        last_seen: "5 hours ago",
+        joining_date: "27-02-2020",
+    },
+    {
+        id: 3,
         first_name: "Ali",
         last_name: "Osman",
         username: "ali_osman",
@@ -34,7 +50,7 @@ const users = [
         joining_date: "22-12-2019",
     },
     {
-        id: 3,
+        id: 4,
         first_name: "Mona",
         last_name: "Hassan",
         username: "monnna",

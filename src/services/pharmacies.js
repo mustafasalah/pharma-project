@@ -1,10 +1,11 @@
 import store from "../state";
 import http from "./http";
 
-const pharmacies = [
+export const pharmacies = [
     {
         id: 1,
         name: "CVS Pharmacy",
+        branch_id: 1,
         branch: "Omdurman Branch",
         phone_numbers: ["+249965474730", "+249184757530"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -39,6 +40,7 @@ const pharmacies = [
     {
         id: 2,
         name: "CVS Pharmacy",
+        branch_id: 2,
         branch: "Khartoum Branch",
         phone_numbers: ["+249965474722", "+249184757223"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -73,6 +75,7 @@ const pharmacies = [
     {
         id: 3,
         name: "CVS Pharmacy",
+        branch_id: 3,
         branch: "Bhary Branch",
         phone_numbers: ["+249965474441", "+249184757990"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -107,8 +110,7 @@ const pharmacies = [
 ];
 
 export const updatePharmacyBranch = ({
-    id,
-    name,
+    branch_id,
     branch,
     phone_numbers,
     email,
@@ -120,7 +122,6 @@ export const updatePharmacyBranch = ({
     long,
 }) => {
     const editedPharmacyBranch = {
-        name,
         branch,
         phone_numbers,
         email,
@@ -132,7 +133,9 @@ export const updatePharmacyBranch = ({
         long: +long,
         status: "pending",
     };
-    let selectedPharmacy = pharmacies.find((pharmacy) => pharmacy.id === id);
+    let selectedPharmacy = pharmacies.find(
+        (pharmacy) => pharmacy.branch_id === branch_id
+    );
     if (selectedPharmacy) {
         selectedPharmacy = Object.assign(
             selectedPharmacy,
@@ -142,8 +145,68 @@ export const updatePharmacyBranch = ({
     return Promise.resolve({ data: selectedPharmacy, status: 200 });
 };
 
+export const setPharmacy = (
+    {
+        name,
+        branch,
+        phone_numbers,
+        email,
+        website,
+        state,
+        city,
+        address,
+        lat,
+        long,
+    },
+    owner
+) => {
+    const newPharmacyBranch = {
+        id: pharmacies.length + 1,
+        name,
+        branch_id: pharmacies.length + Math.round(Math.random() * 100),
+        branch,
+        phone_numbers,
+        email,
+        website,
+        state,
+        city,
+        address,
+        lat: +lat,
+        long: +long,
+        created_at: new Date().toJSON(),
+        status: "pending",
+        owned_by: {
+            id: owner.id,
+            name: owner.name,
+        },
+        support_delivery: false,
+        delivery_cost: 0,
+        vat: 0,
+        payment_options: {
+            mbok: {
+                account_no: "",
+                account_owner_name: "",
+                bank_branch_name: "",
+            },
+            atm_card: {
+                card_no: "",
+                card_owner_name: "",
+                bank_name: "",
+            },
+        },
+    };
+
+    pharmacies.push(newPharmacyBranch);
+
+    return Promise.resolve({
+        data: newPharmacyBranch,
+        status: 200,
+    });
+};
+
 export const setPharmacyBranch = ({
-    name,
+    id,
+    name, // will not be send to http endpoint
     branch,
     phone_numbers,
     email,
@@ -155,8 +218,9 @@ export const setPharmacyBranch = ({
     long,
 }) => {
     const newPharmacyBranch = {
-        id: pharmacies.length + Math.round(Math.random() * 100),
+        id,
         name,
+        branch_id: pharmacies.length + Math.round(Math.random() * 100),
         branch,
         phone_numbers,
         email,
@@ -171,6 +235,21 @@ export const setPharmacyBranch = ({
         owned_by: {
             id: store.loggedUser.id.get(),
             name: store.loggedUser.name.get(),
+        },
+        support_delivery: false,
+        delivery_cost: 0,
+        vat: 0,
+        payment_options: {
+            mbok: {
+                account_no: "",
+                account_owner_name: "",
+                bank_branch_name: "",
+            },
+            atm_card: {
+                card_no: "",
+                card_owner_name: "",
+                bank_name: "",
+            },
         },
     };
 
@@ -190,11 +269,12 @@ export const getPharmaciesByOwner = (ownerId) => {
 };
 
 export const getPharmacyBasicInfo = (ownerId) => {
-    const { name, email, website } = pharmacies.find(
+    const { id, name, email, website } = pharmacies.find(
         (pharmacy) => pharmacy.owned_by.id === +ownerId
     );
+
     return Promise.resolve({
-        data: { name, email, website },
+        data: { id, name, email, website },
         status: 200,
     });
 };

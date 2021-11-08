@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "@hookstate/core";
 import AuthSectionHeader from "../common/AuthSectionHeader";
 import AuthForm from "../forms/AuthForm";
-import FormField from "../forms/FormField";
+import PasswordAuthField from "../common/PasswordAuthField";
+import { resetPassword, verifyToken } from "../../services/auth";
+import { useHistory, useParams } from "react-router";
+import { notify } from "../../utility";
+import SuccessPage from "../common/SuccessPage";
 
 const ResetPassword = () => {
     const resetPasswordForm = useState({
@@ -10,48 +14,80 @@ const ResetPassword = () => {
         confirm_password: "",
     });
 
-    return (
-        <>
-            <AuthSectionHeader name="Reset My Password" />
-            <AuthForm
-                submitBtn={{
-                    label: "Reset My Password",
-                    faClass: "fas fa-redo",
-                }}
-                footerLink={{
-                    link: "/sign-up",
-                    content: "Don't have an account? Signup now",
-                }}
-            >
-                <FormField
-                    name="password"
-                    inputClassName="bg-gray-100 border p-2 pr-6 w-full rounded-sm shadow"
-                    label="new password"
-                    id="password"
-                    value={resetPasswordForm.password}
-                    placeholder="************"
-                    inputWrapper
-                    contentAfter={
-                        <i className="fas fa-unlock-alt absolute top-1/2 transform -translate-y-1/2 right-3.5 text-xs text-gray-300"></i>
-                    }
-                />
+    const showSuccessPage = useState(false);
+    const { token } = useParams();
+    const history = useHistory();
 
-                <FormField
-                    name="confirm_password"
-                    inputClassName="bg-gray-100 border p-2 w-full rounded-sm shadow"
-                    label="confirm password"
-                    id="confirm_password"
-                    value={resetPasswordForm.confirm_password}
-                    placeholder="************"
-                    inputWrapper
-                    contentAfter={
-                        <>
-                            <i className="fas fa-check-double absolute top-1/2 transform -translate-y-1/2 right-3.5 text-xs text-gray-300"></i>
-                        </>
-                    }
-                />
-            </AuthForm>
-        </>
+    // Token Verification
+    useEffect(() => {
+        (async () => {
+            const { status } = await verifyToken(token);
+            // if token is invalid redirect user into forget password page
+            if (status !== 200) history.replace("/forget-password");
+        })();
+    }, []);
+
+    return (
+        <div
+            className={`mt-10 mx-auto ${
+                showSuccessPage.value ? "max-w-xl" : "w-96"
+            }`}
+        >
+            {showSuccessPage.value ? (
+                <SuccessPage
+                    title="your password has been reset successfully!"
+                    redirect={{ link: "/login", pageName: "Login Page" }}
+                ></SuccessPage>
+            ) : (
+                <>
+                    <AuthSectionHeader name="Reset My Password" />
+                    <AuthForm
+                        submitBtn={{
+                            label: "Reset My Password",
+                            faClass: "fas fa-redo",
+                        }}
+                        footerLink={{
+                            link: "/sign-up",
+                            content: "Don't have an account? Signup now",
+                        }}
+                        onSubmit={async () => {
+                            const { status } = await resetPassword(
+                                token,
+                                resetPasswordForm.password.get()
+                            );
+                            notify({
+                                status,
+                                successCallback() {
+                                    showSuccessPage.set(true);
+                                },
+                                errorMsg:
+                                    "This link to reset password is invalid! you will be redirected to forget password page.",
+                                errorCallback() {
+                                    window.setTimeout(
+                                        () =>
+                                            history.replace("/forget-password"),
+                                        5000
+                                    );
+                                },
+                            });
+                        }}
+                    >
+                        <PasswordAuthField
+                            label="new password"
+                            value={resetPasswordForm.password}
+                        />
+
+                        <PasswordAuthField
+                            name="confirm_password"
+                            label="confirm new password"
+                            id="confirm_password"
+                            value={resetPasswordForm.confirm_password}
+                            confirmation={resetPasswordForm.password.value}
+                        />
+                    </AuthForm>
+                </>
+            )}
+        </div>
     );
 };
 

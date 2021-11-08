@@ -9,8 +9,6 @@ import Loading from "./Loading";
 
 function App() {
     const { loggedUser } = useHookstate(store);
-    const { history } = useHistory();
-    const loading = useHookstate(true);
 
     // useEffect(() => {
     //     (async () => {
@@ -37,17 +35,7 @@ function App() {
                 draggable
                 pauseOnHover
             />
-            {loggedUser.id.ornull ? (
-                loading.get() ? (
-                    <Loading />
-                ) : (
-                    <ControlPanel />
-                )
-            ) : (
-                <>
-                    <Authentication />
-                </>
-            )}
+            {loggedUser.id.ornull ? <ControlPanel /> : <Authentication />}
         </>
     );
 }

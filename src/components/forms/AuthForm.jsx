@@ -2,16 +2,29 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FormButton from "./FormButton";
 
-const AuthForm = ({ children, submitBtn, footerLink }) => {
+const AuthForm = ({
+    children,
+    submitBtn,
+    footerLink,
+    onSubmit,
+    className = "flex flex-col gap-y-6",
+}) => {
     return (
         <div className="bg-white rounded shadow-md p-5 text-sm animate__animated animate__fadeIn">
-            <form className="flex flex-col gap-y-6">
-                {children}
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit();
+                }}
+            >
+                <div className={className}>{children}</div>
                 <FormButton
                     label={submitBtn.label}
                     faClass={submitBtn.faClass}
                     iconAfter
-                    className="rounded-sm shadow-md py-2.5 text-sm bg-primary text-white hover:bg-secondary"
+                    className={`${
+                        submitBtn.className || "w-full"
+                    } mt-6 rounded-sm shadow-md py-2.5 text-sm bg-primary text-white hover:bg-secondary`}
                 />
             </form>
             {footerLink && (

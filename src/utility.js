@@ -41,26 +41,31 @@ export function range(min, max) {
 export function notify({
     status,
     waitMsg = "Please Wait...",
-    successMsg = "The process has been done successfully!",
+    successMsg,
     errorMsg = "Network Error!",
     successCallback,
     errorCallback,
 }) {
-    let toastId = toast.loading(waitMsg);
-
     if (status >= 200 && status < 300) {
-        //do something else
-        toast.update(toastId, {
-            render: successMsg,
-            type: "success",
-            isLoading: false,
-            autoClose: 5000,
-        });
+        const toastId = successMsg && toast.loading(waitMsg);
+        if (successMsg) {
+            toast.update(toastId, {
+                render: successMsg,
+                type: "success",
+                isLoading: false,
+                autoClose: 5000,
+            });
+        }
         // optional success callback for extra processing
         typeof successCallback === "function" && successCallback();
     } else {
-        toast.error(errorMsg);
-
+        const toastId = toast.loading(waitMsg);
+        toast.update(toastId, {
+            render: errorMsg,
+            type: "error",
+            isLoading: false,
+            autoClose: 5000,
+        });
         // optional error callback for extra processing
         typeof errorCallback === "function" && errorCallback();
     }
