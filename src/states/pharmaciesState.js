@@ -5,7 +5,7 @@ const pharmaciesState = {
     filters: {
         search: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default pharmaciesState;

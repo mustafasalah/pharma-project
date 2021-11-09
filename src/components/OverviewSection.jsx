@@ -1,29 +1,30 @@
-import { useState } from "@hookstate/core";
-import React, { useEffect } from "react";
+import { useHookstate } from "@hookstate/core";
+import React, { useEffect, useState } from "react";
 import { getOverviewStatistic } from "../services/statistic";
 import store from "../state";
+import overviewStatisticState from "../states/overviewStatisticState";
 import SectionHeader from "./common/SectionHeader";
 import StatisticsWidget from "./common/StatisticsWidget";
 
-const OverviewSection = ({ type }) => {
-    const { overview } = useState(store.statistics);
+const OverviewSection = () => {
+    const { loggedUser } = useHookstate(store);
+    const [overview, setOverview] = useState(overviewStatisticState);
+    const userRole = loggedUser.role.get();
     const { views, pharmacies, users, sales, profits, orders, sold_products } =
         overview;
 
     const getPercentage = ({ counter, previous_counter }) => {
-        const deff = counter.get() - previous_counter.get();
+        const deff = counter - previous_counter;
         return {
-            value: (
-                (Math.abs(deff) / previous_counter.get()) * 100 || 0
-            ).toFixed(1),
+            value: ((Math.abs(deff) / previous_counter) * 100 || 0).toFixed(1),
             direction: deff >= 0 ? "up" : "down",
         };
     };
 
     useEffect(() => {
         (async () => {
-            const { data } = await getOverviewStatistic(type);
-            overview.set(data);
+            const { data } = await getOverviewStatistic(userRole);
+            setOverview(data);
         })();
     }, []);
 
@@ -31,14 +32,16 @@ const OverviewSection = ({ type }) => {
         <>
             <SectionHeader
                 name={
-                    type === "admin" ? "General Overview" : "Today's Overview"
+                    userRole === "admin"
+                        ? "General Overview"
+                        : "Today's Overview"
                 }
                 faClass="fas fa-eye"
             />
             <div className="grid gap-6 grid-cols-4">
-                {type === "admin" ? (
+                {userRole === "admin" ? (
                     <StatisticsWidget
-                        mainText={views.counter.get()}
+                        mainText={views.counter}
                         seconderyText="Today's Views"
                         percent={getPercentage(views)}
                         faClass="fas fa-eye"
@@ -47,7 +50,7 @@ const OverviewSection = ({ type }) => {
                     />
                 ) : (
                     <StatisticsWidget
-                        mainText={`${sales.counter.get()} SDG`}
+                        mainText={`${sales.counter} SDG`}
                         seconderyText="Today's Sales"
                         percent={getPercentage(sales)}
                         faClass="fas fa-piggy-bank"
@@ -57,9 +60,9 @@ const OverviewSection = ({ type }) => {
                 )}
 
                 <StatisticsWidget
-                    mainText={orders.counter.get()}
+                    mainText={orders.counter}
                     seconderyText={
-                        type === "admin"
+                        userRole === "admin"
                             ? "Today's Online Orders"
                             : "Today's Total Orders"
                     }
@@ -69,9 +72,9 @@ const OverviewSection = ({ type }) => {
                     iconColor="text-gray-400"
                 />
 
-                {type === "admin" ? (
+                {userRole === "admin" ? (
                     <StatisticsWidget
-                        mainText={pharmacies.counter.get()}
+                        mainText={pharmacies.counter}
                         seconderyText="Active Pharmacies"
                         link={{
                             url: "/pharmacies",
@@ -83,7 +86,7 @@ const OverviewSection = ({ type }) => {
                     />
                 ) : (
                     <StatisticsWidget
-                        mainText={`${profits.counter.get()} SDG`}
+                        mainText={`${profits.counter} SDG`}
                         seconderyText="Today's Profits"
                         percent={getPercentage(profits)}
                         faClass="fas fa-dollar-sign"
@@ -92,9 +95,9 @@ const OverviewSection = ({ type }) => {
                     />
                 )}
 
-                {type === "admin" ? (
+                {userRole === "admin" ? (
                     <StatisticsWidget
-                        mainText={users.counter.get()}
+                        mainText={users.counter}
                         seconderyText="Active Users"
                         link={{
                             url: "/users",
@@ -106,7 +109,7 @@ const OverviewSection = ({ type }) => {
                     />
                 ) : (
                     <StatisticsWidget
-                        mainText={sold_products.counter.get()}
+                        mainText={sold_products.counter}
                         seconderyText="Today's Sold Products"
                         percent={getPercentage(sold_products)}
                         faClass="fas fa-pills"

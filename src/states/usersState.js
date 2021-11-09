@@ -7,7 +7,7 @@ const usersState = {
         role: "",
         status: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default usersState;

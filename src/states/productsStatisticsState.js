@@ -5,7 +5,7 @@ const productsStatisticsState = {
     filters: {
         search: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default productsStatisticsState;

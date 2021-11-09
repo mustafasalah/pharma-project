@@ -1,11 +1,12 @@
 const pharmacyFormState = {
     data: {
+        id: "",
         name: "",
         branch: "",
         phone_numbers: ["", ""],
         email: "",
         website: "",
-        state: "",
+        state: "khartoum",
         city: "",
         address: "",
         lat: "",

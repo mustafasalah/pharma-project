@@ -65,7 +65,7 @@ const PaymentOption = ({ option, data, branchId }) => {
                     />
                 )
             ) : (
-                <h4 className="flex items-center bg-gray border-b last:border-b-0 font-semibold text-sm shadow px-3 py-2">
+                <h4 className="flex items-center bg-gray border-t font-semibold text-sm shadow px-3 py-2">
                     {option === "mbok" ? "MBOK" : "ATM Card"} -{" "}
                     <i>Not Activated Yet</i>
                     <button

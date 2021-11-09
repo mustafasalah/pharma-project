@@ -7,8 +7,8 @@ const PharmacyRegisterationForm = ({ formState, onSubmit }) => {
     return (
         <AuthForm
             submitBtn={{
-                label: "Sign up",
-                faClass: "fas fa-user-plus",
+                label: "Submit Pharmacy Information",
+                faClass: "fas fa-paper-plane",
                 className: "w-72 mx-auto-important block",
             }}
             footerLink={{

@@ -25,7 +25,9 @@ function AccountMenu() {
                         const confirm = window.confirm(
                             "Are you sure to logged out?"
                         );
-                        confirm && loggedUser.set({});
+                        if (confirm) {
+                            loggedUser.set({});
+                        }
                     }}
                 >
                     <i className="fas fa-sign-out-alt text-xs text-primary mr-2" />

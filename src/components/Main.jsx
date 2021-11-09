@@ -37,11 +37,7 @@ function Main() {
                 </Switch>
             ) : !isPharmacyOwner ? (
                 <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        render={() => <Dashboard type="admin" />}
-                    />
+                    <Route path="/" exact component={Dashboard} />
                     <Route
                         path={["/products/:id", "/products"]}
                         component={Products}
@@ -59,11 +55,7 @@ function Main() {
                 </Switch>
             ) : (
                 <Switch>
-                    <Route
-                        path="/"
-                        exact
-                        render={() => <Dashboard type="pharmacy owner" />}
-                    />
+                    <Route path="/" exact component={Dashboard} />
                     <Route path="/my-pharmacies" component={MyPharmacies} />
                     <Route
                         path={["/orders/:id", "/orders"]}

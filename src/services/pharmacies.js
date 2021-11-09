@@ -5,7 +5,7 @@ export const pharmacies = [
     {
         id: 1,
         name: "CVS Pharmacy",
-        branch_id: 1,
+        pharmacy_id: 1,
         branch: "Omdurman Branch",
         phone_numbers: ["+249965474730", "+249184757530"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -18,7 +18,7 @@ export const pharmacies = [
         created_at: "24-09-2021 12:34:03 PM",
         status: "active",
         owned_by: {
-            id: 1,
+            id: 2,
             name: "Mustafa Salah",
         },
         support_delivery: false,
@@ -40,7 +40,7 @@ export const pharmacies = [
     {
         id: 2,
         name: "CVS Pharmacy",
-        branch_id: 2,
+        pharmacy_id: 1,
         branch: "Khartoum Branch",
         phone_numbers: ["+249965474722", "+249184757223"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -53,7 +53,7 @@ export const pharmacies = [
         created_at: "03-08-2021 22:04:02 PM",
         status: "pending",
         owned_by: {
-            id: 1,
+            id: 2,
             name: "Mustafa Salah",
         },
         support_delivery: false,
@@ -75,7 +75,7 @@ export const pharmacies = [
     {
         id: 3,
         name: "CVS Pharmacy",
-        branch_id: 3,
+        pharmacy_id: 1,
         branch: "Bhary Branch",
         phone_numbers: ["+249965474441", "+249184757990"],
         email: "cvs-pharma@cvs-pharma.com",
@@ -88,7 +88,7 @@ export const pharmacies = [
         created_at: "01-08-2021 02:33:42 PM",
         status: "rejected",
         owned_by: {
-            id: 1,
+            id: 2,
             name: "Mustafa Salah",
         },
         support_delivery: false,
@@ -110,7 +110,7 @@ export const pharmacies = [
 ];
 
 export const updatePharmacyBranch = ({
-    branch_id,
+    id,
     branch,
     phone_numbers,
     email,
@@ -133,9 +133,7 @@ export const updatePharmacyBranch = ({
         long: +long,
         status: "pending",
     };
-    let selectedPharmacy = pharmacies.find(
-        (pharmacy) => pharmacy.branch_id === branch_id
-    );
+    let selectedPharmacy = pharmacies.find((pharmacy) => pharmacy.id === id);
     if (selectedPharmacy) {
         selectedPharmacy = Object.assign(
             selectedPharmacy,
@@ -163,9 +161,9 @@ export const setPharmacy = (
     const newPharmacyBranch = {
         id: pharmacies.length + 1,
         name,
-        branch_id: pharmacies.length + Math.round(Math.random() * 100),
+        pharmacy_id: pharmacies.length + Math.round(Math.random() * 100),
         branch,
-        phone_numbers,
+        phone_numbers: [...phone_numbers],
         email,
         website,
         state,
@@ -205,7 +203,7 @@ export const setPharmacy = (
 };
 
 export const setPharmacyBranch = ({
-    id,
+    pharmacy_id,
     name, // will not be send to http endpoint
     branch,
     phone_numbers,
@@ -218,11 +216,11 @@ export const setPharmacyBranch = ({
     long,
 }) => {
     const newPharmacyBranch = {
-        id,
+        id: pharmacies.length + Math.round(Math.random() * 100),
         name,
-        branch_id: pharmacies.length + Math.round(Math.random() * 100),
+        pharmacy_id,
         branch,
-        phone_numbers,
+        phone_numbers: [...phone_numbers],
         email,
         website,
         state,
@@ -234,7 +232,7 @@ export const setPharmacyBranch = ({
         status: "pending",
         owned_by: {
             id: store.loggedUser.id.get(),
-            name: store.loggedUser.name.get(),
+            name: `${store.loggedUser.first_name.get()} ${store.loggedUser.last_name.get()}`,
         },
         support_delivery: false,
         delivery_cost: 0,
@@ -269,12 +267,15 @@ export const getPharmaciesByOwner = (ownerId) => {
 };
 
 export const getPharmacyBasicInfo = (ownerId) => {
-    const { id, name, email, website } = pharmacies.find(
+    const pharmacy = pharmacies.find(
         (pharmacy) => pharmacy.owned_by.id === +ownerId
     );
+    if (pharmacy === undefined) return Promise.reject({ status: 404 });
+
+    const { pharmacy_id, name, email, website } = pharmacy;
 
     return Promise.resolve({
-        data: { id, name, email, website },
+        data: { pharmacy_id, name, email, website },
         status: 200,
     });
 };

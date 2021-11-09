@@ -1,5 +1,5 @@
 import { useState } from "@hookstate/core";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { signup } from "../../services/auth";
 import { setPharmacy } from "../../services/pharmacies";
 import { notify } from "../../utility";
@@ -8,6 +8,7 @@ import SignupChoice from "../common/SignupChoice";
 import SuccessPage from "../common/SuccessPage";
 import PharmacyRegisterationForm from "../forms/PharmacyRegisterationForm";
 import SignupForm from "../forms/SignupForm";
+import StepsProgress from "../StepsProgress";
 
 const Signup = () => {
     const signupProgress = useState({
@@ -52,7 +53,7 @@ const Signup = () => {
                             icon="fas fa-hospital-user"
                             title="Sign up as normal user"
                             onSelect={() => {
-                                type.set("customer");
+                                type.set("user");
                                 step.set(2);
                             }}
                         />
@@ -139,6 +140,26 @@ const Signup = () => {
             {signupProgress.step.value !== 4 && (
                 <AuthSectionHeader name="Signup" />
             )}
+            {signupProgress.type.value !== "" &&
+                signupProgress.step.value > 1 && (
+                    <StepsProgress
+                        steps={
+                            signupProgress.type.value === "user"
+                                ? [
+                                      "select account type",
+                                      "fill account info",
+                                      "sign up done!",
+                                  ]
+                                : [
+                                      "select account type",
+                                      "fill account info",
+                                      "fill pharmacy info",
+                                      "sign up done!",
+                                  ]
+                        }
+                        currentStep={signupProgress.step}
+                    />
+                )}
             {renderStep()}
         </div>
     );

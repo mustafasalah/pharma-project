@@ -1,3 +1,4 @@
+import { useHookstate } from "@hookstate/core";
 import React, { useEffect, useState } from "react";
 import {
     getProfitsStatistic,
@@ -7,21 +8,25 @@ import {
     getOrdersLineStatistic,
     getViewsStatistic,
 } from "../../services/statistic";
+import store from "../../state";
 import LineChartSection from "../lineChartSection";
 import OverviewSection from "../OverviewSection";
 import PieChartSection from "../PieChartSection";
 import ProductsStatistics from "../ProductsStatistics";
 
-const Dashboard = ({ type = "admin" }) => {
+const Dashboard = () => {
+    const { loggedUser } = useHookstate(store);
+    const userRole = loggedUser.role.get();
+
     const [lineChartTime, setLineChartTime] = useState("week");
     const [pieChartTime, setPieChartTime] = useState("week");
     const [lineChartState, setLineChartState] = useState([
         {
-            label: type === "admin" ? "Orders" : "Profits",
+            label: userRole === "admin" ? "Orders" : "Profits",
             datasets: [],
         },
         {
-            label: type === "admin" ? "Views" : "Sales",
+            label: userRole === "admin" ? "Views" : "Sales",
             datasets: [],
         },
     ]);
@@ -35,7 +40,7 @@ const Dashboard = ({ type = "admin" }) => {
     useEffect(() => {
         (async () => {
             let ordersDatasets = [];
-            if (type === "admin") {
+            if (userRole === "admin") {
                 ({ data: ordersDatasets } = await getOnlineOrdersStatistic(
                     pieChartTime
                 ));
@@ -54,7 +59,7 @@ const Dashboard = ({ type = "admin" }) => {
 
     useEffect(() => {
         (async () => {
-            if (type === "admin") {
+            if (userRole === "admin") {
                 const { data: ordersDatasets } = await getOrdersLineStatistic(
                     lineChartTime
                 );
@@ -96,16 +101,18 @@ const Dashboard = ({ type = "admin" }) => {
 
     return (
         <>
-            <OverviewSection type={type} />
+            <OverviewSection />
             <div className="grid grid-cols-3 gap-x-6 mt-8">
                 <LineChartSection
                     title={
-                        type === "admin" ? "Views & Orders" : "Sales & Profits"
+                        userRole === "admin"
+                            ? "Views & Orders"
+                            : "Sales & Profits"
                     }
                     time={lineChartTime}
                     data={lineChartState}
                     onTimeChange={setLineChartTime}
-                    type={type}
+                    type={userRole}
                 />
                 <PieChartSection
                     title="Orders Overview"
@@ -114,7 +121,7 @@ const Dashboard = ({ type = "admin" }) => {
                     onTimeChange={setPieChartTime}
                 />
             </div>
-            {type === "pharmacy owner" && (
+            {userRole === "pharmacy owner" && (
                 <div className="mt-8">
                     <ProductsStatistics />
                 </div>

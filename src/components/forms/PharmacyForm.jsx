@@ -8,7 +8,8 @@ import { updatePharmacyStatus } from "../../services/pharmacies";
 const rejectBtn = {
     label: "Reject",
     faClass: "fas fa-times-circle text-red group-hover:text-white",
-    className: "bg-gray shadow text-red hover:bg-red hover:text-white",
+    className:
+        "bg-gray rounded text-smd shadow text-red hover:bg-red hover:text-white",
 };
 const activeBtn = { label: "Activate", faClass: "fas fa-check-circle" };
 

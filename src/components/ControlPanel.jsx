@@ -33,7 +33,7 @@ const ControlPanel = () => {
         } else {
             notifications.set([]);
         }
-    }, [pharmacyBranch.id.value]);
+    }, [pharmacyBranch.id.ornull]);
 
     useEffect(() => {
         try {

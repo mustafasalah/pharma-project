@@ -7,7 +7,7 @@ const productsState = {
         category: "",
         company: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default productsState;

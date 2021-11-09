@@ -6,6 +6,7 @@ import PopupForm from "./PopupForm";
 import {
     getPharmaciesByOwner,
     getPharmacyBasicInfo,
+    setPharmacy,
     updatePharmacyBranch,
 } from "../../services/pharmacies";
 import { getCityOptions, notify } from "../../utility";
@@ -18,10 +19,11 @@ const PharmacyPopupForm = ({ showState, formState }) => {
         data: { ...pharmacyFormState.data },
         errors: { ...pharmacyFormState.errors },
     });
-    const pharmaciesData = useState(store.pharmacyBranches);
+    const { pharmacyBranches: pharmaciesData, loggedUser } = useState(store);
     let { data, errors } = state;
     DevTools(state).label("Pharmacy Popup Form");
     const isPending = formState && formState.status === "pending";
+    const isFirstPharmacy = useState(false);
 
     useEffect(() => {
         data.set(
@@ -29,21 +31,28 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 ? JSON.parse(JSON.stringify(formState))
                 : {
                       ...pharmacyFormState.data,
+                      pharmacy_id: data.pharmacy_id.get(),
                       name: data.name.get(),
                       website: data.website.get(),
                       email: data.email.get(),
+                      phone_numbers: ["", ""],
                   }
         );
     }, [formState]);
 
     useEffect(() => {
         (async () => {
-            const { data: pharmacyBasicInfo } = await getPharmacyBasicInfo(
-                store.loggedUser.id.get()
-            );
-            state.data.merge(pharmacyBasicInfo);
+            if (isFirstPharmacy.value === true) return;
+            try {
+                const { data: pharmacyBasicInfo } = await getPharmacyBasicInfo(
+                    store.loggedUser.id.get()
+                );
+                state.data.merge(pharmacyBasicInfo);
+            } catch (ex) {
+                isFirstPharmacy.set(true);
+            }
         })();
-    }, []);
+    }, [isFirstPharmacy.value]);
 
     return (
         <PopupForm
@@ -66,8 +75,14 @@ const PharmacyPopupForm = ({ showState, formState }) => {
             }
             onSubmit={async () => {
                 const isUpdate = formState && formState.status === "rejected";
+
                 const { status } = await (isUpdate
                     ? updatePharmacyBranch(data.get())
+                    : isFirstPharmacy.value
+                    ? setPharmacy(data.get(), {
+                          id: loggedUser.id.get(),
+                          name: `${loggedUser.first_name.get()} ${loggedUser.last_name.get()}`,
+                      })
                     : setPharmacyBranch(data.get()));
 
                 notify({
@@ -79,11 +94,16 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                         // Clear the form data
                         data.set({
                             ...pharmacyFormState.data,
+                            pharmacy_id: data.pharmacy_id.get(),
                             name: data.name.get(),
                             website: data.website.get(),
                             email: data.email.get(),
                             phone_numbers: ["", ""],
                         });
+
+                        if (isFirstPharmacy.value === true) {
+                            isFirstPharmacy.set(false);
+                        }
 
                         // Update employees data list
                         const { data: newPharmacyBranchData } =
@@ -126,7 +146,7 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 id="1"
                 value={data.name}
                 placeholder="pharmacy name here..."
-                disabled
+                disabled={isFirstPharmacy.value === false}
                 required
             />
 
@@ -137,7 +157,7 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 id="2"
                 value={data.branch}
                 placeholder="branch name here..."
-                required
+                required={isFirstPharmacy.value === false}
                 disabled={isPending}
             />
 

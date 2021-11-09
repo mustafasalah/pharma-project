@@ -7,7 +7,7 @@ const inventoryState = {
         category: "",
         status: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default inventoryState;

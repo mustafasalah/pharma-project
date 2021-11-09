@@ -22,17 +22,17 @@ const Pharmacies = () => {
     } = useState(store);
     DevTools(pharmacies).label("Orders");
 
-    let { id: pharmacyId } = useParams();
+    let { id: pharmacyBranchId } = useParams();
     const sortColumn = useState({ columnName: "id", order: "desc" });
 
     useEffect(() => {
-        if (!isNaN(pharmacyId)) {
+        if (!isNaN(pharmacyBranchId)) {
             const pharmacy = pharmacies.data.find(
-                (pharmacy) => pharmacy.id.value === +pharmacyId
+                (pharmacy) => pharmacy.id.value === +pharmacyBranchId
             );
             pharmacy && pharmacies.filters.search.set(pharmacy.name.value);
         }
-    }, [pharmacyId]);
+    }, [pharmacyBranchId]);
 
     return (
         <>
@@ -76,7 +76,7 @@ const columns = [
             <a
                 href={`#${id.get()}`}
                 onClick={() => {
-                    popupWindow.data.set({ id: item.id.value });
+                    popupWindow.data.set({ id: id.value });
                     popupWindow.type.set("pharmacy-info");
                     popupWindow.display.set(true);
                 }}
@@ -158,9 +158,7 @@ const columns = [
                         });
                     }}
                     onView={() => {
-                        popupWindow.data.set(
-                            JSON.parse(JSON.stringify(item.value))
-                        );
+                        popupWindow.data.set({ id: id.value });
                         popupWindow.type.set("pharmacy-info");
                         popupWindow.display.set(true);
                     }}

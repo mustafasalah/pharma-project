@@ -7,7 +7,7 @@ const ordersState = {
         type: "",
         status: "",
     },
-    pagination: configs.pagination,
+    pagination: { ...configs.pagination },
 };
 
 export default ordersState;

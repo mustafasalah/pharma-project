@@ -54,7 +54,7 @@ const MyPharmacies = ({ history }) => {
                 faClass="fas fa-clinic-medical"
             />
             <div className="grid grid-cols-4 gap-8">
-                {pharmacyBranches.map((pharmacyBranch) => (
+                {pharmacyBranches.map((pharmacyBranch, i) => (
                     <PharmacyCard
                         key={pharmacyBranch.id.get()}
                         data={pharmacyBranch.get()}
@@ -82,10 +82,13 @@ const AddPharmacyBranchCard = ({ onClick }) => {
     return (
         <button
             onClick={onClick}
+            title="Add New Pharmacy Branch"
             className="flex flex-col group py-12 hover:border-gray-400 border-2 border-dashed items-center rounded border-gray-300"
         >
             <i className="fas fa-plus text-6xl mb-8 group-hover:text-primary text-gray-300"></i>
-            <strong className="font-semibold">Add New Pharmacy Branch</strong>
+            <strong className="font-semibold text-gray-500 group-hover:text-black">
+                Add New Pharmacy Branch
+            </strong>
         </button>
     );
 };

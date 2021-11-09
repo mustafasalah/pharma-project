@@ -4,14 +4,12 @@ import AuthForm from "./AuthForm";
 import AuthFormField from "./AuthFormField";
 import UsernameAuthField from "./UsernameAuthField";
 
-const SignupForm = ({ formState, onSubmit, haveNextBtn = false }) => {
+const SignupForm = ({ formState, onSubmit }) => {
     return (
         <AuthForm
             submitBtn={{
-                label: haveNextBtn ? "Next" : "Sign up",
-                faClass: haveNextBtn
-                    ? "fas fa-arrow-right"
-                    : "fas fa-user-plus",
+                label: "Create Account",
+                faClass: "fas fa-user-plus",
                 className: "w-72 mx-auto-important block",
             }}
             footerLink={{
@@ -66,6 +64,7 @@ const SignupForm = ({ formState, onSubmit, haveNextBtn = false }) => {
                 id="confirm_password"
                 value={formState.confirm_password}
                 confirmation={formState.password.value}
+                icon="fas fa-check-double"
                 required
             />
 
