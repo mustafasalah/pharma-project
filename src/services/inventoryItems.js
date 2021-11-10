@@ -15,7 +15,7 @@ export const inventoryItems = [
         stock: 255,
         reserved: 3,
         arrival_date: "2021-09-12",
-        expair_date: "2021-12-12",
+        expire_date: "2021-12-12",
         online_order: true,
     },
     {
@@ -32,7 +32,7 @@ export const inventoryItems = [
         stock: 95,
         reserved: 1,
         arrival_date: "2021-12-22",
-        expair_date: "2022-05-22",
+        expire_date: "2022-05-22",
         online_order: true,
     },
     {
@@ -49,7 +49,7 @@ export const inventoryItems = [
         stock: 34,
         reserved: 0,
         arrival_date: "2021-11-12",
-        expair_date: "2022-04-12",
+        expire_date: "2022-04-12",
         online_order: true,
     },
     {
@@ -66,7 +66,7 @@ export const inventoryItems = [
         stock: 0,
         reserved: 0,
         arrival_date: "2021-09-02",
-        expair_date: "2021-12-02",
+        expire_date: "2021-12-02",
         online_order: false,
     },
     {
@@ -83,7 +83,7 @@ export const inventoryItems = [
         stock: 200,
         reserved: 0,
         arrival_date: "2021-06-29",
-        expair_date: "2021-12-29",
+        expire_date: "2021-12-29",
         online_order: true,
     },
     {
@@ -100,7 +100,7 @@ export const inventoryItems = [
         stock: 255,
         reserved: 3,
         arrival_date: "2021-09-12",
-        expair_date: "2021-12-12",
+        expire_date: "2021-12-12",
         online_order: true,
     },
     {
@@ -117,7 +117,7 @@ export const inventoryItems = [
         stock: 95,
         reserved: 1,
         arrival_date: "2021-12-22",
-        expair_date: "2022-05-22",
+        expire_date: "2022-05-22",
         online_order: true,
     },
     {
@@ -134,7 +134,7 @@ export const inventoryItems = [
         stock: 34,
         reserved: 0,
         arrival_date: "2021-11-12",
-        expair_date: "2022-04-12",
+        expire_date: "2022-04-12",
         online_order: true,
     },
     {
@@ -151,7 +151,7 @@ export const inventoryItems = [
         stock: 0,
         reserved: 0,
         arrival_date: "2021-09-02",
-        expair_date: "2021-12-02",
+        expire_date: "2021-12-02",
         online_order: false,
     },
     {
@@ -168,7 +168,7 @@ export const inventoryItems = [
         stock: 200,
         reserved: 0,
         arrival_date: "2021-06-29",
-        expair_date: "2021-12-29",
+        expire_date: "2021-12-29",
         online_order: true,
     },
     {
@@ -185,7 +185,7 @@ export const inventoryItems = [
         stock: 255,
         reserved: 3,
         arrival_date: "2021-09-12",
-        expair_date: "2021-12-12",
+        expire_date: "2021-12-12",
         online_order: true,
     },
     {
@@ -202,7 +202,7 @@ export const inventoryItems = [
         stock: 95,
         reserved: 1,
         arrival_date: "2021-12-22",
-        expair_date: "2022-05-22",
+        expire_date: "2022-05-22",
         online_order: true,
     },
     {
@@ -219,7 +219,7 @@ export const inventoryItems = [
         stock: 34,
         reserved: 0,
         arrival_date: "2021-11-12",
-        expair_date: "2022-04-12",
+        expire_date: "2022-04-12",
         online_order: true,
     },
     {
@@ -236,7 +236,7 @@ export const inventoryItems = [
         stock: 0,
         reserved: 0,
         arrival_date: "2021-09-02",
-        expair_date: "2021-12-02",
+        expire_date: "2021-12-02",
         online_order: false,
     },
     {
@@ -253,7 +253,7 @@ export const inventoryItems = [
         stock: 200,
         reserved: 0,
         arrival_date: "2021-06-29",
-        expair_date: "2021-12-29",
+        expire_date: "2021-12-29",
         online_order: true,
     },
 ];
@@ -271,7 +271,7 @@ export const setInventoryItem = async (item) => {
         cost: item.cost,
         price: item.price,
         arrival_date: item.arrival_date,
-        expair_date: item.expair_date,
+        expire_date: item.expire_date,
         online_order: item.online_order,
         stock: item.stock,
         reserved: item.reserved,
@@ -296,7 +296,7 @@ export const updateInventoryItem = async ({
     cost,
     price,
     arrival_date,
-    expair_date,
+    expire_date,
     online_order,
     stock,
     reserved,
@@ -306,7 +306,7 @@ export const updateInventoryItem = async ({
         cost,
         price,
         arrival_date,
-        expair_date,
+        expire_date,
         online_order,
         stock,
         reserved,

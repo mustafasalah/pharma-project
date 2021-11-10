@@ -38,6 +38,7 @@ const EmployeeForm = ({
                 value={formState.full_name}
                 placeholder="enter employee name here..."
                 required
+                disabled
             />
 
             <FormField
@@ -47,6 +48,7 @@ const EmployeeForm = ({
                 id="2"
                 value={formState.username}
                 placeholder="username here..."
+                disabled
                 required
             />
 
@@ -60,6 +62,7 @@ const EmployeeForm = ({
                 pattern="\+[0-9]{10,12}"
                 value={formState.phone_number}
                 placeholder="e.g. +2499XXXXXXXX"
+                disabled
             />
 
             <FormField
@@ -79,6 +82,7 @@ const EmployeeForm = ({
                         value: "f",
                     },
                 ]}
+                disabled
             />
 
             <FormField
@@ -89,7 +93,6 @@ const EmployeeForm = ({
                 id="5"
                 value={formState.role}
                 options={[
-                    { label: "Pharmacy Onwer", value: "pharmacy onwer" },
                     { label: "Supervisor", value: "supervisor" },
                     { label: "Pharmacist", value: "pharmacist" },
                 ]}

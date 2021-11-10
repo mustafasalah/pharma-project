@@ -82,8 +82,11 @@ const UserForm = ({
                 options={[
                     { label: "Admin", value: "admin" },
                     { label: "Pharmacy Owner", value: "pharmacy owner" },
+                    { label: "Supervisor", value: "supervisor" },
+                    { label: "Pharmacist", value: "pharmacist" },
                     { label: "User", value: "user" },
                 ]}
+                disabled
             />
 
             <FormField

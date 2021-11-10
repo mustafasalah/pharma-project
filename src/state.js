@@ -8,10 +8,10 @@ import productsState from "./states/productsState";
 import productsStatisticsState from "./states/productsStatisticsState";
 import usersState from "./states/usersState";
 
-const store = createState({
+const defaultState = {
     collapseMenu: localStorage.getItem("collapse_menu") === "true",
     statistics: {
-        overview: overviewStatisticState,
+        overview: { ...overviewStatisticState },
     },
     loggedUser: {},
     pharmacyBranches: [],
@@ -38,7 +38,13 @@ const store = createState({
         products: [],
         discount: { amount: 0, unit: "SDG" },
     },
-});
+};
+
+let store = createState({ ...defaultState });
+
+export const resetStore = () => {
+    store.merge({ ...defaultState });
+};
 
 DevTools(store).label("Store");
 

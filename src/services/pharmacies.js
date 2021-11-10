@@ -266,6 +266,15 @@ export const getPharmaciesByOwner = (ownerId) => {
     });
 };
 
+export const getPharmacyBranchByEmployee = (userId) => {
+    // return Promise.reject({ status: 404 });
+
+    return Promise.resolve({
+        data: pharmacies[0],
+        status: 200,
+    });
+};
+
 export const getPharmacyBasicInfo = (ownerId) => {
     const pharmacy = pharmacies.find(
         (pharmacy) => pharmacy.owned_by.id === +ownerId

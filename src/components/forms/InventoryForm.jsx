@@ -146,7 +146,7 @@ const InventoryForm = ({
                 name="arrival_date"
                 id="11"
                 value={formState.arrival_date}
-                max={formState.expair_date.value}
+                max={formState.expire_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"
             />
@@ -156,7 +156,7 @@ const InventoryForm = ({
                 label="expire date"
                 name="expire_date"
                 id="12"
-                value={formState.expair_date}
+                value={formState.expire_date}
                 min={formState.arrival_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"

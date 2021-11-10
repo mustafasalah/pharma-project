@@ -99,7 +99,7 @@ const columns = [
     { title: "price", prop: "price" },
     { title: "stock", prop: "stock" },
     { title: "reserved", prop: "reserved" },
-    { title: "expair date", prop: "expair_date" },
+    { title: "expire date", prop: "expire_date" },
     {
         title: "QTY",
         width: 80,

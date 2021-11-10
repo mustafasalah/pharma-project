@@ -16,8 +16,109 @@ import MyPharmacies from "./pages/MyPharmacies";
 
 function Main() {
     const { loggedUser, pharmacyBranch, collapseMenu } = useState(store);
+    const userRole = loggedUser.role.get();
     const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
     const isPharmacyBranchSelected = pharmacyBranch.id.value !== undefined;
+
+    function renderMain() {
+        switch (userRole) {
+            case "pharmacy owner":
+                if (!isPharmacyBranchSelected) {
+                    return (
+                        <Switch>
+                            <Route
+                                path="/account-settings"
+                                component={AccountSettings}
+                            />
+                            <Route
+                                path="/my-pharmacies"
+                                component={MyPharmacies}
+                            />
+                            <Redirect from="/" to="/my-pharmacies" />
+                        </Switch>
+                    );
+                }
+
+            case "supervisor":
+                return (
+                    <Switch>
+                        <Route path="/" exact component={Dashboard} />
+                        {userRole === "pharmacy owner" && (
+                            <Route
+                                path="/my-pharmacies"
+                                component={MyPharmacies}
+                            />
+                        )}
+                        <Route
+                            path={["/orders/:id", "/orders"]}
+                            component={Orders}
+                        />
+                        <Route path="/pos" component={PointOfSale} />
+                        <Route
+                            path={["/staff/:id", "/staff"]}
+                            component={Employees}
+                        />
+                        <Route
+                            path={["/Inventory/:id", "/Inventory"]}
+                            component={Inventory}
+                        />
+                        <Route
+                            path="/pharmacy-settings"
+                            component={PharmacySettings}
+                        />
+                        <Route
+                            path="/account-settings"
+                            component={AccountSettings}
+                        />
+                        <Redirect to="/" />
+                    </Switch>
+                );
+
+            case "pharmacist":
+                return (
+                    <Switch>
+                        <Route
+                            path={["/orders/:id", "/orders"]}
+                            component={Orders}
+                        />
+                        <Route
+                            path={["/Inventory/:id", "/Inventory"]}
+                            component={Inventory}
+                        />
+                        <Route
+                            path="/account-settings"
+                            component={AccountSettings}
+                        />
+                        <Route path="/" component={PointOfSale} />
+                        <Redirect to="/" />
+                    </Switch>
+                );
+
+            case "admin":
+                return (
+                    <Switch>
+                        <Route path="/" exact component={Dashboard} />
+                        <Route
+                            path={["/products/:id", "/products"]}
+                            component={Products}
+                        />
+                        <Route
+                            path={["/users/:id", "/users"]}
+                            component={Users}
+                        />
+                        <Route
+                            path={["/pharmacies/:id", "/pharmacies"]}
+                            component={Pharmacies}
+                        />
+                        <Route
+                            path="/account-settings"
+                            component={AccountSettings}
+                        />
+                        <Redirect to="/" />
+                    </Switch>
+                );
+        }
+    }
 
     return (
         <main
@@ -26,61 +127,7 @@ function Main() {
             } mt-21.5 py-8 px-8 overflow-hidden transition-all`}
             style={{ minHeight: "calc(100vh - 100px)" }}
         >
-            {!isPharmacyBranchSelected && isPharmacyOwner ? (
-                <Switch>
-                    <Route
-                        path="/account-settings"
-                        component={AccountSettings}
-                    />
-                    <Route path="/my-pharmacies" component={MyPharmacies} />
-                    <Redirect from="/" to="/my-pharmacies" />
-                </Switch>
-            ) : !isPharmacyOwner ? (
-                <Switch>
-                    <Route path="/" exact component={Dashboard} />
-                    <Route
-                        path={["/products/:id", "/products"]}
-                        component={Products}
-                    />
-                    <Route path={["/users/:id", "/users"]} component={Users} />
-                    <Route
-                        path={["/pharmacies/:id", "/pharmacies"]}
-                        component={Pharmacies}
-                    />
-                    <Route
-                        path="/account-settings"
-                        component={AccountSettings}
-                    />
-                    <Redirect to="/" />
-                </Switch>
-            ) : (
-                <Switch>
-                    <Route path="/" exact component={Dashboard} />
-                    <Route path="/my-pharmacies" component={MyPharmacies} />
-                    <Route
-                        path={["/orders/:id", "/orders"]}
-                        component={Orders}
-                    />
-                    <Route path="/pos" component={PointOfSale} />
-                    <Route
-                        path={["/staff/:id", "/staff"]}
-                        component={Employees}
-                    />
-                    <Route
-                        path={["/Inventory/:id", "/Inventory"]}
-                        component={Inventory}
-                    />
-                    <Route
-                        path="/pharmacy-settings"
-                        component={PharmacySettings}
-                    />
-                    <Route
-                        path="/account-settings"
-                        component={AccountSettings}
-                    />
-                    <Redirect to="/" />
-                </Switch>
-            )}
+            {renderMain()}
         </main>
     );
 }

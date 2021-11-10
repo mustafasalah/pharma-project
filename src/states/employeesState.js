@@ -4,6 +4,8 @@ const employeesState = {
     data: [],
     filters: {
         search: "",
+        role: "",
+        status: "",
     },
     pagination: { ...configs.pagination },
 };

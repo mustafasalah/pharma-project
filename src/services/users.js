@@ -53,19 +53,45 @@ export const users = [
         id: 4,
         first_name: "Mona",
         last_name: "Hassan",
-        username: "monnna",
+        username: "mona",
         email: "mona_hassssan@hotmail.com",
-        role: "user",
+        role: "pharmacist",
         gender: "f",
         phone_number: "",
         state: "",
         city: "",
         address: "",
-        status: "non-active",
+        status: "active",
+        last_seen: "1 day ago",
+        joining_date: "24-10-2021",
+    },
+    {
+        id: 5,
+        first_name: "Ahmed",
+        last_name: "Mohamed",
+        username: "ahmed",
+        email: "ahmed_mohamed@hotmail.com",
+        role: "user",
+        gender: "f",
+        phone_number: "+249965949423",
+        state: "",
+        city: "",
+        address: "",
+        status: "active",
         last_seen: "1 day ago",
         joining_date: "24-10-2021",
     },
 ];
+
+export const getUserByUsername = (username) => {
+    const result = users.find((user) => user.username === username);
+    return Promise.resolve({ data: result, status: 200 });
+};
+
+export const getUsersByRole = (role) => {
+    const avaiableUsers = users.filter((user) => user.role === role);
+    return Promise.resolve({ data: avaiableUsers, status: 200 });
+};
 
 export const getUsers = async () => {
     return await Promise.resolve({ data: users, status: 200 });

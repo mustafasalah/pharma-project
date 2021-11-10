@@ -4,7 +4,7 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { getOrders, updateOrderStatus } from "../../services/orders";
+import { updateOrderStatus } from "../../services/orders";
 import { Link } from "react-router-dom";
 import Popup from "../common/Popup";
 import OrderDetials from "../OrderDetails";
@@ -108,7 +108,7 @@ const columns = [
     {
         title: "status",
         sortProp: "status",
-        wrapper: ({ status }) => {
+        wrapper: ({ status, id }) => {
             return (
                 <FormField
                     name="status"
@@ -117,7 +117,7 @@ const columns = [
                     onChange={async (selectedValue) => {
                         const { status: responseStatus } =
                             await updateOrderStatus(
-                                status.get(),
+                                id.get(),
                                 selectedValue.value
                             );
                         notify({
@@ -143,6 +143,7 @@ const columns = [
         title: "handled by",
         sortProp: "handled_by.name",
         wrapper: ({ handled_by: { id, name } }) => {
+            if (id.get() === "") return "Not handled yet";
             return <Link to={`/staff/${id.get()}`}>{name.get()}</Link>;
         },
     },

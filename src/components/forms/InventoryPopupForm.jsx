@@ -33,13 +33,13 @@ const InventoryPopupForm = ({ showState }) => {
                     ({ barcode }) => barcode.value === scanneredBarcode
                 );
                 if (product) {
-                    data.productId.set(product.id);
-                    data.name.set(product.name);
-                    data.photo.set(product.photo.url);
-                    data.barcode.set(product.barcode);
-                    data.unit.set(product.unit);
-                    data.category.set(product.category);
-                    data.company.set(product.company);
+                    data.productId.set(product.id.value);
+                    data.name.set(product.name.value);
+                    data.photo.set(product.photo.url.value);
+                    data.barcode.set(product.barcode.value);
+                    data.unit.set(product.unit.value);
+                    data.category.set(product.category.value);
+                    data.company.set(product.company.value);
                 }
                 scanneredBarcode = "";
             } else {
@@ -94,13 +94,13 @@ const InventoryPopupForm = ({ showState }) => {
                     const product = productsData.find(
                         ({ id }) => id.value === selectedId
                     );
-                    data.productId.set(product.id);
-                    data.name.set(product.name);
-                    data.photo.set(product.photo.url);
-                    data.barcode.set(product.barcode);
-                    data.unit.set(product.unit);
-                    data.category.set(product.category);
-                    data.company.set(product.company);
+                    data.productId.set(product.id.value);
+                    data.name.set(product.name.value);
+                    data.photo.set(product.photo.url.value);
+                    data.barcode.set(product.barcode.value);
+                    data.unit.set(product.unit.value);
+                    data.category.set(product.category.value);
+                    data.company.set(product.company.value);
                 }}
                 required
             />
@@ -229,7 +229,7 @@ const InventoryPopupForm = ({ showState }) => {
                 name="arrival_date"
                 id="11"
                 value={data.arrival_date}
-                max={data.expair_date.value}
+                max={data.expire_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"
             />
@@ -239,7 +239,7 @@ const InventoryPopupForm = ({ showState }) => {
                 label="expire date"
                 name="expire_date"
                 id="12"
-                value={data.expair_date}
+                value={data.expire_date}
                 min={data.arrival_date.value}
                 type="date"
                 placeholder="e.g. 11-11-2021"

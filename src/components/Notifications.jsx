@@ -98,16 +98,27 @@ function Notification({ content }) {
         <li className="border-b-2 border-gray-200 last:border-0">
             <Link
                 to={notificationLink}
-                className="block px-5 py-4 hover:bg-gray-100"
-                onClick={async () => {
-                    await deleteNotification(id);
-                    notifications.set((prev) => {
-                        return prev.filter((notification) => {
-                            return notification.id !== id;
-                        });
-                    });
-                }}
+                className="block relative px-5 py-4 hover:bg-gray-100"
             >
+                <button
+                    title="clear the notification"
+                    className="text-gray-300 hover:text-red hover:bg-gray-200 rounded px-2 py-1 absolute top-3 right-2 transition-none"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        (async () => {
+                            await deleteNotification(id);
+                            notifications.set((prev) => {
+                                return prev.filter((notification) => {
+                                    return notification.id !== id;
+                                });
+                            });
+                        })();
+                    }}
+                >
+                    <i className="fas fa-times"></i>
+                </button>
                 <span
                     className={`bg-${colorsMap.current[type]} shadow capitalize py-0.5 px-2 inline-block mb-1.5 rounded-sm font-semibold text-xxs text-white`}
                 >

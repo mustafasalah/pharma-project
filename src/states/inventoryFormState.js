@@ -13,7 +13,7 @@ const inventoryFormState = {
         stock: 0,
         reserved: 0,
         arrival_date: "",
-        expair_date: "",
+        expire_date: "",
         online_order: true,
     },
     errors: {},

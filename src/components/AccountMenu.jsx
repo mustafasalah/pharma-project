@@ -1,10 +1,10 @@
 import { useState } from "@hookstate/core";
 import React from "react";
 import { Link } from "react-router-dom";
-import store from "../state";
+import store, { resetStore } from "../state";
 
 function AccountMenu() {
-    const { loggedUser } = useState(store);
+    const { loggedUser, pharmacyBranch } = useState(store);
 
     return (
         <>
@@ -26,7 +26,8 @@ function AccountMenu() {
                             "Are you sure to logged out?"
                         );
                         if (confirm) {
-                            loggedUser.set({});
+                            store.set({});
+                            resetStore();
                         }
                     }}
                 >

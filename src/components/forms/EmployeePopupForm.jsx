@@ -1,20 +1,32 @@
 import { DevTools, useState } from "@hookstate/core";
-import React from "react";
+import React, { useEffect } from "react";
 import employeeFormState from "../../states/employeeFormState";
 import FormField from "./FormField";
 import PopupForm from "./PopupForm";
 import { getEmployees, setEmployee } from "../../services/employees";
 import { notify } from "../../utility";
 import store from "../../state";
+import { getUserByUsername, getUsersByRole } from "../../services/users";
 
 const EmployeePopupForm = ({ showState }) => {
     let state = useState({
         data: { ...employeeFormState.data },
         errors: { ...employeeFormState.errors },
     });
+    DevTools(state).label("Employee Popup Form");
+
     const employeesData = useState(store.tables.employees.data);
     const { data, errors } = state;
-    DevTools(state).label("Employee Popup Form");
+    const avaiableUsersToEmployee = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await getUsersByRole("user");
+                avaiableUsersToEmployee.set(data);
+            } catch (ex) {}
+        })();
+    }, []);
 
     return (
         <PopupForm
@@ -31,7 +43,13 @@ const EmployeePopupForm = ({ showState }) => {
                 const { status } = await setEmployee(data.get());
                 notify({
                     status,
-                    successMsg: "Employee Item has been added successfully!",
+                    successMsg: (
+                        <>
+                            We have send invitation email to{" "}
+                            <strong>{data.full_name.get()}</strong> to join
+                            employee team of this pharmacy branch!
+                        </>
+                    ),
                     successCallback: async () => {
                         // Clear the form data
                         data.set({ ...employeeFormState.data });
@@ -48,22 +66,37 @@ const EmployeePopupForm = ({ showState }) => {
         >
             <FormField
                 className="flex flex-col col-span-2"
-                label="full name"
-                name="full_name"
-                id="1"
-                value={data.full_name}
-                placeholder="enter employee name here..."
+                label="username"
+                name="username"
+                id="2"
+                type="select"
+                value={data.username}
+                options={avaiableUsersToEmployee.map((user) => ({
+                    label: user.username.value,
+                    value: user.username.value,
+                }))}
+                onChange={async ({ value: selectedUsername }) => {
+                    const { data: user } = await getUserByUsername(
+                        selectedUsername
+                    );
+
+                    data.username.set(user.username);
+                    data.full_name.set(`${user.first_name} ${user.last_name}`);
+                    data.phone_number.set(user.phone_number);
+                    data.gender.set(user.gender);
+                }}
+                placeholder="username here..."
                 required
             />
 
             <FormField
                 className="flex flex-col col-span-2"
-                label="username"
-                name="username"
-                id="2"
-                value={data.username}
-                placeholder="username here..."
-                required
+                label="full name"
+                name="full_name"
+                id="1"
+                value={data.full_name}
+                placeholder="enter employee name here..."
+                disabled
             />
 
             <FormField
@@ -76,7 +109,7 @@ const EmployeePopupForm = ({ showState }) => {
                 pattern="\+[0-9]{10,12}"
                 value={data.phone_number}
                 placeholder="e.g. +2499XXXXXXXX"
-                required
+                disabled
             />
 
             <FormField
@@ -96,6 +129,7 @@ const EmployeePopupForm = ({ showState }) => {
                         value: "f",
                     },
                 ]}
+                disabled
             />
 
             <FormField
@@ -106,7 +140,6 @@ const EmployeePopupForm = ({ showState }) => {
                 id="5"
                 value={data.role}
                 options={[
-                    { label: "Pharmacy Onwer", value: "pharmacy onwer" },
                     { label: "Supervisor", value: "supervisor" },
                     { label: "Pharmacist", value: "pharmacist" },
                 ]}

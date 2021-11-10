@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 import ForgetPassword from "./pages/ForgetPassword";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
@@ -34,12 +35,7 @@ const Authentication = () => {
                     <Redirect to="/login" />
                 </Switch>
             </main>
-            <footer className=" mt-10">
-                <p className="text-sm text-center bg-white border-t py-2 text-gray-600">
-                    &copy; {new Date().getFullYear()} Pharma. All rights
-                    reserved.
-                </p>
-            </footer>
+            <Footer />
         </>
     );
 };

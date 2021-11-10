@@ -1,3 +1,4 @@
+import store from "../state";
 import http from "./http";
 
 const orders = [
@@ -36,8 +37,8 @@ const orders = [
         type: "online",
         status: "pending",
         handled_by: {
-            id: 2,
-            name: "Ali Osman",
+            id: "",
+            name: "",
         },
         date: "24-09-2021 12:34:03 PM",
         payment: {
@@ -81,8 +82,15 @@ export const setOrder = (data) => {
     });
 };
 
-export const updateOrderStatus = async (id, status) => {
-    return await Promise.resolve({ data: { status }, status: 200 });
+export const updateOrderStatus = (id, status) => {
+    const selectedOrder = orders.find((order) => order.id === id);
+    if (selectedOrder === undefined) return Promise.reject({ status: 404 });
+    selectedOrder.status = status;
+    selectedOrder.handled_by = {
+        id: store.loggedUser.id.get(),
+        name: `${store.loggedUser.first_name.get()} ${store.loggedUser.last_name.get()}`,
+    };
+    return Promise.resolve({ data: { status }, status: 200 });
     // return await http.put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
     //     status,
     // });

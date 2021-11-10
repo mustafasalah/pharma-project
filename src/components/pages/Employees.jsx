@@ -4,7 +4,7 @@ import DataTable from "../common/DataTable";
 import SectionHeader from "../common/SectionHeader";
 import store from "../../state";
 import ManageBtns from "../table/ManageBtns";
-import { deleteEmployee } from "../../services/employees";
+import { deleteEmployee, getEmployees } from "../../services/employees";
 import EmployeeForm from "../forms/EmployeeForm";
 import EmployeePopupForm from "../forms/EmployeePopupForm";
 import { useParams } from "react-router";
@@ -81,6 +81,7 @@ const columns = [
             return gender.get() === "m" ? "male" : "female";
         },
     },
+    { title: "status", prop: "status" },
     { title: "role", prop: "role" },
     {
         title: "work time",
@@ -114,12 +115,17 @@ const columns = [
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteEmployee(id.get());
+                    const { data, status } = await deleteEmployee(id.get());
 
                     notify({
                         status,
                         waitMsg: "Deleting Employee...",
                         successMsg: "Employee has been deleted successfully!",
+                        async successCallback() {
+                            store.tables.employees.data.set((p) => {
+                                return p.filter((emp) => emp.id !== data.id);
+                            });
+                        },
                     });
                 }}
             />
@@ -134,5 +140,27 @@ const filters = [
         by: "full_name",
         prop: "search",
         placeholder: "enter the employee name here...",
+    },
+    {
+        label: "Role",
+        type: "select",
+        by: "role",
+        prop: "role",
+        options: [
+            { label: "All", value: "" },
+            { label: "Supervisor", value: "supervisor" },
+            { label: "Pharmacist", value: "pharmacist" },
+        ],
+    },
+    {
+        label: "Status",
+        type: "select",
+        by: "status",
+        prop: "status",
+        options: [
+            { label: "All", value: "" },
+            { label: "Approved", value: "approve" },
+            { label: "Pending", value: "pending" },
+        ],
     },
 ];

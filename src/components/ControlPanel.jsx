@@ -38,7 +38,8 @@ const ControlPanel = () => {
     useEffect(() => {
         try {
             (async () => {
-                if (loggedUser.role.get() === "admin") {
+                const userRole = loggedUser.role.get();
+                if (userRole === "admin") {
                     const appData = await Promise.all([
                         getPharmaciesNotifications(),
                         getUsers(),
@@ -50,7 +51,10 @@ const ControlPanel = () => {
                     tables.users.data.set(appData[1].data);
                     tables.pharmacies.data.set(appData[2].data);
                     tables.products.data.set(appData[3].data);
-                } else {
+                } else if (
+                    userRole === "pharmacy owner" ||
+                    userRole === "supervisor"
+                ) {
                     const appData = await Promise.all([
                         getInventoryItems(),
                         getEmployees(),
@@ -62,6 +66,16 @@ const ControlPanel = () => {
                     tables.employees.data.set(appData[1].data);
                     tables.orders.data.set(appData[2].data);
                     tables.products.data.set(appData[3].data);
+                } else {
+                    const appData = await Promise.all([
+                        getInventoryItems(),
+                        getOrders(),
+                        getProducts(),
+                    ]);
+
+                    tables.inventory.data.set(appData[0].data);
+                    tables.orders.data.set(appData[1].data);
+                    tables.products.data.set(appData[2].data);
                 }
                 window.setTimeout(() => setLoading(false), 500);
             })();
