@@ -77,7 +77,7 @@ const ForgetPassword = () => {
                             value={forgetForm.confirm_email}
                             placeholder="e.g. example@example.com"
                             pattern={forgetForm.email.value}
-                            icon="fas fa-check-"
+                            icon="fas fa-check-double"
                         />
                     </AuthForm>
                 </>

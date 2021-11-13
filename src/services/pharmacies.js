@@ -1,7 +1,7 @@
 import store from "../state";
 import http from "./http";
 
-export const pharmacies = [
+export let pharmacies = [
     {
         id: 1,
         name: "CVS Pharmacy",
@@ -294,12 +294,10 @@ export const getPharmacies = () => {
 };
 
 export const deletePharmacy = (id) => {
-    return http.delete(`https://jsonplaceholder.typicode.com/posts/${id}`);
+    pharmacies = pharmacies.filter((pharmacy) => pharmacy.id !== id);
+    return Promise.resolve({ data: { id }, status: 200 });
 };
 
 export const updatePharmacyStatus = async (id, status) => {
     return await Promise.resolve({ data: { status }, status: 200 });
-    return await http.put(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-        status,
-    });
 };

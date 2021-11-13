@@ -1,7 +1,7 @@
 import store from "../state";
 import http from "./http";
 
-const products = [
+export let products = [
     {
         id: 1,
         name: "Diarrhoea. Relief - Loperamide Capsules",
@@ -94,10 +94,9 @@ export const getProducts = async () => {
     return await Promise.resolve({ data: products, status: 200 });
 };
 
-export const deleteProduct = async (id) => {
-    return await http.delete(
-        `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
+export const deleteProduct = (id) => {
+    products = products.filter((product) => product.id !== id);
+    return Promise.resolve({ data: { id }, status: 200 });
 };
 
 export const setProduct = async (data) => {

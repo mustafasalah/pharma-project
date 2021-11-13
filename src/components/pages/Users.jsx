@@ -97,12 +97,17 @@ const columns = [
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteUser(id.get());
+                    const { data, status } = await deleteUser(id.get());
 
                     notify({
                         status,
                         waitMsg: "Deleting User...",
                         successMsg: "User has been deleted successfully!",
+                        successCallback() {
+                            store.tables.users.data.set((p) => {
+                                return p.filter((user) => user.id !== data.id);
+                            });
+                        },
                     });
                 }}
             />

@@ -73,12 +73,19 @@ const columns = [
         ),
     },
     { title: "username", prop: "username" },
-    { title: "phone number", prop: "phone_number" },
+    { title: "phone number", prop: "phone_number", defaultValue: "N/A" },
     {
         title: "gender",
         sortProp: "gender",
         wrapper: ({ gender }) => {
-            return gender.get() === "m" ? "male" : "female";
+            switch (gender.get()) {
+                case "m":
+                    return "male";
+                case "f":
+                    return "female";
+                default:
+                    return "N/A";
+            }
         },
     },
     { title: "status", prop: "status" },

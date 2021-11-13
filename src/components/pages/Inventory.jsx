@@ -97,13 +97,20 @@ const columns = [
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteInventoryItem(id.get());
+                    const { data, status } = await deleteInventoryItem(
+                        id.get()
+                    );
 
                     notify({
                         status,
                         waitMsg: "Deleting Inventory Item...",
                         successMsg:
                             "Inventory Item has been deleted successfully!",
+                        successCallback() {
+                            store.tables.inventory.data.set((p) => {
+                                return p.filter((item) => item.id !== data.id);
+                            });
+                        },
                     });
                 }}
             />

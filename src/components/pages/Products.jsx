@@ -115,12 +115,19 @@ const columns = [
                     );
                     if (isDelete === false) return;
 
-                    const { status } = await deleteProduct(id.get());
+                    const { data, status } = await deleteProduct(id.get());
 
                     notify({
                         status,
                         waitMsg: "Deleting Product...",
                         successMsg: "Product has been deleted successfully!",
+                        successCallback() {
+                            store.tables.products.data.set((p) => {
+                                return p.filter(
+                                    (product) => product.id !== data.id
+                                );
+                            });
+                        },
                     });
                 }}
             />

@@ -131,7 +131,9 @@ const columns = [
         title: "phone numbers",
         sortable: false,
         wrapper: ({ phone_numbers }) => {
-            return phone_numbers.get().join(" - ");
+            return phone_numbers[1].get() === ""
+                ? phone_numbers[0].get()
+                : phone_numbers.get().join(" - ").trim(" - ");
         },
     },
     { title: "joining date", prop: "created_at" },
@@ -148,13 +150,20 @@ const columns = [
                         );
                         if (isDelete === false) return;
 
-                        const { status } = await deletePharmacy(id.get());
+                        const { data, status } = await deletePharmacy(id.get());
 
                         notify({
                             status,
                             waitMsg: "Deleting Pharmacy...",
                             successMsg:
                                 "Pharmacy has been deleted successfully!",
+                            successCallback() {
+                                store.tables.pharmacies.data.set((p) => {
+                                    return p.filter(
+                                        (pharmacy) => pharmacy.id !== data.id
+                                    );
+                                });
+                            },
                         });
                     }}
                     onView={() => {

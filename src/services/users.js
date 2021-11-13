@@ -1,6 +1,6 @@
 import http from "./http";
 
-export const users = [
+export let users = [
     {
         id: 1,
         first_name: "Mustafa",
@@ -113,10 +113,9 @@ export const getUsers = async () => {
     return await Promise.resolve({ data: users, status: 200 });
 };
 
-export const deleteUser = async (id) => {
-    return await http.delete(
-        `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
+export const deleteUser = (id) => {
+    users = users.filter((user) => user.id !== id);
+    return Promise.resolve({ data: { id }, status: 200 });
 };
 
 export const setUser = async ({

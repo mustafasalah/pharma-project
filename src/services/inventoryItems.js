@@ -1,6 +1,6 @@
 import http from "./http";
 
-export const inventoryItems = [
+export let inventoryItems = [
     {
         id: 1,
         name: "Diarrhoea. Relief - Loperamide Capsules",
@@ -259,9 +259,8 @@ export const inventoryItems = [
 ];
 
 export const deleteInventoryItem = async (id) => {
-    return await http.delete(
-        `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
+    inventoryItems = inventoryItems.filter((item) => item.id !== id);
+    return Promise.resolve({ data: { id }, status: 200 });
 };
 
 export const setInventoryItem = async (item) => {

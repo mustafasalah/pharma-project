@@ -3,7 +3,7 @@ const employeeFormState = {
         full_name: "",
         username: "",
         phone_number: "",
-        gender: "m",
+        gender: "",
         role: "pharmacist",
         work_from: "",
         work_to: "",

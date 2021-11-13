@@ -32,7 +32,7 @@ const EmployeePopupForm = ({ showState }) => {
         <PopupForm
             title="Add New Employee"
             state={showState}
-            className="grid gap-x-5 gap-y-6 grid-cols-4 text-sm gray-inputs"
+            className="grid gap-x-5 gap-y-6 grid-cols-6 text-sm gray-inputs"
             formButtons={[
                 {
                     label: "Add Employee",
@@ -65,7 +65,7 @@ const EmployeePopupForm = ({ showState }) => {
             }}
         >
             <FormField
-                className="flex flex-col col-span-2"
+                className="flex flex-col col-span-3"
                 label="username"
                 name="username"
                 id="2"
@@ -82,15 +82,15 @@ const EmployeePopupForm = ({ showState }) => {
 
                     data.username.set(user.username);
                     data.full_name.set(`${user.first_name} ${user.last_name}`);
-                    data.phone_number.set(user.phone_number);
-                    data.gender.set(user.gender);
+                    //data.phone_number.set(user.phone_number);
+                    //data.gender.set(user.gender);
                 }}
                 placeholder="username here..."
                 required
             />
 
             <FormField
-                className="flex flex-col col-span-2"
+                className="flex flex-col col-span-3"
                 label="full name"
                 name="full_name"
                 id="1"
@@ -99,7 +99,7 @@ const EmployeePopupForm = ({ showState }) => {
                 disabled
             />
 
-            <FormField
+            {/* <FormField
                 className="flex flex-col"
                 label="phone number"
                 name="phone_number"
@@ -130,7 +130,7 @@ const EmployeePopupForm = ({ showState }) => {
                     },
                 ]}
                 disabled
-            />
+            /> */}
 
             <FormField
                 className="flex flex-col col-span-2"
