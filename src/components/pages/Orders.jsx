@@ -144,6 +144,7 @@ const columns = [
         sortProp: "handled_by.name",
         wrapper: ({ handled_by: { id, name } }) => {
             if (id.get() === "") return "Not handled yet";
+            if (store.loggedUser.role.get() === "pharmacist") return name.get();
             return <Link to={`/staff/${id.get()}`}>{name.get()}</Link>;
         },
     },

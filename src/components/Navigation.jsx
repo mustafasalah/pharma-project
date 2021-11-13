@@ -116,6 +116,7 @@ function Navigation() {
                             title="Point of Sale"
                             faClass="fas fa-cash-register"
                             link="/"
+                            exact
                         ></MenuItem>
 
                         <MenuItem

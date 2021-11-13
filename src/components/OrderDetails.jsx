@@ -99,7 +99,7 @@ const OrderDetials = ({
                         <span>{id}</span>
                         <span className="mx-2"> - </span>
                         <strong>Handled By: </strong>
-                        <span>{handled_by.name}</span>
+                        <span>{handled_by.name || "Not Handled Yet"}</span>
                         <span className="mx-2"> - </span>
                         <strong>Date: </strong>
                         <span>{date}</span>
