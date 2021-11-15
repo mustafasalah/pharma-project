@@ -149,6 +149,7 @@ const filters = [
         by: "category",
         prop: "category",
         options: [{ label: "All", value: "" }, ...getCategories()],
+        wide: true,
     },
     {
         label: "Company",

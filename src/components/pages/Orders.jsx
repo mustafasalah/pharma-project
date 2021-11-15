@@ -132,7 +132,7 @@ const columns = [
                     options={[
                         { label: "Finished", value: "finished" },
                         { label: "Pending", value: "pending" },
-                        { label: "Payment Confirmed", value: "confirmed" },
+                        { label: "Confirmed", value: "confirmed" },
                         { label: "Canceled", value: "canceled" },
                     ]}
                 />
@@ -213,8 +213,8 @@ const filters = [
         prop: "type",
         options: [
             { label: "All", value: "" },
-            { label: "Local Orders", value: "local" },
-            { label: "Online Orders", value: "online" },
+            { label: "Local", value: "local" },
+            { label: "Online", value: "online" },
         ],
     },
     {
@@ -226,7 +226,7 @@ const filters = [
             { label: "All", value: "" },
             { label: "Finished", value: "finished" },
             { label: "Pending", value: "pending" },
-            { label: "Payment Confirmed", value: "confirmed" },
+            { label: "Confirmed", value: "confirmed" },
             { label: "Canceled", value: "canceled" },
         ],
     },

@@ -38,6 +38,11 @@
         @apply outline-none;
     }
 
+    input:invalid,
+    input.invalid {
+        @apply text-red;
+    }
+
     .gray-inputs input:not(.react-select__input),
     .gray-inputs select,
     .gray-inputs textarea,

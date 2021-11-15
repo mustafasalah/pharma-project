@@ -128,6 +128,7 @@ const filters = [
         type: "select",
         by: "role",
         prop: "role",
+        wide: true,
         options: [
             { label: "All", value: "" },
             { label: "Admin", value: "admin" },

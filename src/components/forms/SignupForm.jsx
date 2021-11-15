@@ -2,6 +2,7 @@ import React from "react";
 import PasswordAuthField from "../common/PasswordAuthField";
 import AuthForm from "./AuthForm";
 import AuthFormField from "./AuthFormField";
+import PhoneNumberAuthField from "./PhoneNumberAuthField";
 import UsernameAuthField from "./UsernameAuthField";
 
 const SignupForm = ({ formState, onSubmit }) => {
@@ -68,15 +69,9 @@ const SignupForm = ({ formState, onSubmit }) => {
                 required
             />
 
-            <AuthFormField
-                name="phone_number"
-                label="phone number"
+            <PhoneNumberAuthField
                 id="phone_number"
-                type="tel"
-                pattern="\+[0-9]{10,12}"
                 value={formState.phone_number}
-                placeholder="e.g. +249XXXXXXXXX"
-                icon="fas fa-phone"
                 required
             />
 

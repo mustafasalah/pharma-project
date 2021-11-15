@@ -14,6 +14,8 @@ const PasswordAuthField = ({ value, confirmation, ...props }) => {
             minLength="6"
             maxLength="20"
             pattern={confirmation}
+            escapePattern
+            required
             {...props}
         />
     );

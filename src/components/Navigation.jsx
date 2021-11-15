@@ -97,13 +97,6 @@ function Navigation() {
                             faClass="fas fa-user-tie"
                             link="/staff"
                         ></MenuItem>
-
-                        <MenuItem
-                            key="pharmacy-settings"
-                            title="Pharmacy Settings"
-                            faClass="fas fa-cogs"
-                            link="/pharmacy-settings"
-                        ></MenuItem>
                     </>
                 );
                 break;

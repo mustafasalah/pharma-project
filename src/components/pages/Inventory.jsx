@@ -131,6 +131,7 @@ const filters = [
         type: "select",
         by: "category",
         prop: "category",
+        wide: true,
         options: [{ label: "All", value: "" }, ...getCategories()],
     },
     {

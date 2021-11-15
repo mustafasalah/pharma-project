@@ -13,6 +13,7 @@ const UsernameAuthField = ({ value, ...props }) => {
             minLength="2"
             maxLength="20"
             pattern="\w+"
+            required
             {...props}
         />
     );

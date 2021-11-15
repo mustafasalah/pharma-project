@@ -4,6 +4,7 @@ import FormField from "./FormField";
 import { updateUser } from "../../services/users";
 import { getCityOptions, notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
+import PhoneNumberField from "./PhoneNumberField";
 
 const UserForm = ({
     state,
@@ -108,16 +109,10 @@ const UserForm = ({
                 ]}
             />
 
-            <FormField
+            <PhoneNumberField
                 className="flex flex-col col-span-2"
-                label="phone number"
-                name="phone_number"
                 id="7"
-                type="tel"
-                maxLength="13"
-                pattern="\+[0-9]{10,12}"
                 value={formState.phone_number}
-                placeholder="e.g. +2499XXXXXXXX"
             />
 
             <FormField

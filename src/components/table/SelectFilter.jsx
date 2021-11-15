@@ -1,7 +1,6 @@
 import React from "react";
-import FormField from "../forms/FormField";
 
-function SelectFilter({ label, value, options, className = "" }) {
+function SelectFilter({ label, value, options, className = "", wide = false }) {
     return (
         <div
             className={`inline-block font-medium relative mr-5 last:mr-0 ${className}`}
@@ -11,7 +10,9 @@ function SelectFilter({ label, value, options, className = "" }) {
             </label>
             <select
                 id={label}
-                className="inline-block py-1.5 px-2 w-28 border border-gray-300 rounded-sm shadow focus:outline-none"
+                className={`inline-block py-1.5 px-2 ${
+                    wide ? "w-36" : "w-28"
+                } border border-gray-300 rounded-sm shadow focus:outline-none`}
                 value={value.get()}
                 onChange={({ target }) => value.set(target.value)}
             >

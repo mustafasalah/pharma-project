@@ -14,6 +14,7 @@ function FormField({
     booleanValue = false,
     inputWrapper = false,
     contentAfter,
+    escapePattern,
     ...props
 }) {
     const currentValue = value !== undefined ? value.get() : "";
@@ -33,6 +34,10 @@ function FormField({
             value.set(target.value);
         }
     };
+
+    if (escapePattern && props.pattern) {
+        props.pattern = props.pattern.replace(/[$^.]/, "\\$&");
+    }
 
     const onSelectChange = (selectedValue) => {
         value.set(selectedValue.value);

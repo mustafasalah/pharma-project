@@ -4,6 +4,7 @@ import FormField from "./FormField";
 import { updateEmployee } from "../../services/employees";
 import { notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
+import PhoneNumberField from "./PhoneNumberField";
 
 const EmployeeForm = ({
     state,
@@ -52,16 +53,10 @@ const EmployeeForm = ({
                 required
             />
 
-            <FormField
+            <PhoneNumberField
                 className="flex flex-col col-span-2"
-                label="phone number"
-                name="phone_number"
                 id="3"
-                type="tel"
-                maxLength="13"
-                pattern="\+[0-9]{10,12}"
                 value={formState.phone_number}
-                placeholder="e.g. +2499XXXXXXXX"
                 disabled
             />
 

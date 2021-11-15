@@ -65,19 +65,24 @@ const ForgetPassword = () => {
                             name="email"
                             label="email"
                             id="email"
+                            type="email"
                             value={forgetForm.email}
                             placeholder="e.g. example@example.com"
                             icon="fas fa-at"
+                            required
                         />
 
                         <AuthFormField
                             name="confirm_email"
                             label="confirm email"
                             id="confirm_email"
+                            type="email"
                             value={forgetForm.confirm_email}
                             placeholder="e.g. example@example.com"
                             pattern={forgetForm.email.value}
                             icon="fas fa-check-double"
+                            escapePattern
+                            required
                         />
                     </AuthForm>
                 </>

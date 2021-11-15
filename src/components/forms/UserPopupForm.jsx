@@ -6,6 +6,7 @@ import PopupForm from "./PopupForm";
 import { getUsers, setUser } from "../../services/users";
 import { getCityOptions, notify } from "../../utility";
 import store from "../../state";
+import PhoneNumberField from "./PhoneNumberField";
 
 const UserPopupForm = ({ showState }) => {
     let state = useState({
@@ -121,16 +122,10 @@ const UserPopupForm = ({ showState }) => {
                 ]}
             />
 
-            <FormField
+            <PhoneNumberField
                 className="flex flex-col"
-                label="phone number"
-                name="phone_number"
                 id="7"
-                type="tel"
-                maxLength="13"
-                pattern="\+[0-9]{10,12}"
                 value={data.phone_number}
-                placeholder="e.g. +2499XXXXXXXX"
             />
 
             <FormField

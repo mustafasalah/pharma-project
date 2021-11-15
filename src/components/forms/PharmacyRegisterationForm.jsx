@@ -2,6 +2,7 @@ import React from "react";
 import { getCityOptions } from "../../utility";
 import AuthForm from "./AuthForm";
 import AuthFormField from "./AuthFormField";
+import PhoneNumberAuthField from "./PhoneNumberAuthField";
 
 const PharmacyRegisterationForm = ({ formState, onSubmit }) => {
     return (
@@ -34,25 +35,18 @@ const PharmacyRegisterationForm = ({ formState, onSubmit }) => {
                 value={formState.branch}
                 placeholder="e.g. Khartoum Branch"
             />
-            <AuthFormField
+            <PhoneNumberAuthField
                 name="phone_number_1"
                 label="phone number 1"
                 id="phone_number_1"
-                type="tel"
                 value={formState.phone_numbers[0]}
-                placeholder="e.g. +249XXXXXXXXX"
-                icon="fas fa-phone"
                 required
             />
-            <AuthFormField
+            <PhoneNumberAuthField
                 name="phone_number_2"
                 label="phone number 2"
                 id="phone_number_2"
-                type="tel"
-                pattern="\+[0-9]{10,12}"
                 value={formState.phone_numbers[1]}
-                placeholder="e.g. +249XXXXXXXXX"
-                icon="fas fa-phone"
             />
             <AuthFormField
                 name="pharmacy_email"

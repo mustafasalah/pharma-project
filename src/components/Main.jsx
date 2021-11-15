@@ -17,7 +17,6 @@ import MyPharmacies from "./pages/MyPharmacies";
 function Main() {
     const { loggedUser, pharmacyBranch, collapseMenu } = useState(store);
     const userRole = loggedUser.role.get();
-    const isPharmacyOwner = loggedUser.role.get() === "pharmacy owner";
     const isPharmacyBranchSelected = pharmacyBranch.id.value !== undefined;
 
     function renderMain() {
@@ -61,10 +60,6 @@ function Main() {
                         <Route
                             path={["/Inventory/:id", "/Inventory"]}
                             component={Inventory}
-                        />
-                        <Route
-                            path="/pharmacy-settings"
-                            component={PharmacySettings}
                         />
                         <Route
                             path="/account-settings"

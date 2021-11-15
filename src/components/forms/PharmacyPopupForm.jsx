@@ -13,6 +13,7 @@ import { getCityOptions, notify } from "../../utility";
 import store from "../../state";
 import { setPharmacyBranch } from "../../services/pharmacies";
 import Note from "../common/Note";
+import PhoneNumberField from "./PhoneNumberField";
 
 const PharmacyPopupForm = ({ showState, formState }) => {
     let state = useState({
@@ -161,30 +162,22 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 disabled={isPending}
             />
 
-            <FormField
+            <PhoneNumberField
                 className="flex flex-col col-span-4"
                 label="phone number 1"
-                name="phone_number"
+                name="phone_number_1"
                 id="3"
-                type="tel"
-                maxLength="13"
-                pattern="\+[0-9]{10,12}"
                 value={data.phone_numbers[0]}
-                placeholder="e.g. +2499XXXXXXXX"
-                required
                 disabled={isPending}
+                required
             />
 
-            <FormField
+            <PhoneNumberField
                 className="flex flex-col col-span-4"
                 label="phone number 2"
-                name="phone_number"
+                name="phone_number_2"
                 id="4"
-                type="tel"
-                maxLength="13"
-                pattern="\+[0-9]{10,12}"
                 value={data.phone_numbers[1]}
-                placeholder="e.g. +2499XXXXXXXX"
                 disabled={isPending}
             />
 
