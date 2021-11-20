@@ -13,7 +13,8 @@ const SuccessPage = ({ title, children, redirect }) => {
     return (
         <section className="animate__animated animate__fadeIn">
             <h2 className="text-2xl text-center font-bold mt-20 mb-5 capitalize">
-                <i className="fas fa-check-circle text-green mr-1"></i> {title}
+                <i className="text-shadow fas fa-check-circle text-green mr-1"></i>{" "}
+                {title}
             </h2>
             <p className="text-gray-500 text-center text-xl">{children}</p>
             {redirect && (

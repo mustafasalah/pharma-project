@@ -5,6 +5,7 @@ import { getCityOptions, notify } from "../../utility";
 import { useState, DevTools } from "@hookstate/core";
 import { updatePharmacyStatus } from "../../services/pharmacies";
 import PhoneNumberField from "./PhoneNumberField";
+import GoogleMap from "../GoogleMap";
 
 const rejectBtn = {
     label: "Reject",
@@ -165,6 +166,12 @@ const PharmacyForm = ({
                 placeholder="address line here..."
                 required
                 disabled
+            />
+
+            <GoogleMap
+                className="flex flex-col col-span-6"
+                coordinates={{ lat: formState.lat, lng: formState.lng }}
+                immutable
             />
         </Form>
     );

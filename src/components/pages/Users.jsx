@@ -81,7 +81,12 @@ const columns = [
     },
     { title: "role", prop: "role" },
     { title: "status", prop: "status" },
-    { title: "last seen", sortable: false, prop: "last_seen" },
+    {
+        title: "last seen",
+        sortable: false,
+        prop: "last_seen",
+        defaultValue: "Not logged in yet",
+    },
     { title: "joining date", prop: "joining_date" },
     {
         title: "manage",

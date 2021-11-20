@@ -96,6 +96,12 @@
 @tailwind utilities;
 
 @layer utilities {
+    @variants group-hover {
+        .text-shadow {
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+        }
+    }
+
     .collapse-btn {
         @apply shadow text-xs px-2.5 py-1.5 text-gray-300 bg-gray-100 rounded-l border border-r-0 border-gray-200 transition-none hover:bg-primary hover:border-primary hover:text-white;
     }
@@ -105,7 +111,7 @@
     }
 
     .highlighted {
-        animation: highlight 2s ease-in-out 4 alternate;
+        animation: highlight 2s ease-in-out 2 alternate;
     }
 
     @keyframes highlight {

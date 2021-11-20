@@ -9,6 +9,7 @@ function StatisticsWidget({
     bgColor,
     iconColor,
     link,
+    suffix = "",
 }) {
     return (
         <div className="animate__animated animate__flipInX rounded overflow-hidden flex bg-white shadow-md relative">
@@ -17,7 +18,7 @@ function StatisticsWidget({
             ></i>
             <div className="py-7 pl-4 pr-2 flex-grow">
                 <strong className="block text-secondary text-xl">
-                    {mainText}
+                    {`${mainText.toLocaleString("en")} ${suffix}`}
                 </strong>
                 <span className="text-gray-400 text-smd font-light inline-block mt-1">
                     {seconderyText}

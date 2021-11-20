@@ -14,6 +14,7 @@ import store from "../../state";
 import { setPharmacyBranch } from "../../services/pharmacies";
 import Note from "../common/Note";
 import PhoneNumberField from "./PhoneNumberField";
+import GoogleMap from "../GoogleMap";
 
 const PharmacyPopupForm = ({ showState, formState }) => {
     let state = useState({
@@ -237,6 +238,15 @@ const PharmacyPopupForm = ({ showState, formState }) => {
                 placeholder="address line here..."
                 required
                 disabled={isPending}
+            />
+
+            <GoogleMap
+                className="flex flex-col col-span-12"
+                coordinates={{ lat: data.lat, lng: data.lng }}
+                immutable={formState && formState.status === "pending"}
+                initZoom={
+                    formState && formState.status === "pending" ? undefined : 9
+                }
             />
         </PopupForm>
     );

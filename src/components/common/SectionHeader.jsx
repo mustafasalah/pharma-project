@@ -10,7 +10,8 @@ const SectionHeader = ({
     return (
         <h2 className="flex items-center mb-4">
             <span className="font-bold text-xl">
-                <i className={`${faClass} text-primary mr-2`}></i> {name}
+                <i className={`text-shadow ${faClass} text-primary mr-2`}></i>{" "}
+                {name}
             </span>
             {selectMenu && (
                 <div className="ml-auto text-gray-500 text-smd font-medium">

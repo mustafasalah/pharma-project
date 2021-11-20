@@ -122,6 +122,7 @@ export const setUser = async ({
     first_name,
     last_name,
     username,
+    password,
     email,
     role,
     gender,
@@ -147,6 +148,13 @@ export const setUser = async ({
 
     const newUser = {
         id: users.length + Math.round(Math.random() * 100),
+        joining_date: new Date()
+            .toJSON()
+            .slice(0, 10)
+            .split("-")
+            .reverse()
+            .join("-"),
+        last_seen: "",
         ...data,
     };
 

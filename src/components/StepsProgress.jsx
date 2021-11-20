@@ -2,7 +2,7 @@ import React from "react";
 
 const StepsProgress = ({ steps, currentStep }) => {
     return (
-        <div className="my-10">
+        <div className="my-10 animate__animated animate__faster animate__backInDown">
             <div className="flex items-center mb-3 px-8">
                 {steps.map((title, i) => {
                     const no = i + 1;
@@ -11,7 +11,9 @@ const StepsProgress = ({ steps, currentStep }) => {
                             <>
                                 <span
                                     className={`${
-                                        no === 1 ? "cursor-pointer" : ""
+                                        currentStep.value === 2 && no === 1
+                                            ? "cursor-pointer"
+                                            : ""
                                     } select-none shadow w-10 h-10 inline-block rounded-full text-white text-xl text-center font-semibold leading-10 ${
                                         no <= currentStep.value
                                             ? "bg-primary"
@@ -40,7 +42,7 @@ const StepsProgress = ({ steps, currentStep }) => {
                     }
                     return (
                         <span
-                            className={`select-none shadow w-10 h-10 inline-block rounded-full text-white text-xl text-center font-semibold leading-10 ${
+                            className={`text-shadow select-none shadow w-10 h-10 inline-block rounded-full text-white text-xl text-center font-semibold leading-10 ${
                                 no <= currentStep.value
                                     ? "bg-primary"
                                     : "bg-bright"
@@ -59,7 +61,7 @@ const StepsProgress = ({ steps, currentStep }) => {
                             className={`capitalize font-semibold w-1/${
                                 steps.length
                             } text-smd ${
-                                no <= currentStep.value ? "" : "text-gray-600"
+                                no <= currentStep.value ? "" : "text-gray-500"
                             } ${
                                 no > 1 && no < steps.length
                                     ? "text-center"

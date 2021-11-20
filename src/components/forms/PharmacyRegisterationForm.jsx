@@ -1,5 +1,6 @@
 import React from "react";
 import { getCityOptions } from "../../utility";
+import GoogleMap from "../GoogleMap";
 import AuthForm from "./AuthForm";
 import AuthFormField from "./AuthFormField";
 import PhoneNumberAuthField from "./PhoneNumberAuthField";
@@ -93,6 +94,11 @@ const PharmacyRegisterationForm = ({ formState, onSubmit }) => {
                 value={formState.address}
                 placeholder="address line here..."
                 required
+            />
+            <GoogleMap
+                className="col-span-2"
+                coordinates={{ lat: formState.lat, lng: formState.lng }}
+                initZoom={9}
             />
         </AuthForm>
     );

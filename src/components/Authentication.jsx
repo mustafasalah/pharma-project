@@ -12,7 +12,7 @@ const Authentication = () => {
         <>
             {/* <TopBar withLogo /> */}
             <main
-                className="border border-trans"
+                className="border border-trans overflow-y-hidden"
                 style={{ minHeight: "calc(100vh - 77px)" }}
             >
                 <div className="w-52 mx-auto mt-10">

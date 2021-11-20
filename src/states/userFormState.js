@@ -4,6 +4,8 @@ const userFormState = {
         last_name: "",
         username: "",
         email: "",
+        password: "",
+        confirm_password: "",
         role: "user",
         gender: "",
         phone_number: "",

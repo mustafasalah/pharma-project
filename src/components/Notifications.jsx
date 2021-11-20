@@ -31,6 +31,7 @@ function Notification({ content }) {
 
     const { notifications } = useState(store);
     const { id, type, data } = content;
+    const willBeDeleted = useState(false);
 
     let notificationLink = "",
         msg = "";
@@ -95,7 +96,13 @@ function Notification({ content }) {
     }
 
     return (
-        <li className="border-b-2 border-gray-200 last:border-0">
+        <li
+            className={`border-b-2 border-gray-200 last:border-0 ${
+                willBeDeleted.value
+                    ? "animate__animated animate__faster animate__fadeOutRight"
+                    : ""
+            }`}
+        >
             <Link
                 to={notificationLink}
                 className="block relative px-5 py-4 hover:bg-gray-100"
@@ -106,15 +113,16 @@ function Notification({ content }) {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        willBeDeleted.set(true);
 
-                        (async () => {
+                        window.setTimeout(async () => {
                             await deleteNotification(id);
                             notifications.set((prev) => {
                                 return prev.filter((notification) => {
                                     return notification.id !== id;
                                 });
                             });
-                        })();
+                        }, 500);
                     }}
                 >
                     <i className="fas fa-times"></i>

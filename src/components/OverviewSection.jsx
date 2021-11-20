@@ -50,7 +50,8 @@ const OverviewSection = () => {
                     />
                 ) : (
                     <StatisticsWidget
-                        mainText={`${sales.counter} SDG`}
+                        mainText={sales.counter}
+                        suffix="SDG"
                         seconderyText="Today's Sales"
                         percent={getPercentage(sales)}
                         faClass="fas fa-piggy-bank"
@@ -86,7 +87,8 @@ const OverviewSection = () => {
                     />
                 ) : (
                     <StatisticsWidget
-                        mainText={`${profits.counter} SDG`}
+                        mainText={profits.counter}
+                        suffix="SDG"
                         seconderyText="Today's Profits"
                         percent={getPercentage(profits)}
                         faClass="fas fa-dollar-sign"

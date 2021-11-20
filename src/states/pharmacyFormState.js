@@ -9,8 +9,8 @@ const pharmacyFormState = {
         state: "khartoum",
         city: "",
         address: "",
-        lat: "",
-        long: "",
+        lat: 15.4838,
+        lng: 32.5339,
     },
     errors: {},
 };

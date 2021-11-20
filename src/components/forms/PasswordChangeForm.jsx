@@ -5,6 +5,7 @@ import store from "../../state";
 import { notify } from "../../utility";
 import Form from "./Form";
 import FormField from "./FormField";
+import PasswordField from "./PasswordField";
 
 const defaultState = {
     newPassword: "",
@@ -36,46 +37,35 @@ const PasswordChangeForm = () => {
                 });
             }}
             formButtons={[
-                // {
-                //     label: "Clear Fields",
-                //     faClass: "fas fa-times text-red",
-                //     type: "reset",
-                //     className: "bg-white shadow-md hover:text-red",
-                // },
                 {
                     label: "Change Password",
                     faClass: "fas fa-exchange-alt",
                 },
             ]}
         >
-            <FormField
+            <PasswordField
                 className="flex flex-col"
-                label="password"
-                name="password"
-                id="password"
                 value={formData.newPassword}
                 placeholder="Your new password here..."
-                required
             />
 
-            <FormField
+            <PasswordField
                 className="flex flex-col"
                 label="confirm password"
                 name="confirm_password"
                 id="confirm_password"
                 value={formData.confirmPassword}
+                confirmation={formData.newPassword.value}
                 placeholder="Confirm your new password here..."
-                required
             />
 
-            <FormField
+            <PasswordField
                 className="flex flex-col"
                 label="old password"
                 name="old_password"
                 id="old_password"
                 value={formData.oldPassword}
                 placeholder="Your old password here..."
-                required
             />
         </Form>
     );

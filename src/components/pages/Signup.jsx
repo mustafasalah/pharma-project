@@ -36,6 +36,8 @@ const Signup = () => {
         state: "khartoum",
         city: "",
         address: "",
+        lat: 15.4838,
+        lng: 32.5339,
     });
 
     let createdUser = useRef();
@@ -136,7 +138,7 @@ const Signup = () => {
     }, [signupProgress.value]);
 
     return (
-        <div className="mt-10 max-w-xl mx-auto">
+        <div className="mt-10 max-w-xl mx-auto overflow-y-hidden">
             {signupProgress.step.value !== 4 && (
                 <AuthSectionHeader name="Signup" />
             )}

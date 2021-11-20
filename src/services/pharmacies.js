@@ -13,8 +13,8 @@ export let pharmacies = [
         state: "khartoum",
         city: "omdurman",
         address: "Alwadi Street, near alrowda hospital",
-        lat: 12.434034,
-        long: 42.439493,
+        lat: 12.4034,
+        lng: 42.4493,
         created_at: "24-09-2021 12:34:03 PM",
         status: "active",
         owned_by: {
@@ -48,8 +48,8 @@ export let pharmacies = [
         state: "khartoum",
         city: "khartoum",
         address: "Al khartoum 2, near Ozone",
-        lat: 11.74784,
-        long: 33.47944,
+        lat: 11.7474,
+        lng: 33.4794,
         created_at: "03-08-2021 22:04:02 PM",
         status: "pending",
         owned_by: {
@@ -83,8 +83,8 @@ export let pharmacies = [
         state: "khartoum",
         city: "bhary",
         address: "Al moasasha",
-        lat: 11.74784,
-        long: 33.47944,
+        lat: 51.784,
+        lng: 23.444,
         created_at: "01-08-2021 02:33:42 PM",
         status: "rejected",
         owned_by: {
@@ -119,7 +119,7 @@ export const updatePharmacyBranch = ({
     city,
     address,
     lat,
-    long,
+    lng,
 }) => {
     const editedPharmacyBranch = {
         branch,
@@ -130,7 +130,7 @@ export const updatePharmacyBranch = ({
         city,
         address,
         lat: +lat,
-        long: +long,
+        lng: +lng,
         status: "pending",
     };
     let selectedPharmacy = pharmacies.find((pharmacy) => pharmacy.id === id);
@@ -154,7 +154,7 @@ export const setPharmacy = (
         city,
         address,
         lat,
-        long,
+        lng,
     },
     owner
 ) => {
@@ -170,7 +170,7 @@ export const setPharmacy = (
         city,
         address,
         lat: +lat,
-        long: +long,
+        lng: +lng,
         created_at: new Date().toJSON(),
         status: "pending",
         owned_by: {
@@ -213,7 +213,7 @@ export const setPharmacyBranch = ({
     city,
     address,
     lat,
-    long,
+    lng,
 }) => {
     const newPharmacyBranch = {
         id: pharmacies.length + Math.round(Math.random() * 100),
@@ -227,7 +227,7 @@ export const setPharmacyBranch = ({
         city,
         address,
         lat: +lat,
-        long: +long,
+        lng: +lng,
         created_at: new Date().toJSON(),
         status: "pending",
         owned_by: {

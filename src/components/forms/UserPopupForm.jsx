@@ -7,6 +7,7 @@ import { getUsers, setUser } from "../../services/users";
 import { getCityOptions, notify } from "../../utility";
 import store from "../../state";
 import PhoneNumberField from "./PhoneNumberField";
+import PasswordField from "./PasswordField";
 
 const UserPopupForm = ({ showState }) => {
     let state = useState({
@@ -25,7 +26,7 @@ const UserPopupForm = ({ showState }) => {
             className="grid gap-x-5 gap-y-6 grid-cols-3 text-sm gray-inputs"
             formButtons={[
                 {
-                    label: "Add User",
+                    label: "Create New User",
                     faClass: "fas fa-plus",
                 },
             ]}
@@ -79,7 +80,7 @@ const UserPopupForm = ({ showState }) => {
             />
 
             <FormField
-                className="flex flex-col col-span-2"
+                className="flex flex-col"
                 label="email"
                 name="email"
                 type="email"
@@ -87,6 +88,15 @@ const UserPopupForm = ({ showState }) => {
                 value={data.email}
                 placeholder="email here..."
                 required
+            />
+
+            <PasswordField className="flex flex-col" value={data.password} />
+
+            <PasswordField
+                label="Confirm Password"
+                className="flex flex-col col-span-1"
+                confirmation={data.password.value}
+                value={data.confirm_password}
             />
 
             <FormField
@@ -164,7 +174,7 @@ const UserPopupForm = ({ showState }) => {
             />
 
             <FormField
-                className="flex flex-col"
+                className="flex flex-col col-span-3"
                 label="address"
                 name="address"
                 id="11"

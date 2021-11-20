@@ -83,9 +83,9 @@ const AddPharmacyBranchCard = ({ onClick }) => {
         <button
             onClick={onClick}
             title="Add New Pharmacy Branch"
-            className="flex flex-col group py-12 hover:border-gray-400 border-2 border-dashed items-center rounded border-gray-300"
+            className="group shadow-inner flex flex-col group py-12 hover:border-gray-400 border-2 border-dashed items-center rounded border-gray-300"
         >
-            <i className="fas fa-plus text-6xl mb-8 group-hover:text-primary text-gray-300"></i>
+            <i className="group-hover:text-shadow fas fa-plus text-6xl mb-8 group-hover:text-primary text-gray-300"></i>
             <strong className="font-semibold text-gray-500 group-hover:text-black">
                 Add New Pharmacy Branch
             </strong>
@@ -112,7 +112,7 @@ const PharmacyCard = ({ data: { status, name, branch }, onClick }) => {
                 {status}
             </span>
             <i
-                className={`fas fa-clinic-medical text-6xl mb-4 group-hover:text-white text-${statusColor}`}
+                className={`text-shadow fas fa-clinic-medical text-6xl mb-4 group-hover:text-white text-${statusColor}`}
             ></i>
             <strong className="font-semibold text-lg">{name}</strong>
             <span className="text-sm text-gray-500 group-hover:text-white">

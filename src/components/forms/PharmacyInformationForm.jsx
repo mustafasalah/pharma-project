@@ -2,6 +2,7 @@ import { useHookstate } from "@hookstate/core";
 import React from "react";
 import { setPharmacyInformation } from "../../services/pharmacyBranch";
 import { getCityOptions, notify } from "../../utility";
+import GoogleMap from "../GoogleMap";
 import FormButton from "./FormButton";
 import FormField from "./FormField";
 import PhoneNumberField from "./PhoneNumberField";
@@ -111,9 +112,11 @@ const PharmacyInformationForm = ({ data }) => {
                     value={formData.address}
                     placeholder="address line here..."
                 />
-                <label htmlFor="" className="col-span-4 font-medium">
-                    Location in the map
-                </label>
+                <GoogleMap
+                    label="Location in the map"
+                    className="flex flex-col col-span-4"
+                    coordinates={{ lat: formData.lat, lng: formData.lng }}
+                />
             </div>
             <div className="text-right mt-5">
                 <FormButton label="Save Changes" />
