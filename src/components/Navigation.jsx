@@ -130,6 +130,17 @@ function Navigation() {
                 break;
         }
 
+        if (userRole === "pharmacy owner" && isPharmacyBranchSelected) {
+            output.push(
+                <MenuItem
+                    key="pharmacy-settings"
+                    title="Pharmacy Settings"
+                    faClass="fas fa-cogs"
+                    link="/pharmacy-settings"
+                ></MenuItem>
+            );
+        }
+
         output.push(
             <MenuItem
                 key="account-settings"

@@ -61,6 +61,12 @@ function Main() {
                             path={["/Inventory/:id", "/Inventory"]}
                             component={Inventory}
                         />
+                        {userRole === "pharmacy owner" && (
+                            <Route
+                                path="/pharmacy-settings"
+                                component={PharmacySettings}
+                            />
+                        )}
                         <Route
                             path="/account-settings"
                             component={AccountSettings}
