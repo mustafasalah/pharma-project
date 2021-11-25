@@ -10,7 +10,7 @@ const AuthForm = ({
     className = "flex flex-col gap-y-6",
 }) => {
     return (
-        <div className="bg-white rounded shadow-md p-5 text-sm animate__animated animate__faster animate__backInUp">
+        <div className="bg-white rounded shadow-lg p-5 text-sm animate__animated animate__faster animate__backInUp">
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

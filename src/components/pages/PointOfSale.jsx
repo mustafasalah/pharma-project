@@ -21,7 +21,7 @@ const PointOfSale = () => {
         window.onkeypress = ({ keyCode, key }) => {
             if (keyCode === 13) {
                 const product = inventoryItems.find(
-                    ({ barcode }) => barcode === scanneredBarcode
+                    ({ barcode }) => barcode.get() === scanneredBarcode
                 );
                 if (product) {
                     products.set((oldList) => {

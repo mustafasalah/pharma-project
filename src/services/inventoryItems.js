@@ -21,7 +21,7 @@ export let inventoryItems = [
     {
         id: 2,
         name: "Ovex Family Pack Tablets",
-        barcode: "1237d3434340942",
+        barcode: "358982077023700",
         unit: "4x 100mg Tablets",
         category: "antibiotics",
         company: "Ovex",
