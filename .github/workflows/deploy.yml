@@ -14,7 +14,7 @@ jobs:
       with:
         host: ftp.pharma.com.sd
         user: upload@pharma.com.sd
-        password: ${{ secrets.FTP_PASSWORD }}
+        password: ${{ secrets.PASSWORD }}
         localDir: 
         remoteDir: 
         options: 
