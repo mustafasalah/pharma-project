@@ -8,7 +8,7 @@
       # FTP user
       user: upload@pharma.com.sd
       # FTP password
-      password: ${{ secrets.password }}
+      password: ${{ secrets.PASSWORD }}
       # Force SSL encryption
       forceSsl: true # optional, default is false
       # Local directory
