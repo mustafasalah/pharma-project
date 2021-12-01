@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="./favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Web site created using create-react-app"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <title>Pharma Platform - Comming Soon...</title>
+
+        <style>
+            * {
+                font-family: Poppins, sans-serif;
+            }
+
+            body {
+                background: url("./assets/images/bg.jpg");
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100 text-black transition-colors duration-500">
+        <section class="mx-auto mt-48 w-60">
+            <img
+                class="w-full"
+                src="/assets/images/logo-2.png"
+                alt="Pharma Platform"
+            />
+            <h1 class="mt-12 text-2xl font-semibold text-gray-700 text-center">
+                Comming Soon
+            </h1>
+        </section>
+    </body>
+
+    <script>
+        window.setInterval(() => {
+            const h1 = document.querySelector("section h1");
+            if (h1.innerHTML.endsWith("..."))
+                h1.innerHTML = h1.innerHTML.slice(0, -3);
+            else h1.innerHTML += ".";
+        }, 1000);
+    </script>
+</html>
