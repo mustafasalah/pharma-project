@@ -13,7 +13,7 @@ jobs:
       uses: sebastianpopp/ftp-action@releases/v2
       with:
         host: ftp.pharma.com.sd
-        user: upload@pharma.com.sd
+        user: files@pharma.com.sd
         password: ${{ secrets.PASSWORD }}
         localDir: .
         remoteDir: .

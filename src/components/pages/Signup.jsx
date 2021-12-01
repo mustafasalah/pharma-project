@@ -138,7 +138,7 @@ const Signup = () => {
     }, [signupProgress.value]);
 
     return (
-        <div className="mt-10 max-w-xl mx-auto overflow-y-hidden">
+        <div className="mt-10 max-w-xl mx-auto">
             {signupProgress.step.value !== 4 && (
                 <AuthSectionHeader name="Signup" />
             )}
