@@ -16,7 +16,7 @@ function Logo({
                 <Link className="block" to="/">
                     {collapseMenu.value && !withoutCollapseBtn ? (
                         <img
-                            src="/assets/images/mini-logo.png"
+                            src="/assets/images/favicon.svg"
                             alt="Pharma Logo"
                             style={{
                                 width: 47,
@@ -25,7 +25,7 @@ function Logo({
                         />
                     ) : (
                         <img
-                            src="/assets/images/logo.png"
+                            src="/assets/images/logo.svg"
                             alt="Pharma Logo"
                             style={{
                                 width: 178.5,

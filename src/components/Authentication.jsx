@@ -15,10 +15,10 @@ const Authentication = () => {
                 className="border border-trans overflow-y-hidden"
                 style={{ minHeight: "calc(100vh - 77px)" }}
             >
-                <div className="w-52 mx-auto mt-10">
+                <div className="w-56 mx-auto mt-10">
                     <Link to="/">
                         <img
-                            src="/assets/images/logo-2.png"
+                            src="/assets/images/logo-2.svg"
                             alt="Pharma Logo"
                         />
                     </Link>
