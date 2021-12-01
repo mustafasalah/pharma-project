@@ -2,7 +2,18 @@ const colors = require("tailwindcss/colors");
 const defaultConfig = require("tailwindcss/defaultConfig");
 
 module.exports = {
-    purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+    purge: {
+        content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+        css: ["./src/index.css"],
+        safelist: [
+            "react-select__indicator",
+            "Toastify__toast-body",
+            /menu-item/,
+            /red/,
+            /gray/,
+            /bg-yellow/,
+        ],
+    },
     darkMode: false, // or 'media' or 'class'
     theme: {
         colors: {

@@ -22,7 +22,7 @@ function TopMenu({ withoutNotifications = false }) {
                     }
                 >
                     <i
-                        className={`animate__animated animate__delay-2s animate__repeat-3 animate__swing fas fa-bellfas fa-bell text-primary`}
+                        className={`animate__animated animate__delay-2s animate__infinite animate__swing fas fa-bellfas fa-bell text-primary`}
                     ></i>
                     {notifications.length !== 0 && (
                         <span className="rounded-full w-3.5 h-3.5 absolute bg-red top-7 right-5 text-xxs text-white">
