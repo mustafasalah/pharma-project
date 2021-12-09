@@ -67,7 +67,11 @@ const PointOfSale = () => {
                         </Note>
                     </div>
                     <div className="mt-5">
-                        <DataTable data={products} columns={columns} />
+                        <DataTable
+                            data={products}
+                            columns={columns}
+                            animateRows
+                        />
                     </div>
                 </div>
 

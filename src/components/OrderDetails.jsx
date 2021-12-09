@@ -11,6 +11,7 @@ const OrderDetials = ({
         vat,
         discount,
         delivery = 0,
+        payment,
         handled_by,
     },
 }) => {
@@ -105,6 +106,9 @@ const OrderDetials = ({
                         <span>{date}</span>
                     </p>
                     <p>
+                        <strong>Payment Method: </strong>
+                        <span>{payment.method}</span>{" "}
+                        <span className="mx-2"> - </span>
                         <strong>Phone Numbers: </strong>
                         <span>{phone_numbers.get().join(" - ")}</span>
                         {email && (
@@ -114,7 +118,6 @@ const OrderDetials = ({
                                 <span>{email.get()}</span>
                             </>
                         )}
-
                         {website && (
                             <>
                                 <br />

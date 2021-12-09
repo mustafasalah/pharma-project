@@ -6,6 +6,7 @@ import { notify } from "../utility";
 import Popup from "./common/Popup";
 import DiscountPopupForm from "./forms/DiscountPopupForm";
 import FormButton from "./forms/FormButton";
+import FormField from "./forms/FormField";
 import OrderDetials from "./OrderDetails";
 
 const OrderSummary = ({ products, discount, vat }) => {
@@ -15,6 +16,7 @@ const OrderSummary = ({ products, discount, vat }) => {
     });
     const displayDiscountForm = useHookstate(false);
     const { loggedUser } = useHookstate(store);
+    const paymentMethod = useHookstate("cash");
 
     let totalItems = 0,
         basketTotal = 0;
@@ -78,6 +80,21 @@ const OrderSummary = ({ products, discount, vat }) => {
                     <span className="text-primary">{total} SDG</span>
                 </p>
             </div>
+            {products.length !== 0 && (
+                <div className="bg-white rounded shadow-md p-4 text-smd mt-6">
+                    <FormField
+                        name="payment_method"
+                        label="Payment Method"
+                        type="select"
+                        value={paymentMethod}
+                        options={[
+                            { label: "Cash", value: "Cash" },
+                            { label: "MBOK", value: "MBOK" },
+                            { label: "ATM Card", value: "ATM Card" },
+                        ]}
+                    />
+                </div>
+            )}
             <div className="grid grid-cols-1 gap-y-4 mt-6">
                 {products.length !== 0 && (
                     <>
@@ -105,6 +122,10 @@ const OrderSummary = ({ products, discount, vat }) => {
                                     products_amount: basketTotal,
                                     discount: actualDiscountAmount,
                                     vat: vat.get(),
+                                    payment: {
+                                        method: paymentMethod.get(),
+                                        proof: "",
+                                    },
                                 });
 
                                 notify({

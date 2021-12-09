@@ -89,6 +89,7 @@ const InventoryForm = ({
                 id="7"
                 value={formState.cost}
                 type="number"
+                step="0.01"
                 min="1"
             />
 
@@ -99,6 +100,7 @@ const InventoryForm = ({
                 id="8"
                 value={formState.price}
                 type="number"
+                step="0.01"
                 min="1"
             />
 

@@ -12,6 +12,7 @@ function DataTable({
     filtersData,
     pagination,
     sortColumn,
+    animateRows,
 }) {
     const filteredData = useMemo(
         () => (filters ? filterData(filters, filtersData, data) : data),
@@ -42,6 +43,7 @@ function DataTable({
                 columns={columns}
                 sortColumn={sortColumn}
                 form={form}
+                animateRows={animateRows}
             />
             {pagination && (
                 <Pagination

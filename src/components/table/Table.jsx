@@ -2,7 +2,7 @@ import React from "react";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 
-function Table({ data, columns, form, sortColumn }) {
+function Table({ data, columns, form, sortColumn, animateRows }) {
     if (data.length === 0)
         return (
             <p className="rounded shadow-lg bg-white mt-5 text-center text-gray-400 text-sm p-5 italic">
@@ -14,7 +14,12 @@ function Table({ data, columns, form, sortColumn }) {
         <>
             <table>
                 <TableHead columns={columns} sortColumn={sortColumn} />
-                <TableBody columns={columns} data={data} form={form} />
+                <TableBody
+                    columns={columns}
+                    data={data}
+                    form={form}
+                    animateRows={animateRows}
+                />
             </table>
         </>
     );

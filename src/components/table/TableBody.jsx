@@ -4,7 +4,7 @@ import TableRow from "./TableRow";
 import store from "../../state";
 import { useRouteMatch } from "react-router";
 
-function TableBody({ data, columns, form }) {
+function TableBody({ data, columns, form, animateRows = false }) {
     const { params } = useRouteMatch();
     const editedRow = useState(null);
     const { popupWindow } = useState(store);
@@ -21,6 +21,7 @@ function TableBody({ data, columns, form }) {
                 return (
                     <TableRow
                         key={item.id.value}
+                        animate={animateRows}
                         highlight={params.id && +params.id === item.id.get()}
                         form={form && form(item, () => editedRow.set(null))}
                         edited={edited}

@@ -13,6 +13,7 @@ const ProductsSearch = ({
     const [loading, setLoading] = useState(false);
     const inventoryData = useHookstate(store.tables.inventory.data);
     const [resultSet, setResultSet] = useState([]);
+    const [displayMenu, setDisplayMenu] = useState(false);
 
     return (
         <div className={`inline-block font-medium relative mr-5 ${className}`}>
@@ -29,6 +30,12 @@ const ProductsSearch = ({
                 value={value.get()}
                 onInput={() => {
                     setLoading(true);
+                }}
+                onFocus={() => {
+                    setDisplayMenu(true);
+                    if (resultSet.length === 0) {
+                        setResultSet(inventoryData);
+                    }
                 }}
                 onChange={({ target }) => {
                     value.set(target.value);
@@ -47,7 +54,7 @@ const ProductsSearch = ({
                 }}
             />
             <i className="fas fa-search absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-300"></i>
-            {value.get() !== "" && (
+            {displayMenu && (
                 <div className="bg-white absolute z-30 right-0 w-72 max-h-64 overflow-y-auto rounded-sm border shadow mt-2">
                     {loading ? (
                         <Loading
@@ -83,6 +90,7 @@ const ProductsSearch = ({
                                                   ];
                                         });
                                         value.set("");
+                                        setDisplayMenu(false);
                                     }}
                                 />
                             ))}
@@ -103,7 +111,7 @@ const ResultItem = ({ result, onSelect }) => {
     return (
         <li className="border-b last:border-b-0">
             <button
-                onClick={isInStock && onSelect}
+                onClick={() => isInStock && onSelect()}
                 className={`px-3 py-2 text-left w-full ${
                     isInStock
                         ? "hover:bg-gray-100"

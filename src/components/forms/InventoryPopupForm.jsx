@@ -109,23 +109,24 @@ const InventoryPopupForm = ({ showState }) => {
                 className="flex flex-col"
                 label="barcode"
                 name="barcode"
-                type="select"
+                type="text"
                 id="2"
                 value={data.barcode}
-                options={productsData.map(({ barcode, id }) => ({
-                    label: barcode.value,
-                    value: id.value,
-                }))}
-                onChange={({ value: selectedId }) => {
-                    const product = productsData.find(
-                        ({ id }) => id.value === selectedId
-                    );
-                    data.productId.set(product.id);
-                    data.name.set(product.name);
-                    data.barcode.set(product.barcode);
-                    data.unit.set(product.unit);
-                    data.category.set(product.category);
-                    data.company.set(product.company);
+                onChange={({ target }) => {
+                    const product = productsData.find(({ barcode }) => {
+                        return barcode.value === target.value;
+                    });
+                    console.log(product);
+                    if (product) {
+                        data.productId.set(product.id.value);
+                        data.name.set(product.name.value);
+                        data.barcode.set(product.barcode.value);
+                        data.unit.set(product.unit.value);
+                        data.category.set(product.category.value);
+                        data.company.set(product.company.value);
+                    } else if (data.productId.value === null) {
+                        data.barcode.set(target.value);
+                    }
                 }}
                 placeholder="barcode here..."
                 required
@@ -170,6 +171,7 @@ const InventoryPopupForm = ({ showState }) => {
                 value={data.cost}
                 type="number"
                 min="1"
+                step="0.01"
                 required
             />
 
@@ -180,7 +182,8 @@ const InventoryPopupForm = ({ showState }) => {
                 id="8"
                 value={data.price}
                 type="number"
-                min="1"
+                min={data.cost.value}
+                step="0.01"
                 required
             />
 
@@ -240,7 +243,7 @@ const InventoryPopupForm = ({ showState }) => {
                 name="expire_date"
                 id="12"
                 value={data.expire_date}
-                min={data.arrival_date.value}
+                min={new Date().toJSON().substr(0, 10)}
                 type="date"
                 placeholder="e.g. 11-11-2021"
             />

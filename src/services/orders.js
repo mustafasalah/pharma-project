@@ -12,7 +12,7 @@ const orders = [
         },
         date: "24-09-2021 12:34:03 PM",
         payment: {
-            method: "cash",
+            method: "Cash",
             proof: "",
         },
         products: [
