@@ -12,6 +12,7 @@ module.exports = {
             /red/,
             /gray/,
             /bg-yellow/,
+            /bg-green/,
         ],
     },
     darkMode: false, // or 'media' or 'class'
