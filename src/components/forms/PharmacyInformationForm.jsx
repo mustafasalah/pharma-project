@@ -116,6 +116,7 @@ const PharmacyInformationForm = ({ data }) => {
                     label="Location in the map"
                     className="flex flex-col col-span-4"
                     coordinates={{ lat: formData.lat, lng: formData.lng }}
+                    initZoom={14}
                 />
             </div>
             <div className="text-right mt-5">

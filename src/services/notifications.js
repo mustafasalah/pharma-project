@@ -3,7 +3,7 @@ import http from "./http";
 let notifications = [
     {
         id: 1,
-        type: "new_order",
+        type: "order",
         data: {
             id: 1,
             user: "Mustafa Salah",
@@ -32,8 +32,8 @@ let notifications = [
         id: 4,
         type: "out_of_stock",
         data: {
-            id: 1,
-            name: "Diarrhoea. Relief - Loperamide Capsules",
+            id: 4,
+            name: "Flarin Ibuprofen 200mg Capsules",
         },
     },
     {
@@ -55,7 +55,8 @@ let notifications = [
     },
 ];
 
-export const getPharmaciesNotifications = () => {
+export const getPharmaciesNotifications = async () => {
+    //return await http.get(`/notifications/pharmacies`);
     return Promise.resolve({
         data: notifications.filter(
             (notification) =>
@@ -65,7 +66,17 @@ export const getPharmaciesNotifications = () => {
     });
 };
 
-export const getNotifications = () => {
+export const getNotifications = async () => {
+    // const orderNotifications = await http.get(`/notifications/orders`);
+    // const inventoryNotification = await http.get(`/notifications/inventory`);
+    // const notifications = [
+    //     ...orderNotifications.data,
+    //     ...inventoryNotification.data,
+    // ];
+    // return Promise.resolve({
+    //     data: notifications,
+    // });
+
     return Promise.resolve({
         data: notifications.filter(
             (notification) =>
@@ -75,7 +86,14 @@ export const getNotifications = () => {
     });
 };
 
-export const deleteNotification = (id) => {
+export const deleteNotification = async (type, id) => {
+    // const response = await http.delete(`/notifications/${type}/${id}`);
+    // if (response.status === 200) {
+    //     notifications = notifications.filter(
+    //         (notification) => notification.id !== id
+    //     );
+    // }
+    // return response;
     notifications = notifications.filter(
         (notification) => notification.id !== id
     );

@@ -2,7 +2,9 @@ import http from "./http";
 import { users } from "./users";
 
 export const login = (username, password) => {
-    const loggedUser = users.find((user) => user.username === username);
+    const loggedUser = users.find(
+        (user) => user.username === username && user.password === password
+    );
 
     if (!loggedUser) return Promise.resolve({ status: 403 });
 
