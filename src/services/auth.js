@@ -15,8 +15,8 @@ export const login = (username, password) => {
 };
 
 export const signup = async (userData) => {
-    delete userData.password;
-    //delete userData.confirm_password;
+    //delete userData.password;
+    delete userData.confirm_password;
 
     const newUser = {
         id: users.length + 1,
