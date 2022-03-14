@@ -3,7 +3,7 @@ import http from "./http";
 let notifications = [
     {
         id: 1,
-        type: "order",
+        type: "new_order",
         data: {
             id: 1,
             user: "Mustafa Salah",
